@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -9,6 +10,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { DragDropFileUpload } from "@/components/drag-drop-file-upload";
+import Image from "next/image";
 
 interface BulkFormProps {
   onSubmit: (forms: FormData[]) => Promise<void>;
@@ -102,7 +104,7 @@ export function BulkListingForm({ onSubmit, onSaveDraft }: BulkFormProps) {
     value: string
   ) => {
     const updatedForms = [...forms];
-    // @ts-ignore - This is safe as we're only updating string fields
+    // @ts-expect-error - This is safe as we're only updating string fields
     updatedForms[formIndex][field] = value;
     setForms(updatedForms);
 
@@ -575,7 +577,9 @@ export function BulkListingForm({ onSubmit, onSaveDraft }: BulkFormProps) {
                     {form.images.map((image, imageIndex) => (
                       <div key={imageIndex} className="relative group">
                         <div className="h-32 w-full rounded-md border border-gray-300 overflow-hidden">
-                          <img
+                          <Image
+                          width={500}
+                          height={500}
                             src={
                               URL.createObjectURL(image) || "/placeholder.svg"
                             }

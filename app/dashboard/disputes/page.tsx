@@ -5,7 +5,6 @@ import { Layout } from "@/components/layout";
 import { StatCard } from "@/components/ui/stat-card";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
-import { ViewButton } from "@/components/ui/view-button";
 import { NewDisputeModal } from "@/components/new-dispute-modal";
 import { ChevronDown, Plus } from "lucide-react";
 import { getAllDisputes } from "@/services/disputes-service";

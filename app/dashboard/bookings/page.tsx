@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
@@ -141,12 +142,13 @@ export default function BookingsPage() {
   const [bookings, setBookings] = useState(allBookingsData);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [sortField, setSortField] = useState<string | null>(null);
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  // const [sortField, ] = useState<string | null>(null);
+  // const [sortDirection] = useState<"asc" | "desc">("asc");
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
     null
   );
-
+console.log(selectedDate)
+console.log(selectedEvent)
   const itemsPerPage = 3;
 
   // Convert bookings to calendar events for the calendar
@@ -280,88 +282,88 @@ export default function BookingsPage() {
   };
 
   // Handle adding a new event from the calendar
-  const handleAddEvent = (start: Date, end: Date) => {
+  const handleAddEvent = () => {
     setShowBookingModal(true);
     // Pre-fill the booking modal with these dates
   };
 
   // Filter and sort bookings
-  const filteredBookings = useMemo(() => {
-    return bookings
-      .filter((booking) => {
-        // Search term filter
-        const matchesSearch =
-          searchTerm === "" ||
-          booking.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          booking.dressId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          booking.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          booking.dressName.toLowerCase().includes(searchTerm.toLowerCase());
+  // const filteredBookings = useMemo(() => {
+  //   return bookings
+  //     .filter((booking) => {
+  //       // Search term filter
+  //       const matchesSearch =
+  //         searchTerm === "" ||
+  //         booking.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //         booking.dressId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //         booking.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //         booking.dressName.toLowerCase().includes(searchTerm.toLowerCase());
 
-        // Delivery type filter
-        const matchesDeliveryType =
-          deliveryTypeFilter === "All" ||
-          booking.deliveryType === deliveryTypeFilter;
+  //       // Delivery type filter
+  //       const matchesDeliveryType =
+  //         deliveryTypeFilter === "All" ||
+  //         booking.deliveryType === deliveryTypeFilter;
 
-        // Status filter
-        const matchesStatus =
-          statusFilter === "All" || booking.status === statusFilter;
+  //       // Status filter
+  //       const matchesStatus =
+  //         statusFilter === "All" || booking.status === statusFilter;
 
-        // Date filter (simplified for demo)
-        const matchesDate =
-          dateFilter === "All" ||
-          (dateFilter === "This Month" &&
-            booking.bookingDate.startsWith("2025-04")) ||
-          (dateFilter === "Next Month" &&
-            booking.bookingDate.startsWith("2025-05"));
+  //       // Date filter (simplified for demo)
+  //       const matchesDate =
+  //         dateFilter === "All" ||
+  //         (dateFilter === "This Month" &&
+  //           booking.bookingDate.startsWith("2025-04")) ||
+  //         (dateFilter === "Next Month" &&
+  //           booking.bookingDate.startsWith("2025-05"));
 
-        return (
-          matchesSearch && matchesDeliveryType && matchesStatus && matchesDate
-        );
-      })
-      .sort((a, b) => {
-        if (!sortField) return 0;
+  //       return (
+  //         matchesSearch && matchesDeliveryType && matchesStatus && matchesDate
+  //       );
+  //     })
+  //     .sort((a, b) => {
+  //       if (!sortField) return 0;
 
-        // Handle different field types
-        if (sortField === "price") {
-          const priceA = Number.parseFloat(a.price.replace("$", ""));
-          const priceB = Number.parseFloat(b.price.replace("$", ""));
-          return sortDirection === "asc" ? priceA - priceB : priceB - priceA;
-        }
+  //       // Handle different field types
+  //       if (sortField === "price") {
+  //         const priceA = Number.parseFloat(a.price.replace("$", ""));
+  //         const priceB = Number.parseFloat(b.price.replace("$", ""));
+  //         return sortDirection === "asc" ? priceA - priceB : priceB - priceA;
+  //       }
 
-        if (sortField === "bookingDate") {
-          const dateA = new Date(a.bookingDate).getTime();
-          const dateB = new Date(b.bookingDate).getTime();
-          return sortDirection === "asc" ? dateA - dateB : dateB - dateA;
-        }
+  //       if (sortField === "bookingDate") {
+  //         const dateA = new Date(a.bookingDate).getTime();
+  //         const dateB = new Date(b.bookingDate).getTime();
+  //         return sortDirection === "asc" ? dateA - dateB : dateB - dateA;
+  //       }
 
-        // Default string comparison
-        const valueA = a[sortField as keyof typeof a];
-        const valueB = b[sortField as keyof typeof b];
+  //       // Default string comparison
+  //       const valueA = a[sortField as keyof typeof a];
+  //       const valueB = b[sortField as keyof typeof b];
 
-        if (typeof valueA === "string" && typeof valueB === "string") {
-          return sortDirection === "asc"
-            ? valueA.localeCompare(valueB)
-            : valueB.localeCompare(valueA);
-        }
+  //       if (typeof valueA === "string" && typeof valueB === "string") {
+  //         return sortDirection === "asc"
+  //           ? valueA.localeCompare(valueB)
+  //           : valueB.localeCompare(valueA);
+  //       }
 
-        return 0;
-      });
-  }, [
-    bookings,
-    searchTerm,
-    deliveryTypeFilter,
-    statusFilter,
-    dateFilter,
-    sortField,
-    sortDirection,
-  ]);
+  //       return 0;
+  //     });
+  // }, [
+  //   bookings,
+  //   searchTerm,
+  //   deliveryTypeFilter,
+  //   statusFilter,
+  //   dateFilter,
+  //   sortField,
+  //   sortDirection,
+  // ]);
 
   // Pagination
-  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
-  const paginatedBookings = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredBookings.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredBookings, currentPage, itemsPerPage]);
+  // const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
+  // const paginatedBookings = useMemo(() => {
+  //   const startIndex = (currentPage - 1) * itemsPerPage;
+  //   return filteredBookings.slice(startIndex, startIndex + itemsPerPage);
+  // }, [filteredBookings, currentPage, itemsPerPage]);
 
   // Reset pagination when filters change
   useEffect(() => {
@@ -369,23 +371,23 @@ export default function BookingsPage() {
   }, [searchTerm, deliveryTypeFilter, statusFilter, dateFilter]);
 
   // Handle sorting
-  const handleSort = (field: string) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortField(field);
-      setSortDirection("asc");
-    }
-  };
+  // const handleSort = (field: string) => {
+  //   if (sortField === field) {
+  //     setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+  //   } else {
+  //     setSortField(field);
+  //     setSortDirection("asc");
+  //   }
+  // };
 
   // Clear all filters
-  const clearFilters = () => {
-    setSearchTerm("");
-    setDeliveryTypeFilter("All");
-    setStatusFilter("All");
-    setDateFilter("All");
-    setSortField(null);
-  };
+  // const clearFilters = () => {
+  //   setSearchTerm("");
+  //   setDeliveryTypeFilter("All");
+  //   setStatusFilter("All");
+  //   setDateFilter("All");
+  //   setSortField(null);
+  // };
 
   // Get status class for styling
   const getStatusClass = (status: string) => {

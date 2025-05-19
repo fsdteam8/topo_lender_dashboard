@@ -1,16 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import {
-  Mic,
   Send,
   Search,
   User,
   Paperclip,
   AlertCircle,
   RefreshCw,
-  Wifi,
-  WifiOff,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useWebSocketChat } from "@/hooks/use-websocket-chat";
@@ -131,7 +128,10 @@ export default function ChatComponent() {
   } = useWebSocketChat(initialChatsData, initialMessagesData);
 
   // Get current messages for active chat
-  const currentMessages = activeChat ? allMessages[activeChat] || [] : [];
+const currentMessages = useMemo(() => {
+  return activeChat ? allMessages[activeChat] || [] : [];
+}, [activeChat, allMessages]);
+
 
   // Filter chats based on search query
   const filteredChats = chats.filter(

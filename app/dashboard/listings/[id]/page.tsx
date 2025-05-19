@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { StatusModal } from "@/components/status-modal";
-import { ToggleSwitch } from "@/components/ui/toggle-switch";
+// import { ToggleSwitch } from "@/components/ui/toggle-switch";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   getDressById,
   getConditionReports,
@@ -28,7 +27,7 @@ export default function ListingDetailsPage({
 }) {
   const { id } = params;
 
-  const router = useRouter();
+  // const router = useRouter();
   const [dress, setDress] = useState<Dress | null>(null);
   const [conditionReports, setConditionReports] = useState<ConditionReport[]>(
     []
@@ -40,7 +39,7 @@ export default function ListingDetailsPage({
 
   // Status modal state
   const [showStatusModal, setShowStatusModal] = useState(false);
-  const [newStatus, setNewStatus] = useState(false);
+  const [newStatus, ] = useState(false);
 
   // Calendar data
   const calendarData = [
@@ -93,12 +92,12 @@ export default function ListingDetailsPage({
   }, [id]);
 
   // Handle status toggle
-  const handleStatusToggle = (newStatus: boolean) => {
-    if (!dress) return;
+  // const handleStatusToggle = (newStatus: boolean) => {
+  //   if (!dress) return;
 
-    setNewStatus(newStatus);
-    setShowStatusModal(true);
-  };
+  //   setNewStatus(newStatus);
+  //   setShowStatusModal(true);
+  // };
 
   // Confirm status change
   const confirmStatusChange = async () => {
@@ -159,7 +158,7 @@ export default function ListingDetailsPage({
               Listing Not Found
             </h2>
             <p className="text-yellow-600 mb-6">
-              The listing you're looking for doesn't exist or has been removed.
+              The listing you&apoch;re looking for doesn&apoch;t exist or has been removed.
             </p>
             <Link href="/listings">
               <button className="px-4 py-2 bg-[#891d33] text-white rounded-md hover:bg-[#732032] transition-colors">
