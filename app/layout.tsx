@@ -36,7 +36,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} ${avenirBold.variable} ${avenirNormal.variable}`}>
+    <html
+      lang="en"
+      className={`${poppins.variable} ${avenirBold.variable} ${avenirNormal.variable}`}
+    >
       <body>
         <Toaster position="top-center" richColors closeButton />
         {children}
