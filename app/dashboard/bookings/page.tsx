@@ -493,7 +493,9 @@ export default function BookingsPage() {
 
         <div className="bg-white p-6 rounded-lg shadow-sm">
           <div className="mb-6">
-            <h3 className="font-avenirNormal text-2xl font-normal text-black tracking-[15%] leading-[28px]">Calendar</h3>
+            <h3 className="font-avenirNormal text-2xl font-normal text-black tracking-[15%] leading-[28px]">
+              Calendar
+            </h3>
             {isLoading ? (
               <div className="h-96 bg-gray-100 animate-pulse rounded-lg"></div>
             ) : (
@@ -580,49 +582,50 @@ export default function BookingsPage() {
                           </span>
                         )} */}
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[48.5px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[48.5px] py-[21px]">
                         Dress ID
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[73.75px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[73.75px] py-[21px]">
                         Customer
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47px] py-[21px]">
                         Price
                       </th>
                       <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47.25px] py-[21px]">
                         Rental Period
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47.25px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47.25px] py-[21px]">
                         Delivery Type
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[30.25px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[30.25px] py-[21px]">
                         Status
                       </th>
-                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[39.5px] py-[21px]">Action</th>
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[39.5px] py-[21px]">
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {bookings.slice(0, 3).map((booking, index) => (
-                      <tr
-                        key={index}
-                        className=" hover:bg-gray-50"
-                      >
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.id}</td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.dressId}</td>
-                        <td className="font-avenirNormal py-[45px] px-[13px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.customer}</td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.price}</td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.rentalPeriod}</td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.deliveryType}</td>
+                      <tr key={index} className=" hover:bg-gray-50">
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.id}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.dressId}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[13px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.customer}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.price}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.rentalPeriod}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.deliveryType}
+                        </td>
                         <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
                           <span
                             className={`px-2 py-[3px] rounded-full text-sm ${getStatusClass(
@@ -633,7 +636,7 @@ export default function BookingsPage() {
                           </span>
                         </td>
                         <td className="h-full flex items-center justify-center py-[45px] px-[37px] ">
-                          <Link href={`/bookings/${booking.id}`}>
+                          <Link href={`/dashboard/bookings/${booking.id}`}>
                             <span className="font-avenirNormal text-xs font-normal text-white leading-[120%] tracking-[0%] bg-[#891D33] rounded-[8px] py-[5px] px-[10px]">
                               View
                             </span>

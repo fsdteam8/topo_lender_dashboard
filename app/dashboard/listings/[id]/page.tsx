@@ -209,7 +209,7 @@ export default function ListingDetailsPage({
                 <p className="text-sm text-gray-500">Product ID: {dress.id}</p>
               </div>
               <div className="flex space-x-3">
-                <Link href={`/listings/${dress.id}/edit`}>
+                <Link href={`/dashboard/listings/${dress.id}/edit`}>
                   <button className="px-4 py-2 bg-[#891d33] text-white rounded-md">
                     Edit Details
                   </button>
@@ -375,7 +375,7 @@ export default function ListingDetailsPage({
                 )}
               </div>
 
-              <button className="mt-4 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 bg-[#891D33] text-white">
+              <button className="mt-4 px-4 py-2 border  rounded-md hover:bg-gray-50 hover:text-[#891D33] border-[#891D33] bg-[#891D33] text-white">
                 Upload Image
               </button>
             </div>
@@ -408,7 +408,7 @@ export default function ListingDetailsPage({
             <button className="px-4 py-2 border border-gray-300  rounded-[8px] bg-[#891D33] text-white">
               Export Listing Data
             </button>
-            <button className="px-4 py-2 border rounded-md border-[#8c1c3a] text-[#8c1c3a] hover:bg-[#8c1c3a]">
+            <button className="px-4 py-2 border rounded-md border-[#8c1c3a] text-[#8c1c3a] hover:text-[#fafafa]  hover:bg-[#8c1c3a]">
               Escalate to Support
             </button>
           </div>

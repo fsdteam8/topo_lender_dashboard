@@ -253,7 +253,7 @@ export default function ListingsPage() {
                 <ChevronDown className="ml-2 h-4 w-4" />
               </button>
             </div>
-            <Link href="/listings/new">
+            <Link href="/dashboard/listings/new">
               <button className="px-4 py-2 bg-[#891d33] text-white rounded-md flex items-center">
                  <span className="mr-2">Add New Listing</span> <Plus className="mr-2 h-4 w-4 text-white" />
               </button>
@@ -531,7 +531,7 @@ export default function ListingsPage() {
                           />
                         </td>
                         <td className="py-4">
-                          <Link href={`/listings/${dress.id}`}>
+                          <Link href={`/dashboard/listings/${dress.id}`}>
                             <span className="px-3 py-1 text-xs bg-[#891d33] text-white rounded-md shadow-sm hover:bg-[#732032] transition-colors inline-block">
                               View
                             </span>

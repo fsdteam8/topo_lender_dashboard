@@ -231,8 +231,8 @@ export default function ChatComponent() {
   }, [typingTimeout]);
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-bold uppercase mb-8">Chats</h2>
+    <div className="p-[80px]">
+      <h2 className="text-[32px]  font-normal uppercase mb-[60px]">Chats</h2>
 
       {/* Connection status indicator */}
       {isWebSocketEnabled && !isConnected && (
@@ -256,8 +256,8 @@ export default function ChatComponent() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left column - Chat search and list */}
-        <div className="bg-white rounded-lg shadow-sm p-4">
-          <div className="mb-4">
+        <div className=" rounded-lg shadow-sm  ">
+          <div className="mb-4 bg-[#FFFFFF] py-[25px] px-[15px] rounded-xl shadow-[0px_4px_10px_0px_#0000001A]">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-gray-400" />
@@ -285,7 +285,7 @@ export default function ChatComponent() {
                     "flex items-start p-4 cursor-pointer rounded-lg transition-colors",
                     activeChat === chat.id
                       ? "bg-[#f8e6ea]"
-                      : "bg-white hover:bg-gray-50"
+                      : " hover:bg-gray-50"
                   )}
                   onClick={() => setActiveChat(chat.id)}
                 >
@@ -320,26 +320,26 @@ export default function ChatComponent() {
         </div>
 
         {/* Right column - Active conversation */}
-        <div className="lg:col-span-2 bg-white rounded-lg shadow-sm overflow-hidden flex flex-col h-[700px]">
+        <div className="lg:col-span-2  rounded-lg shadow-sm overflow-hidden flex flex-col h-[700px]">
           {activeChat ? (
             <>
               {/* Chat header */}
-              <div className="p-4 border-b flex items-center justify-between bg-white sticky top-0 z-10">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-[#891d33]/10 flex items-center justify-center text-[#891d33] mr-2">
-                    <User className="h-4 w-4" />
+              <div className=" border-b flex items-center justify-between bg-white mb-[30px] rounded-xl  shadow-[0px_4px_10px_0px_#0000001A] sticky  top-0 z-10">
+                <div className="flex items-center gap-[30px] px-[20px]">
+                  <div className="w-8 h-8  rounded-full bg-[#891d33]/10 flex items-center justify-center text-[#891d33] mr-2">
+                    <User className="h-[28px] w-[28px]" />
                   </div>
                   <div>
-                    <p className="font-medium text-sm">
+                    {/* <p className="font-medium text-sm">
                       {chats.find((c) => c.id === activeChat)?.customerName ||
                         "Customer"}
-                    </p>
-                    <p className="text-xs text-gray-500">
+                    </p> */}
+                    <p className="text-[24px] py-[20px] text-black">
                       Booking ID: #{activeChat}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   {isWebSocketEnabled ? (
                     isConnected ? (
                       <span className="inline-flex items-center text-xs text-green-600">
@@ -358,13 +358,13 @@ export default function ChatComponent() {
                       Simulation mode
                     </span>
                   )}
-                </div>
+                </div> */}
               </div>
 
               {/* Messages area */}
               <div
                 ref={chatContainerRef}
-                className="flex-1 p-6 overflow-y-auto bg-gray-50"
+                className="flex-1 p-6 overflow-y-auto bg-[#FFFFFF]  shadow-[ 0px_4px_10px_0px_#0000001A]"
               >
                 {currentMessages.length === 0 ? (
                   <div className="flex items-center justify-center h-full text-gray-500">
@@ -384,7 +384,7 @@ export default function ChatComponent() {
                       >
                         {msg.sender === "user" && (
                           <div className="max-w-[75%]">
-                            <div className="bg-white rounded-lg p-3 shadow-sm">
+                            <div className="bg-[#F2F4F5] text-black rounded-full p-3 shadow-sm">
                               <p className="text-sm">{msg.text}</p>
                             </div>
                             <div className="flex items-center mt-1">
@@ -397,7 +397,7 @@ export default function ChatComponent() {
 
                         {msg.sender === "admin" && (
                           <div className="max-w-[75%]">
-                            <div className="bg-[#891d33] text-white rounded-lg p-3 shadow-sm">
+                            <div className="bg-[#891d33] text-white rounded-full p-3 shadow-sm">
                               <p className="text-sm">{msg.text}</p>
                             </div>
                             <div className="flex items-center justify-end mt-1">
@@ -446,8 +446,8 @@ export default function ChatComponent() {
               </div>
 
               {/* Quick replies */}
-              <div className="p-4 border-t bg-white">
-                <div className="flex flex-wrap gap-2 mb-4">
+              <div className="p-4 bg-[#FFFFFF]">
+                <div className="flex flex-wrap gap-2 mb-[30px]">
                   {quickReplyOptions.map((option, index) => (
                     <button
                       key={index}
@@ -457,7 +457,7 @@ export default function ChatComponent() {
                         "px-3 py-2 text-xs rounded-lg transition-colors",
                         isSending
                           ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          : "bg-[#891D33]  text-white hover:bg-[#891d33da]"
                       )}
                     >
                       {option}
@@ -466,8 +466,8 @@ export default function ChatComponent() {
                 </div>
 
                 {/* Input area */}
-                <div className="flex items-center">
-                  <div className="flex-1 flex items-center border rounded-l-full overflow-hidden">
+                <div className="flex gap-[30px] items-center justify-center">
+                  <div className="flex-1 flex items-center border rounded-full overflow-hidden">
                     <input
                       ref={messageInputRef}
                       type="text"
@@ -479,21 +479,21 @@ export default function ChatComponent() {
                       }
                       disabled={isSending}
                       className={cn(
-                        "flex-1 px-4 py-3 focus:outline-none",
+                        "flex-1 px-4 py-[18px] focus:outline-none",
                         isSending ? "bg-gray-50 text-gray-400" : "bg-white"
                       )}
                     />
+                  </div>
                     <button
                       className={cn(
-                        "p-2 text-gray-500",
+                        "p-3 text-gray-500 rounded-full border border-[#BFBFBF]",
                         isSending && "opacity-50 cursor-not-allowed"
                       )}
                       disabled={isSending}
                     >
                       <Paperclip className="h-5 w-5" />
                     </button>
-                  </div>
-                  <button
+                  {/* <button
                     className={cn(
                       "p-3 bg-white border border-l-0 border-gray-200",
                       isSending && "opacity-50 cursor-not-allowed"
@@ -501,14 +501,14 @@ export default function ChatComponent() {
                     disabled={isSending}
                   >
                     <Mic className="h-5 w-5 text-gray-500" />
-                  </button>
+                  </button> */}
                   <button
                     onClick={handleSendMessage}
                     disabled={!message.trim() || isSending}
                     className={cn(
-                      "p-3 rounded-r-full transition-colors",
+                      "p-3 rounded-full transition-colors",
                       !message.trim() || isSending
-                        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                        ? "bg-[#891D33] text-white cursor-not-allowed"
                         : "bg-[#891d33] text-white hover:bg-[#691527]"
                     )}
                   >
