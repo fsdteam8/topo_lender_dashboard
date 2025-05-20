@@ -20,6 +20,8 @@ import {
   getMostPopularDress,
   getListingsCounts,
 } from "@/services/listings-service";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 export default function ListingsPage() {
   // State for dresses and filters
@@ -46,6 +48,9 @@ export default function ListingsPage() {
   const [newStatus, setNewStatus] = useState(false);
 
   const itemsPerPage = 3;
+
+  const session = useSession();
+  const token = session?.data?.user?.accessToken;
 
   // Load data
   useEffect(() => {
@@ -214,6 +219,29 @@ export default function ListingsPage() {
     setSortField(null);
   };
 
+  // fetch the data
+
+  const { data } = useQuery({
+    queryKey: ["listings"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/lender/?page=1&limit=10`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      return res.json();
+    },
+  });
+  console.log(data);
+
   // Handle error state
   if (error) {
     return (
@@ -255,40 +283,12 @@ export default function ListingsPage() {
             </div>
             <Link href="/dashboard/listings/new">
               <button className="px-4 py-2 bg-[#891d33] text-white rounded-md flex items-center">
-                 <span className="mr-2">Add New Listing</span> <Plus className="mr-2 h-4 w-4 text-white" />
+                <span className="mr-2">Add New Listing</span>{" "}
+                <Plus className="mr-2 h-4 w-4 text-white" />
               </button>
             </Link>
           </div>
         </div>
-
-        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div className="bg-[#891d33] h-[150px] rounded-md shadow-sm text-white">
-            <h3 className="text-sm font-medium text-white/80 mb-2">
-              Most Popular Listing
-            </h3>
-            <p className="text-2xl font-bold">
-              {isLoading
-                ? "Loading..."
-                : mostPopularDress?.name || "No listings"}
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-md shadow-sm">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">
-              Total Listings
-            </h3>
-            <p className="text-2xl font-bold">
-              {isLoading ? "Loading..." : totalListings}
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-md shadow-sm">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">
-              Active Listings
-            </h3>
-            <p className="text-2xl font-bold">
-              {isLoading ? "Loading..." : activeListings}
-            </p>
-          </div>
-        </div> */}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <div className="bg-[#891d33] h-[150px] rounded-md text-white flex flex-col items-start justify-center p-6 shadow-[0px_4px_10px_0px_#0000001A]">
@@ -454,7 +454,9 @@ export default function ListingsPage() {
                           </span>
                         )}
                       </th>
-                      <th className="text-left py-3 font-medium text-[#6B7280]">Thumbnails</th>
+                      <th className="text-left py-3 font-medium text-[#6B7280]">
+                        Thumbnails
+                      </th>
                       <th
                         className="text-left py-3 text-[#6B7280] font-medium cursor-pointer hover:text-[#891d33]"
                         onClick={() => handleSort("name")}
@@ -499,8 +501,12 @@ export default function ListingsPage() {
                           </span>
                         )}
                       </th>
-                      <th className="text-left py-3 font-medium text-[#6B7280]">Status</th>
-                      <th className="text-left py-3 font-medium text-[#6B7280]">Action</th>
+                      <th className="text-left py-3 font-medium text-[#6B7280]">
+                        Status
+                      </th>
+                      <th className="text-left py-3 font-medium text-[#6B7280]">
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -563,7 +569,7 @@ export default function ListingsPage() {
                       {filteredDresses.length} results
                     </span>
                   </div>
-                  
+
                   <div className="flex space-x-1">
                     <button
                       className={`w-8 h-8 flex items-center justify-center rounded-md ${

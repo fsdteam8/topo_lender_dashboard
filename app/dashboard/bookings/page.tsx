@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
 import {
-  GoogleStyleCalendar,
   type CalendarEvent,
 } from "@/components/ui/google-style-calendar";
 import { Pagination } from "@/components/ui/pagination";
@@ -14,6 +13,7 @@ import { BookingModal } from "@/components/booking-modal";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SkeletonTable } from "@/components/ui/skeletons";
+import ShowBooking from "@/components/show-booking";
 
 // Sample bookings data
 const allBookingsData = [
@@ -141,69 +141,69 @@ export default function BookingsPage() {
   const [error, setError] = useState<Error | null>(null);
   const [bookings, setBookings] = useState(allBookingsData);
   const [showBookingModal, setShowBookingModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate,] = useState<Date | null>(null);
   // const [sortField, ] = useState<string | null>(null);
   // const [sortDirection] = useState<"asc" | "desc">("asc");
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
+  const [selectedEvent,] = useState<CalendarEvent | null>(
     null
   );
-console.log(selectedDate)
-console.log(selectedEvent)
+  console.log(selectedDate);
+  console.log(selectedEvent);
   const itemsPerPage = 3;
 
   // Convert bookings to calendar events for the calendar
-  const calendarEvents = useMemo(() => {
-    return bookings.map((booking) => {
-      // Parse the rental period
-      const [startStr, endStr] = booking.rentalPeriod.split(" - ");
+  // const calendarEvents = useMemo(() => {
+  //   return bookings.map((booking) => {
+  //     // Parse the rental period
+  //     const [startStr, endStr] = booking.rentalPeriod.split(" - ");
 
-      // Parse dates (assuming format like "May 12, 2025")
-      const startParts = startStr.split(" ");
-      const endParts = endStr.split(",")[0].split(" ");
+  //     // Parse dates (assuming format like "May 12, 2025")
+  //     const startParts = startStr.split(" ");
+  //     const endParts = endStr.split(",")[0].split(" ");
 
-      const startMonth = startParts[0];
-      const startDay = Number.parseInt(startParts[1]);
-      const endMonth = endParts[0];
-      const endDay = Number.parseInt(endParts[1]);
-      const year = Number.parseInt(endStr.split(", ")[1]);
+  //     const startMonth = startParts[0];
+  //     const startDay = Number.parseInt(startParts[1]);
+  //     const endMonth = endParts[0];
+  //     const endDay = Number.parseInt(endParts[1]);
+  //     const year = Number.parseInt(endStr.split(", ")[1]);
 
-      // Convert month names to numbers
-      const monthMap: Record<string, number> = {
-        Jan: 0,
-        Feb: 1,
-        Mar: 2,
-        Apr: 3,
-        May: 4,
-        Jun: 5,
-        Jul: 6,
-        Aug: 7,
-        Sep: 8,
-        Oct: 9,
-        Nov: 10,
-        Dec: 11,
-      };
+  //     // Convert month names to numbers
+  //     const monthMap: Record<string, number> = {
+  //       Jan: 0,
+  //       Feb: 1,
+  //       Mar: 2,
+  //       Apr: 3,
+  //       May: 4,
+  //       Jun: 5,
+  //       Jul: 6,
+  //       Aug: 7,
+  //       Sep: 8,
+  //       Oct: 9,
+  //       Nov: 10,
+  //       Dec: 11,
+  //     };
 
-      const start = new Date(year, monthMap[startMonth], startDay);
-      const end = new Date(year, monthMap[endMonth], endDay);
+  //     const start = new Date(year, monthMap[startMonth], startDay);
+  //     const end = new Date(year, monthMap[endMonth], endDay);
 
-      // Add color based on status
-      let color = "bg-blue-100 text-blue-800";
-      if (booking.status === "Shipped") color = "bg-purple-100 text-purple-800";
-      else if (booking.status === "Completed")
-        color = "bg-green-100 text-green-800";
-      else if (booking.status === "Pending")
-        color = "bg-yellow-100 text-yellow-800";
+  //     // Add color based on status
+  //     let color = "bg-blue-100 text-blue-800";
+  //     if (booking.status === "Shipped") color = "bg-purple-100 text-purple-800";
+  //     else if (booking.status === "Completed")
+  //       color = "bg-green-100 text-green-800";
+  //     else if (booking.status === "Pending")
+  //       color = "bg-yellow-100 text-yellow-800";
 
-      return {
-        id: booking.id,
-        title: `${booking.dressName} (${booking.customer})`,
-        start,
-        end,
-        color,
-        description: `Booking ID: ${booking.id}\nDress: ${booking.dressName}\nCustomer: ${booking.customer}\nPrice: ${booking.price}\nDelivery: ${booking.deliveryType}\nStatus: ${booking.status}`,
-      };
-    });
-  }, [bookings]);
+  //     return {
+  //       id: booking.id,
+  //       title: `${booking.dressName} (${booking.customer})`,
+  //       start,
+  //       end,
+  //       color,
+  //       description: `Booking ID: ${booking.id}\nDress: ${booking.dressName}\nCustomer: ${booking.customer}\nPrice: ${booking.price}\nDelivery: ${booking.deliveryType}\nStatus: ${booking.status}`,
+  //     };
+  //   });
+  // }, [bookings]);
 
   // Simulate data loading
   useEffect(() => {
@@ -262,30 +262,30 @@ console.log(selectedEvent)
   };
 
   // Handle calendar event click
-  const handleEventClick = (event: CalendarEvent) => {
-    setSelectedEvent(event);
+  // const handleEventClick = (event: CalendarEvent) => {
+  //   setSelectedEvent(event);
 
-    // Find the booking that corresponds to this event
-    const booking = bookings.find((b) => b.id === event.id);
-    if (booking) {
-      // Filter the table to show only this booking
-      setSearchTerm(booking.id);
-    }
-  };
+  //   // Find the booking that corresponds to this event
+  //   const booking = bookings.find((b) => b.id === event.id);
+  //   if (booking) {
+  //     // Filter the table to show only this booking
+  //     setSearchTerm(booking.id);
+  //   }
+  // };
 
   // Handle calendar date click
-  const handleDateClick = (date: Date) => {
-    setSelectedDate(date);
+  // const handleDateClick = (date: Date) => {
+  //   setSelectedDate(date);
 
-    // In a real app, you would filter bookings by this date
-    setDateFilter("Custom");
-  };
+  //   // In a real app, you would filter bookings by this date
+  //   setDateFilter("Custom");
+  // };
 
   // Handle adding a new event from the calendar
-  const handleAddEvent = () => {
-    setShowBookingModal(true);
-    // Pre-fill the booking modal with these dates
-  };
+  // const handleAddEvent = () => {
+  //   setShowBookingModal(true);
+  //   // Pre-fill the booking modal with these dates
+  // };
 
   // Filter and sort bookings
   // const filteredBookings = useMemo(() => {
@@ -493,76 +493,7 @@ console.log(selectedEvent)
           )} */}
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="mb-6">
-            <h3 className="font-avenirNormal text-2xl font-normal text-black tracking-[15%] leading-[28px]">
-              Calendar
-            </h3>
-            {isLoading ? (
-              <div className="h-96 bg-gray-100 animate-pulse rounded-lg"></div>
-            ) : (
-              <GoogleStyleCalendar
-                events={calendarEvents}
-                onEventClick={handleEventClick}
-                onDateClick={handleDateClick}
-                onAddEvent={handleAddEvent}
-                className="min-h-[600px]"
-              />
-            )}
-          </div>
-        </div>
-
-        {/* <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-medium">Recent Bookings</h3>
-              <Link href="/bookings">
-                <span className="text-sm text-primary hover:underline">
-                  View All
-                </span>
-              </Link>
-            </div>
-
-            {isLoading ? (
-              <div className="space-y-4">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="h-16 bg-gray-200 rounded-md"></div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {bookings.slice(0, 3).map((booking) => (
-                  <Link href={`/bookings/${booking.id}`} key={booking.id}>
-                    <div className="border rounded-md p-4 hover:bg-gray-50 transition-colors">
-                      <div className="flex justify-between">
-                        <div>
-                          <p className="font-medium">{booking.dressName}</p>
-                          <p className="text-sm text-gray-500">
-                            Booking ID: {booking.id}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {booking.rentalPeriod}
-                          </p>
-                        </div>
-                        <div>
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs ${getStatusClass(
-                              booking.status
-                            )}`}
-                          >
-                            {booking.status}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        </div> */}
+        <ShowBooking />
 
         <div className="bg-white rounded-lg shadow-sm mt-[60px] ">
           {isLoading ? (

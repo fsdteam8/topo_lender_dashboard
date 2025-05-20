@@ -41,9 +41,9 @@ export default function RootLayout({
       className={`${poppins.variable} ${avenirBold.variable} ${avenirNormal.variable}`}
     >
       <body>
-        <Toaster position="top-center" richColors closeButton />
-        {children}
-        </body>
+          <Toaster position="top-center" richColors closeButton />
+          {children}
+      </body>
     </html>
   );
 }
