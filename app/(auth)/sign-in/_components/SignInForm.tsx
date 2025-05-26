@@ -56,15 +56,15 @@ export default function SignInForm() {
       if (res?.error) {
         throw new Error(res.error);
       }
+      console.log(res?.status)
       toast.success("Login successful");
       // window.location.href = "/";
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Login failed. Please check your credentials.");
     }
 
-    console.log(values);
   }
 
   return (

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { ChevronDown } from "lucide-react"
+// import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface SelectDropdownProps {
@@ -71,7 +71,7 @@ export function SelectDropdown({
             setIsOpen(!isOpen)
           }
         }}
-        role="combobox"
+        // role="combobox"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >

@@ -92,7 +92,7 @@ export default function OtpForm() {
       if (inputRefs.current[0]) {
         inputRefs.current[0].focus();
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to resend OTP. Please try again.");
     } finally {
       setLoading(false);
@@ -147,7 +147,7 @@ export default function OtpForm() {
 
         {/* Resend OTP */}
         <div className="text-center my-6">
-          <span className="font-avenirNormal text-xl font-normal leading-[120%] text-[#ACACAC] tracking-[0%]">Didn't Receive OTP? </span>
+          <span className="font-avenirNormal text-xl font-normal leading-[120%] text-[#ACACAC] tracking-[0%]">Didn&apos;t Receive OTP? </span>
           <button
             onClick={handleResendOtp}
             disabled={loading}
