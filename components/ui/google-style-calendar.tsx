@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import type React from "react";
@@ -408,8 +409,8 @@ export function GoogleStyleCalendar({
 
           <div className="relative">
             {timeSlots.map((hour) => {
-              const timeSlotStart = setHours(currentDate, hour);
-              const timeSlotEnd = setHours(currentDate, hour + 1);
+              // const timeSlotStart = setHours(currentDate, hour);
+              // const timeSlotEnd = setHours(currentDate, hour + 1);
 
               return (
                 <div
