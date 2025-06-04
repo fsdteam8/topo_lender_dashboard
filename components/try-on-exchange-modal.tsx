@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useState } from "react"
@@ -15,6 +16,7 @@ export function TryOnExchangeModal({ isOpen, onClose, onAction }: TryOnExchangeM
     newDressValue: "",
     originalValue: "50.00",
   })
+  console.log(selectedAction)
 
   const [step, setStep] = useState(1)
 
@@ -35,10 +37,10 @@ export function TryOnExchangeModal({ isOpen, onClose, onAction }: TryOnExchangeM
     }
   }
 
-  const handleExchangeConfirm = () => {
-    // Will trigger exchange flow
-    setStep(3)
-  }
+  // const handleExchangeConfirm = () => {
+  //   // Will trigger exchange flow
+  //   setStep(3)
+  // }
 
   const handleExchangeConfirmFinal = () => {
     const newDressValue = Number.parseFloat(exchangeData.newDressValue)

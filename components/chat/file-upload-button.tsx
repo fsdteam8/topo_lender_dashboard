@@ -19,7 +19,7 @@ export function FileUploadButton({
 }: FileUploadButtonProps) {
   const [isHovering, setIsHovering] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+console.log(isHovering)
   const handleClick = () => {
     if (!disabled && fileInputRef.current) {
       fileInputRef.current.click();

@@ -2,13 +2,12 @@
 
 import type React from "react";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Layout } from "@/components/layout";
 import { FileUpload } from "@/components/file-upload";
 import {
   getDisputeById,
-  escalateDispute,
   getEscalationReasons,
 } from "@/services/disputes-service";
 import type {
@@ -27,7 +26,8 @@ export default function EscalateDisputePage({
   const { id } = params;
   const [dispute, setDispute] = useState<Dispute | null>(null);
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, ] = useState(false);
+  console.log(submitting)
   const [reasons, setReasons] = useState<ReasonOption[]>([]);
   const [reasonDropdownOpen, setReasonDropdownOpen] = useState(false);
   const [formData, setFormData] = useState<EscalationFormData>({
@@ -89,43 +89,43 @@ export default function EscalateDisputePage({
     setFormData((prev) => ({ ...prev, additionalEvidence: files }));
   };
 
-  const handleSubmit = async () => {
-    // Validate form
-    const newErrors: Partial<Record<keyof EscalationFormData, string>> = {};
+  // const handleSubmit = async () => {
+  //   // Validate form
+  //   const newErrors: Partial<Record<keyof EscalationFormData, string>> = {};
 
-    if (!formData.reason) {
-      newErrors.reason = "Reason is required";
-    }
+  //   if (!formData.reason) {
+  //     newErrors.reason = "Reason is required";
+  //   }
 
-    if (!formData.description) {
-      newErrors.description = "Description is required";
-    }
+  //   if (!formData.description) {
+  //     newErrors.description = "Description is required";
+  //   }
 
-    if (!formData.contactInfo) {
-      newErrors.contactInfo = "Email or phone number is required";
-    }
+  //   if (!formData.contactInfo) {
+  //     newErrors.contactInfo = "Email or phone number is required";
+  //   }
 
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
+  //   if (!formData.password) {
+  //     newErrors.password = "Password is required";
+  //   }
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+  //   if (Object.keys(newErrors).length > 0) {
+  //     setErrors(newErrors);
+  //     return;
+  //   }
 
-    if (!dispute) return;
+  //   if (!dispute) return;
 
-    setSubmitting(true);
-    try {
-      await escalateDispute(dispute.id, formData);
-      router.push(`/disputes/${dispute.id}`);
-    } catch (error) {
-      console.error("Error escalating dispute:", error);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  //   setSubmitting(true);
+  //   try {
+  //     await escalateDispute(dispute.id, formData);
+  //     router.push(`/disputes/${dispute.id}`);
+  //   } catch (error) {
+  //     console.error("Error escalating dispute:", error);
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // };
 
   if (loading) {
     return (

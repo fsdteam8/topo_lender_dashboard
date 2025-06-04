@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { StatusModal } from "@/components/status-modal";
-import { ToggleSwitch } from "@/components/ui/toggle-switch";
+// import { ToggleSwitch } from "@/components/ui/toggle-switch";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   getDressById,
   getConditionReports,
@@ -28,7 +27,7 @@ export default function ListingDetailsPage({
 }) {
   const { id } = params;
 
-  const router = useRouter();
+  // const router = useRouter();
   const [dress, setDress] = useState<Dress | null>(null);
   const [conditionReports, setConditionReports] = useState<ConditionReport[]>(
     []
@@ -40,7 +39,7 @@ export default function ListingDetailsPage({
 
   // Status modal state
   const [showStatusModal, setShowStatusModal] = useState(false);
-  const [newStatus, setNewStatus] = useState(false);
+  const [newStatus, ] = useState(false);
 
   // Calendar data
   const calendarData = [
@@ -93,12 +92,12 @@ export default function ListingDetailsPage({
   }, [id]);
 
   // Handle status toggle
-  const handleStatusToggle = (newStatus: boolean) => {
-    if (!dress) return;
+  // const handleStatusToggle = (newStatus: boolean) => {
+  //   if (!dress) return;
 
-    setNewStatus(newStatus);
-    setShowStatusModal(true);
-  };
+  //   setNewStatus(newStatus);
+  //   setShowStatusModal(true);
+  // };
 
   // Confirm status change
   const confirmStatusChange = async () => {
@@ -159,7 +158,7 @@ export default function ListingDetailsPage({
               Listing Not Found
             </h2>
             <p className="text-yellow-600 mb-6">
-              The listing you're looking for doesn't exist or has been removed.
+              The listing you&apoch;re looking for doesn&apoch;t exist or has been removed.
             </p>
             <Link href="/listings">
               <button className="px-4 py-2 bg-[#891d33] text-white rounded-md hover:bg-[#732032] transition-colors">
@@ -209,7 +208,7 @@ export default function ListingDetailsPage({
                 <p className="text-sm text-gray-500">Product ID: {dress.id}</p>
               </div>
               <div className="flex space-x-3">
-                <Link href={`/listings/${dress.id}/edit`}>
+                <Link href={`/dashboard/listings/${dress.id}/edit`}>
                   <button className="px-4 py-2 bg-[#891d33] text-white rounded-md">
                     Edit Details
                   </button>
@@ -375,7 +374,7 @@ export default function ListingDetailsPage({
                 )}
               </div>
 
-              <button className="mt-4 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 bg-[#891D33] text-white">
+              <button className="mt-4 px-4 py-2 border  rounded-md hover:bg-gray-50 hover:text-[#891D33] border-[#891D33] bg-[#891D33] text-white">
                 Upload Image
               </button>
             </div>
@@ -408,7 +407,7 @@ export default function ListingDetailsPage({
             <button className="px-4 py-2 border border-gray-300  rounded-[8px] bg-[#891D33] text-white">
               Export Listing Data
             </button>
-            <button className="px-4 py-2 border rounded-md border-[#8c1c3a] text-[#8c1c3a] hover:bg-[#8c1c3a]">
+            <button className="px-4 py-2 border rounded-md border-[#8c1c3a] text-[#8c1c3a] hover:text-[#fafafa]  hover:bg-[#8c1c3a]">
               Escalate to Support
             </button>
           </div>

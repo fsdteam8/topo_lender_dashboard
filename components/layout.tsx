@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { User } from "lucide-react";
 import { signOut } from "next-auth/react";
+import Footer from "./footer";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -23,8 +24,9 @@ export function Layout({ children }: LayoutProps) {
   return (
     <>
       <div>
-        <div className="flex min-h-screen ">
-          {/* Sidebar */}
+        <div className="flex flex-col min-h-screen ">
+          <div>
+            {/* Sidebar */}
           <div className="fixed left-0 top-0 bottom-0 w-[208px] bg-[#891d33] text-white flex flex-col z-10">
             <div className="p-8 flex justify-center">
               <div className="text-white text-7xl font-serif italic">𝓜</div>
@@ -40,57 +42,57 @@ export function Layout({ children }: LayoutProps) {
                 Overview
               </Link>
               <Link
-                href="/bookings"
+                href="/dashboard/bookings"
                 className={`py-2.5 px-4 rounded-md text-sm font-medium transition-colors ${
-                  isActive("/bookings") ? "bg-white/20" : "hover:bg-white/10"
+                  isActive("/dashboard/bookings") ? "bg-white/20" : "hover:bg-white/10"
                 }`}
               >
                 Bookings
               </Link>
               <Link
-                href="/listings"
+                href="/dashboard/listings"
                 className={`py-2.5 px-4 rounded-md text-sm font-medium transition-colors ${
-                  isActive("/listings") ? "bg-white/20" : "hover:bg-white/10"
+                  isActive("/dashboard/listings") ? "bg-white/20" : "hover:bg-white/10"
                 }`}
               >
                 Listings
               </Link>
               <Link
-                href="/payments"
+                href="/dashboard/payments"
                 className={`py-2.5 px-4 rounded-md text-sm font-medium transition-colors ${
-                  isActive("/payments") ? "bg-white/20" : "hover:bg-white/10"
+                  isActive("/dashboard/payments") ? "bg-white/20" : "hover:bg-white/10"
                 }`}
               >
                 Payments
               </Link>
               <Link
-                href="/disputes"
+                href="/dashboard/disputes"
                 className={`py-2.5 px-4 rounded-md text-sm font-medium transition-colors ${
-                  isActive("/disputes") ? "bg-white/20" : "hover:bg-white/10"
+                  isActive("/dashboard/disputes") ? "bg-white/20" : "hover:bg-white/10"
                 }`}
               >
                 Disputes
               </Link>
               <Link
-                href="/chats"
+                href="/dashboard/chats"
                 className={`py-2.5 px-4 rounded-md text-sm font-medium transition-colors ${
-                  isActive("/chats") ? "bg-white/20" : "hover:bg-white/10"
+                  isActive("/dashboard/chats") ? "bg-white/20" : "hover:bg-white/10"
                 }`}
               >
                 Chats
               </Link>
               <Link
-                href="/help-center"
+                href="/dashboard/help-center"
                 className={`py-2.5 px-4 rounded-md text-sm font-medium transition-colors ${
-                  isActive("/help-center") ? "bg-white/20" : "hover:bg-white/10"
+                  isActive("/dashboard/help-center") ? "bg-white/20" : "hover:bg-white/10"
                 }`}
               >
                 Help Center
               </Link>
               <Link
-                href="/account-settings"
+                href="/dashboard/account-settings"
                 className={`py-2.5 px-4 rounded-md text-sm font-medium transition-colors ${
-                  isActive("/account-settings")
+                  isActive("/dashboard/account-settings")
                     ? "bg-white/20"
                     : "hover:bg-white/10"
                 }`}
@@ -99,10 +101,11 @@ export function Layout({ children }: LayoutProps) {
               </Link>
             </nav>
 
-            <div className="mt-auto p-6">
-              <button className="text-xs uppercase tracking-wider border-t border-white/30 pt-4 w-full text-left font-medium">
+            <div className="mt-auto p-6 flex flex-col  justify-center ">
+              <button onClick={()=>signOut()} className="text-xs uppercase tracking-wider pb-3 pt-4 w-full text-left font-medium">
                 SIGN OUT
               </button>
+              <hr />
             </div>
           </div>
 
@@ -126,27 +129,9 @@ export function Layout({ children }: LayoutProps) {
               {children}
             </main>
           </div>
-        </div>
-        {/* Footer */}
-        {/* <footer className="h-[120px] py-[50px] bg-white border-t border-[#B0B0B0]">
-          <div className="flex items-center justify-center gap-[15px]">
-            <p className="text-base font-normal text-black uppercase tracking-[20%] leading-[20px] ">
-              © 2025 MUSE GALA ALL RIGHTS RESERVED{" "}
-              <span className="mx-2">•</span>
-            </p>
-            <Link href="/privacy-policy" className="hover:underline">
-              <span className="text-base font-normal text-black uppercase tracking-[20%] leading-[20px]">
-                PRIVACY POLICY
-              </span>
-            </Link>{" "}
-            <span className="mx-2">•</span>
-            <Link href="/terms" className="hover:underline">
-              <span className="text-base font-normal text-black uppercase tracking-[20%] leading-[20px]">
-                TERMS & CONDITION
-              </span>
-            </Link>
           </div>
-        </footer> */}
+          <Footer/>
+        </div>
       </div>
     </>
   );

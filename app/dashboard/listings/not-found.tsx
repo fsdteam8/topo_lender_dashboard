@@ -28,7 +28,7 @@ export default function ListingsNotFound() {
         </h1>
 
         <p className="text-gray-600 mb-8">
-          We couldn't find the dress listing you're looking for. It may have
+          We couldn&apos;t find the dress listing you&apos;re looking for. It may have
           been removed, rented out, or the URL might be incorrect.
         </p>
 
