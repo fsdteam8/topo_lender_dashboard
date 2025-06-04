@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useState, useEffect } from "react"
 import { ChevronDown, X } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { CancelOrderModal } from "./ui/cancel-order-modal"
+// import { CancelOrderModal } from "./ui/cancel-order-modal"
 
 interface Dress {
   id: string

@@ -17,7 +17,7 @@ export function MessageBubble({
   text,
   timestamp,
   isUser,
-  isRead = false,
+  // isRead = false,
   status = "sent",
   imageUrl,
 }: MessageProps) {

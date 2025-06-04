@@ -5,6 +5,7 @@ import { StatCard } from "@/components/ui/stat-card";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 // Sample dress data
 const dressData = [
@@ -72,6 +73,10 @@ const bookingData = [
 ];
 
 export default function OverviewPage() {
+
+  const session = useSession();
+  const token = session?.data?.user
+  console.log({token})
   return (
     <Layout>
       <div className="p-8 bg-[#fefaf6]">
