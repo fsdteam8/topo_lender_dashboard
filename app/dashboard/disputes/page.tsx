@@ -5,7 +5,6 @@ import { Layout } from "@/components/layout";
 import { StatCard } from "@/components/ui/stat-card";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
-import { ViewButton } from "@/components/ui/view-button";
 import { NewDisputeModal } from "@/components/new-dispute-modal";
 import { ChevronDown, Plus } from "lucide-react";
 import { getAllDisputes } from "@/services/disputes-service";
@@ -120,15 +119,15 @@ export default function DisputesPage() {
           <StatCard
             title="Total Disputes"
             value={totalDisputes.toString()}
-            className="bg-[#8c1c3a]  rounded-xl text-[white] shadow-[0px_4px_10px_0px_#0000001A]"
+            className="bg-[#8c1c3a]  rounded-xl text-[white] "
           />
           <StatCard
             title="Resolution Rate"
             value={`${resolutionRate}%`}
-            className=" rounded-xl shadow-[0px_4px_10px_0px_#0000001A]"
+            className=" rounded-xl "
           />
           <StatCard
-            className="text-[black] shadow-[0px_4px_10px_0px_#0000001A] rounded-xl"
+            className="text-[black]  rounded-xl"
             title="Pending Disputes"
             value={pendingDisputes.toString()}
           />
@@ -216,7 +215,7 @@ export default function DisputesPage() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Link href={`/disputes/${dispute.id}`}>
+                        <Link href={`/dashboard/disputes/${dispute.id}`}>
                           <Button variant="outline" size="sm" className="bg-[#891D33] text-white rounded-xl">
                             View
                           </Button>

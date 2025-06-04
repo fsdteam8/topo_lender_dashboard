@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+// import { useState } from "react";
 import { Layout } from "@/components/layout";
 import Link from "next/link";
 
@@ -107,24 +107,24 @@ const accountSections = [
   },
 ];
 
-const SelectDropdown = ({ label, placeholder }: any) => {
-  return (
-    <div>
-      <label className="block text-sm font-medium text-[#8c1c3a] mb-1">
-        {label}
-      </label>
-      <select className="w-full p-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-primary">
-        <option value="">{placeholder}</option>
-        <option value="reason1">Reason 1</option>
-        <option value="reason2">Reason 2</option>
-        <option value="reason3">Reason 3</option>
-      </select>
-    </div>
-  );
-};
+// const SelectDropdown = ({ label, placeholder }: any) => {
+//   return (
+//     <div>
+//       <label className="block text-sm font-medium text-[#8c1c3a] mb-1">
+//         {label}
+//       </label>
+//       <select className="w-full p-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-primary">
+//         <option value="">{placeholder}</option>
+//         <option value="reason1">Reason 1</option>
+//         <option value="reason2">Reason 2</option>
+//         <option value="reason3">Reason 3</option>
+//       </select>
+//     </div>
+//   );
+// };
 
 export default function AccountSettingsPage() {
-  const [showDeactivate, setShowDeactivate] = useState(false);
+  // const [showDeactivate, setShowDeactivate] = useState(false);
 
   return (
     <Layout>

@@ -1,6 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { toast } from "sonner";
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
@@ -14,6 +15,7 @@ export async function middleware(req: NextRequest) {
 
   //   Not Lender
   if (token?.role !== "LENDER") {
+
     return NextResponse.redirect(new URL("/sign-in", req.url)); // or /unauthorized
   }
 

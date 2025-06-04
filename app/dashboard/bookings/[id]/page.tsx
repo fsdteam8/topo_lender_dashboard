@@ -1,6 +1,5 @@
 "use client";
 
-import { use } from "react";
 import { Layout } from "@/components/layout";
 import { BookingDetails } from "@/components/booking-details";
 

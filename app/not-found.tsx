@@ -28,8 +28,8 @@ export default function NotFound() {
         </h1>
 
         <p className="text-gray-600 mb-8">
-          The dress you're looking for seems to have walked off the runway. It
-          might be getting fitted or simply doesn't exist in our collection.
+          The dress you&apoch;re looking for seems to have walked off the runway. It
+          might be getting fitted or simply doesn&apoch;t exist in our collection.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
