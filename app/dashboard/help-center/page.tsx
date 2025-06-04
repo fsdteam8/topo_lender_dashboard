@@ -42,10 +42,10 @@ const faqSections = [
         answer: (
           <>
             To edit your dress listing, go to your dashboard {">"} Listings{" "}
-            {">"} click "Edit" next to the item you want to update. You can
+            {">"} click &ldquo;Edit&ldquo; next to the item you want to update. You can
             adjust the price, description, photos, or availability. <br />{" "}
             <br />
-            To pause a listing, simply toggle it to "inactive" — it will no
+            To pause a listing, simply toggle it to &ldquo;inactive&ldquo; — it will no
             longer appear in the customer search but can be reactivated at any
             time.
           </>
@@ -116,19 +116,19 @@ const faqSections = [
 ];
 
 export default function HelpCenterPage() {
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>(
+  const [openSections, ] = useState<{ [key: string]: boolean }>(
     {}
   );
   const [openQuestions, setOpenQuestions] = useState<{
     [key: string]: boolean;
   }>({});
 
-  const toggleSection = (title: string) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [title]: !prev[title],
-    }));
-  };
+  // const toggleSection = (title: string) => {
+  //   setOpenSections((prev) => ({
+  //     ...prev,
+  //     [title]: !prev[title],
+  //   }));
+  // };
 
   const toggleQuestion = (question: string) => {
     setOpenQuestions((prev) => ({

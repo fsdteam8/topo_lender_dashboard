@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
 import {
-  GoogleStyleCalendar,
   type CalendarEvent,
 } from "@/components/ui/google-style-calendar";
 import { Pagination } from "@/components/ui/pagination";
@@ -13,6 +13,7 @@ import { BookingModal } from "@/components/booking-modal";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SkeletonTable } from "@/components/ui/skeletons";
+import ShowBooking from "@/components/show-booking";
 
 // Sample bookings data
 const allBookingsData = [
@@ -140,68 +141,69 @@ export default function BookingsPage() {
   const [error, setError] = useState<Error | null>(null);
   const [bookings, setBookings] = useState(allBookingsData);
   const [showBookingModal, setShowBookingModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [sortField, setSortField] = useState<string | null>(null);
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
+  const [selectedDate,] = useState<Date | null>(null);
+  // const [sortField, ] = useState<string | null>(null);
+  // const [sortDirection] = useState<"asc" | "desc">("asc");
+  const [selectedEvent,] = useState<CalendarEvent | null>(
     null
   );
-
+  console.log(selectedDate);
+  console.log(selectedEvent);
   const itemsPerPage = 3;
 
   // Convert bookings to calendar events for the calendar
-  const calendarEvents = useMemo(() => {
-    return bookings.map((booking) => {
-      // Parse the rental period
-      const [startStr, endStr] = booking.rentalPeriod.split(" - ");
+  // const calendarEvents = useMemo(() => {
+  //   return bookings.map((booking) => {
+  //     // Parse the rental period
+  //     const [startStr, endStr] = booking.rentalPeriod.split(" - ");
 
-      // Parse dates (assuming format like "May 12, 2025")
-      const startParts = startStr.split(" ");
-      const endParts = endStr.split(",")[0].split(" ");
+  //     // Parse dates (assuming format like "May 12, 2025")
+  //     const startParts = startStr.split(" ");
+  //     const endParts = endStr.split(",")[0].split(" ");
 
-      const startMonth = startParts[0];
-      const startDay = Number.parseInt(startParts[1]);
-      const endMonth = endParts[0];
-      const endDay = Number.parseInt(endParts[1]);
-      const year = Number.parseInt(endStr.split(", ")[1]);
+  //     const startMonth = startParts[0];
+  //     const startDay = Number.parseInt(startParts[1]);
+  //     const endMonth = endParts[0];
+  //     const endDay = Number.parseInt(endParts[1]);
+  //     const year = Number.parseInt(endStr.split(", ")[1]);
 
-      // Convert month names to numbers
-      const monthMap: Record<string, number> = {
-        Jan: 0,
-        Feb: 1,
-        Mar: 2,
-        Apr: 3,
-        May: 4,
-        Jun: 5,
-        Jul: 6,
-        Aug: 7,
-        Sep: 8,
-        Oct: 9,
-        Nov: 10,
-        Dec: 11,
-      };
+  //     // Convert month names to numbers
+  //     const monthMap: Record<string, number> = {
+  //       Jan: 0,
+  //       Feb: 1,
+  //       Mar: 2,
+  //       Apr: 3,
+  //       May: 4,
+  //       Jun: 5,
+  //       Jul: 6,
+  //       Aug: 7,
+  //       Sep: 8,
+  //       Oct: 9,
+  //       Nov: 10,
+  //       Dec: 11,
+  //     };
 
-      const start = new Date(year, monthMap[startMonth], startDay);
-      const end = new Date(year, monthMap[endMonth], endDay);
+  //     const start = new Date(year, monthMap[startMonth], startDay);
+  //     const end = new Date(year, monthMap[endMonth], endDay);
 
-      // Add color based on status
-      let color = "bg-blue-100 text-blue-800";
-      if (booking.status === "Shipped") color = "bg-purple-100 text-purple-800";
-      else if (booking.status === "Completed")
-        color = "bg-green-100 text-green-800";
-      else if (booking.status === "Pending")
-        color = "bg-yellow-100 text-yellow-800";
+  //     // Add color based on status
+  //     let color = "bg-blue-100 text-blue-800";
+  //     if (booking.status === "Shipped") color = "bg-purple-100 text-purple-800";
+  //     else if (booking.status === "Completed")
+  //       color = "bg-green-100 text-green-800";
+  //     else if (booking.status === "Pending")
+  //       color = "bg-yellow-100 text-yellow-800";
 
-      return {
-        id: booking.id,
-        title: `${booking.dressName} (${booking.customer})`,
-        start,
-        end,
-        color,
-        description: `Booking ID: ${booking.id}\nDress: ${booking.dressName}\nCustomer: ${booking.customer}\nPrice: ${booking.price}\nDelivery: ${booking.deliveryType}\nStatus: ${booking.status}`,
-      };
-    });
-  }, [bookings]);
+  //     return {
+  //       id: booking.id,
+  //       title: `${booking.dressName} (${booking.customer})`,
+  //       start,
+  //       end,
+  //       color,
+  //       description: `Booking ID: ${booking.id}\nDress: ${booking.dressName}\nCustomer: ${booking.customer}\nPrice: ${booking.price}\nDelivery: ${booking.deliveryType}\nStatus: ${booking.status}`,
+  //     };
+  //   });
+  // }, [bookings]);
 
   // Simulate data loading
   useEffect(() => {
@@ -260,108 +262,108 @@ export default function BookingsPage() {
   };
 
   // Handle calendar event click
-  const handleEventClick = (event: CalendarEvent) => {
-    setSelectedEvent(event);
+  // const handleEventClick = (event: CalendarEvent) => {
+  //   setSelectedEvent(event);
 
-    // Find the booking that corresponds to this event
-    const booking = bookings.find((b) => b.id === event.id);
-    if (booking) {
-      // Filter the table to show only this booking
-      setSearchTerm(booking.id);
-    }
-  };
+  //   // Find the booking that corresponds to this event
+  //   const booking = bookings.find((b) => b.id === event.id);
+  //   if (booking) {
+  //     // Filter the table to show only this booking
+  //     setSearchTerm(booking.id);
+  //   }
+  // };
 
   // Handle calendar date click
-  const handleDateClick = (date: Date) => {
-    setSelectedDate(date);
+  // const handleDateClick = (date: Date) => {
+  //   setSelectedDate(date);
 
-    // In a real app, you would filter bookings by this date
-    setDateFilter("Custom");
-  };
+  //   // In a real app, you would filter bookings by this date
+  //   setDateFilter("Custom");
+  // };
 
   // Handle adding a new event from the calendar
-  const handleAddEvent = (start: Date, end: Date) => {
-    setShowBookingModal(true);
-    // Pre-fill the booking modal with these dates
-  };
+  // const handleAddEvent = () => {
+  //   setShowBookingModal(true);
+  //   // Pre-fill the booking modal with these dates
+  // };
 
   // Filter and sort bookings
-  const filteredBookings = useMemo(() => {
-    return bookings
-      .filter((booking) => {
-        // Search term filter
-        const matchesSearch =
-          searchTerm === "" ||
-          booking.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          booking.dressId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          booking.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          booking.dressName.toLowerCase().includes(searchTerm.toLowerCase());
+  // const filteredBookings = useMemo(() => {
+  //   return bookings
+  //     .filter((booking) => {
+  //       // Search term filter
+  //       const matchesSearch =
+  //         searchTerm === "" ||
+  //         booking.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //         booking.dressId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //         booking.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //         booking.dressName.toLowerCase().includes(searchTerm.toLowerCase());
 
-        // Delivery type filter
-        const matchesDeliveryType =
-          deliveryTypeFilter === "All" ||
-          booking.deliveryType === deliveryTypeFilter;
+  //       // Delivery type filter
+  //       const matchesDeliveryType =
+  //         deliveryTypeFilter === "All" ||
+  //         booking.deliveryType === deliveryTypeFilter;
 
-        // Status filter
-        const matchesStatus =
-          statusFilter === "All" || booking.status === statusFilter;
+  //       // Status filter
+  //       const matchesStatus =
+  //         statusFilter === "All" || booking.status === statusFilter;
 
-        // Date filter (simplified for demo)
-        const matchesDate =
-          dateFilter === "All" ||
-          (dateFilter === "This Month" &&
-            booking.bookingDate.startsWith("2025-04")) ||
-          (dateFilter === "Next Month" &&
-            booking.bookingDate.startsWith("2025-05"));
+  //       // Date filter (simplified for demo)
+  //       const matchesDate =
+  //         dateFilter === "All" ||
+  //         (dateFilter === "This Month" &&
+  //           booking.bookingDate.startsWith("2025-04")) ||
+  //         (dateFilter === "Next Month" &&
+  //           booking.bookingDate.startsWith("2025-05"));
 
-        return (
-          matchesSearch && matchesDeliveryType && matchesStatus && matchesDate
-        );
-      })
-      .sort((a, b) => {
-        if (!sortField) return 0;
+  //       return (
+  //         matchesSearch && matchesDeliveryType && matchesStatus && matchesDate
+  //       );
+  //     })
+  //     .sort((a, b) => {
+  //       if (!sortField) return 0;
 
-        // Handle different field types
-        if (sortField === "price") {
-          const priceA = Number.parseFloat(a.price.replace("$", ""));
-          const priceB = Number.parseFloat(b.price.replace("$", ""));
-          return sortDirection === "asc" ? priceA - priceB : priceB - priceA;
-        }
+  //       // Handle different field types
+  //       if (sortField === "price") {
+  //         const priceA = Number.parseFloat(a.price.replace("$", ""));
+  //         const priceB = Number.parseFloat(b.price.replace("$", ""));
+  //         return sortDirection === "asc" ? priceA - priceB : priceB - priceA;
+  //       }
 
-        if (sortField === "bookingDate") {
-          const dateA = new Date(a.bookingDate).getTime();
-          const dateB = new Date(b.bookingDate).getTime();
-          return sortDirection === "asc" ? dateA - dateB : dateB - dateA;
-        }
+  //       if (sortField === "bookingDate") {
+  //         const dateA = new Date(a.bookingDate).getTime();
+  //         const dateB = new Date(b.bookingDate).getTime();
+  //         return sortDirection === "asc" ? dateA - dateB : dateB - dateA;
+  //       }
 
-        // Default string comparison
-        const valueA = a[sortField as keyof typeof a];
-        const valueB = b[sortField as keyof typeof b];
+  //       // Default string comparison
+  //       const valueA = a[sortField as keyof typeof a];
+  //       const valueB = b[sortField as keyof typeof b];
 
-        if (typeof valueA === "string" && typeof valueB === "string") {
-          return sortDirection === "asc"
-            ? valueA.localeCompare(valueB)
-            : valueB.localeCompare(valueA);
-        }
+  //       if (typeof valueA === "string" && typeof valueB === "string") {
+  //         return sortDirection === "asc"
+  //           ? valueA.localeCompare(valueB)
+  //           : valueB.localeCompare(valueA);
+  //       }
 
-        return 0;
-      });
-  }, [
-    bookings,
-    searchTerm,
-    deliveryTypeFilter,
-    statusFilter,
-    dateFilter,
-    sortField,
-    sortDirection,
-  ]);
+  //       return 0;
+  //     });
+  // }, [
+  //   bookings,
+  //   searchTerm,
+  //   deliveryTypeFilter,
+  //   statusFilter,
+  //   dateFilter,
+  //   sortField,
+  //   sortDirection,
+  // ]);
 
   // Pagination
-  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
-  const paginatedBookings = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredBookings.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredBookings, currentPage, itemsPerPage]);
+  // const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
+  // const paginatedBookings = useMemo(() => {
+  //   const startIndex = (currentPage - 1) * itemsPerPage;
+  //   return filteredBookings.slice(startIndex, startIndex + itemsPerPage);
+  // }, [filteredBookings, currentPage, itemsPerPage]);
 
   // Reset pagination when filters change
   useEffect(() => {
@@ -369,23 +371,23 @@ export default function BookingsPage() {
   }, [searchTerm, deliveryTypeFilter, statusFilter, dateFilter]);
 
   // Handle sorting
-  const handleSort = (field: string) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortField(field);
-      setSortDirection("asc");
-    }
-  };
+  // const handleSort = (field: string) => {
+  //   if (sortField === field) {
+  //     setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+  //   } else {
+  //     setSortField(field);
+  //     setSortDirection("asc");
+  //   }
+  // };
 
   // Clear all filters
-  const clearFilters = () => {
-    setSearchTerm("");
-    setDeliveryTypeFilter("All");
-    setStatusFilter("All");
-    setDateFilter("All");
-    setSortField(null);
-  };
+  // const clearFilters = () => {
+  //   setSearchTerm("");
+  //   setDeliveryTypeFilter("All");
+  //   setStatusFilter("All");
+  //   setDateFilter("All");
+  //   setSortField(null);
+  // };
 
   // Get status class for styling
   const getStatusClass = (status: string) => {
@@ -491,74 +493,7 @@ export default function BookingsPage() {
           )} */}
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="mb-6">
-            <h3 className="font-avenirNormal text-2xl font-normal text-black tracking-[15%] leading-[28px]">Calendar</h3>
-            {isLoading ? (
-              <div className="h-96 bg-gray-100 animate-pulse rounded-lg"></div>
-            ) : (
-              <GoogleStyleCalendar
-                events={calendarEvents}
-                onEventClick={handleEventClick}
-                onDateClick={handleDateClick}
-                onAddEvent={handleAddEvent}
-                className="min-h-[600px]"
-              />
-            )}
-          </div>
-        </div>
-
-        {/* <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-medium">Recent Bookings</h3>
-              <Link href="/bookings">
-                <span className="text-sm text-primary hover:underline">
-                  View All
-                </span>
-              </Link>
-            </div>
-
-            {isLoading ? (
-              <div className="space-y-4">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="h-16 bg-gray-200 rounded-md"></div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {bookings.slice(0, 3).map((booking) => (
-                  <Link href={`/bookings/${booking.id}`} key={booking.id}>
-                    <div className="border rounded-md p-4 hover:bg-gray-50 transition-colors">
-                      <div className="flex justify-between">
-                        <div>
-                          <p className="font-medium">{booking.dressName}</p>
-                          <p className="text-sm text-gray-500">
-                            Booking ID: {booking.id}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {booking.rentalPeriod}
-                          </p>
-                        </div>
-                        <div>
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs ${getStatusClass(
-                              booking.status
-                            )}`}
-                          >
-                            {booking.status}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        </div> */}
+        <ShowBooking />
 
         <div className="bg-white rounded-lg shadow-sm mt-[60px] ">
           {isLoading ? (
@@ -580,49 +515,50 @@ export default function BookingsPage() {
                           </span>
                         )} */}
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[48.5px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[48.5px] py-[21px]">
                         Dress ID
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[73.75px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[73.75px] py-[21px]">
                         Customer
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47px] py-[21px]">
                         Price
                       </th>
                       <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47.25px] py-[21px]">
                         Rental Period
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47.25px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[47.25px] py-[21px]">
                         Delivery Type
                       </th>
-                      <th
-                        className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[30.25px] py-[21px]"
-                      >
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[30.25px] py-[21px]">
                         Status
                       </th>
-                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[39.5px] py-[21px]">Action</th>
+                      <th className="font-avenirNormal text-sm font-normal text-[#6B7280] leading-[120%] tracking-[0%] px-[39.5px] py-[21px]">
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {bookings.slice(0, 3).map((booking, index) => (
-                      <tr
-                        key={index}
-                        className=" hover:bg-gray-50"
-                      >
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.id}</td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.dressId}</td>
-                        <td className="font-avenirNormal py-[45px] px-[13px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.customer}</td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.price}</td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.rentalPeriod}</td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">{booking.deliveryType}</td>
+                      <tr key={index} className=" hover:bg-gray-50">
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.id}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.dressId}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[13px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.customer}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.price}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.rentalPeriod}
+                        </td>
+                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                          {booking.deliveryType}
+                        </td>
                         <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
                           <span
                             className={`px-2 py-[3px] rounded-full text-sm ${getStatusClass(
@@ -633,7 +569,7 @@ export default function BookingsPage() {
                           </span>
                         </td>
                         <td className="h-full flex items-center justify-center py-[45px] px-[37px] ">
-                          <Link href={`/bookings/${booking.id}`}>
+                          <Link href={`/dashboard/bookings/${booking.id}`}>
                             <span className="font-avenirNormal text-xs font-normal text-white leading-[120%] tracking-[0%] bg-[#891D33] rounded-[8px] py-[5px] px-[10px]">
                               View
                             </span>

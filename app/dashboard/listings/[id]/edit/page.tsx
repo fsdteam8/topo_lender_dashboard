@@ -2,12 +2,12 @@
 
 import type React from "react";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { useRouter } from "next/navigation";
 import { getDressById, updateDress } from "@/services/listings-service";
 import type { Dress, DressFormData } from "@/types/listings";
-import { Trash2, Plus, Trash } from "lucide-react";
+import {  Plus, Trash } from "lucide-react";
 import { DragDropUpload } from "@/components/drag-drop-upload";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
 
@@ -26,7 +26,7 @@ export default function EditListingPage({
   const [error, setError] = useState<Error | null>(null);
   const [pickupAddresses, setPickupAddresses] = useState<string[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-
+console.log(uploadedFiles)
   // Load dress data
   useEffect(() => {
     const loadDress = async () => {
@@ -82,9 +82,9 @@ export default function EditListingPage({
   };
 
   // Add pickup address
-  const addPickupAddress = () => {
-    setPickupAddresses([...pickupAddresses, ""]);
-  };
+  // const addPickupAddress = () => {
+  //   setPickupAddresses([...pickupAddresses, ""]);
+  // };
 
   // Remove pickup address
   const removePickupAddress = (index: number) => {

@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Check, FileText, Package, CreditCard, RefreshCw, X, Calendar } from "lucide-react"
 import { format } from "date-fns"
@@ -41,8 +41,9 @@ const BookingStep = ({ icon, title, date, isActive, isCompleted }: BookingStepPr
 )
 
 export function BookingDetails({ bookingId }: BookingDetailsProps) {
-  const router = useRouter()
-  const [bookingType, setBookingType] = useState<"shipping" | "pickup">("shipping")
+  // const router = useRouter()
+  const [bookingType,] = useState<"shipping" | "pickup">("shipping")
+
   const [status, setStatus] = useState<BookingStatus | PickupStatus>("confirmed")
   const [showCancelModal, setShowCancelModal] = useState(false)
   const [showPickupModal, setShowPickupModal] = useState(false)
@@ -283,17 +284,17 @@ export function BookingDetails({ bookingId }: BookingDetailsProps) {
   }
 
   // Format date string for display
-  const formatDateString = (dateString: string) => {
-    try {
-      if (dateString === "April ##") return dateString
-      const parts = dateString.split(" ")
-      if (parts.length < 2) return dateString
+  // const formatDateString = (dateString: string) => {
+  //   try {
+  //     if (dateString === "April ##") return dateString
+  //     const parts = dateString.split(" ")
+  //     if (parts.length < 2) return dateString
 
-      return `${parts[0]} ${parts[1]}`
-    } catch {
-      return dateString
-    }
-  }
+  //     return `${parts[0]} ${parts[1]}`
+  //   } catch {
+  //     return dateString
+  //   }
+  // }
 
   return (
     <>

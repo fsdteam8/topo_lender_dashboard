@@ -3,7 +3,7 @@
 import type React from "react";
 
 import { useState, useRef } from "react";
-import { Upload } from "lucide-react";
+// import { Upload } from "lucide-react";
 
 interface DragDropUploadProps {
   onFileChange: (files: File[]) => void;

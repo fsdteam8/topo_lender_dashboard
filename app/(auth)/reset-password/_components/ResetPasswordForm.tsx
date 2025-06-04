@@ -14,7 +14,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
 import AuthHeader from "@/components/shared/Auth/AuthHeader";
 
 // Password validation schema
@@ -42,7 +41,7 @@ type PasswordFormValues = z.infer<typeof passwordSchema>;
 export default function ResetPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   // Initialize form with React Hook Form and Zod validation
   const form = useForm<PasswordFormValues>({
