@@ -1,5 +1,6 @@
-import { memo } from "react";
 import { cn } from "@/lib/utils";
+import { memo } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "./card";
 
 interface StatCardProps {
   title: string;
@@ -14,16 +15,13 @@ export const StatCard = memo(function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <div
-      className={cn(
-        "bg-white h-[155px] rounded-[15px] flex items-center px-5 shadow-[0px_4px_10px_0px_#0000001A]",
-        className
-      )}
-    >
-      <div>
-        <h3 className={`text-sm font-medium  mb-6 ${className}`}>{title}</h3>
+    <Card className={cn(className)}>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
         <p className="text-2xl font-bold">{value}</p>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 });

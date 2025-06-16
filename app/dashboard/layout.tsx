@@ -1,6 +1,6 @@
 import AuthProvider from "@/components/Providers/AuthProvider";
-import "../globals.css";
 import QueryProvider from "@/components/Providers/query-provider";
+import "../globals.css";
 export default function RootLayout({
   children,
 }: Readonly<{
