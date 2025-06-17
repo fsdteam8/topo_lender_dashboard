@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { Layout } from "@/components/layout";
-import { StatCard } from "@/components/ui/stat-card";
+import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
-import { Pagination } from "@/components/ui/pagination";
-import { X, Download } from "lucide-react";
+import { StatCard } from "@/components/ui/stat-card";
+import { Download, X } from "lucide-react";
+import { useState } from "react";
 // import modalImage from "../../public/mIcon.png";
 import Image from "next/image";
 
@@ -64,8 +64,7 @@ export default function PaymentsPage() {
   return (
     <Layout>
       <div className="p-8">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold uppercase">Payments</h2>
+        <div className="flex justify-end items-center mb-8">
           <div className="flex space-x-4">
             <SelectDropdown
               label="Time Filter"
@@ -81,11 +80,11 @@ export default function PaymentsPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <StatCard
             title="Total Revenue"
-            value="$#,###"
+            value="$120"
             className="bg-[#8c1c3a] text-white"
           />
-          <StatCard title="Subscription" value="Subscription Plan" />
-          <StatCard title="Next Payout" value="$### on May 28, 2025" />
+          <StatCard title="Subscription" value="Pro tier" />
+          <StatCard title="Next Payout" value="17 Jun, 2025" />
         </div>
 
         <div className="bg-white p-6 rounded-[15px] shadow-[0px_4px_10px_0px_#0000001A] mb-8">

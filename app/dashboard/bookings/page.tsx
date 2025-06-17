@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, useEffect } from "react";
+import { BookingModal } from "@/components/booking-modal";
 import { Layout } from "@/components/layout";
+import ShowBooking from "@/components/show-booking";
+import { Button } from "@/components/ui/button";
+import { type CalendarEvent } from "@/components/ui/google-style-calendar";
+import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
-import {
-  type CalendarEvent,
-} from "@/components/ui/google-style-calendar";
-import { Pagination } from "@/components/ui/pagination";
-import { BookingModal } from "@/components/booking-modal";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { SkeletonTable } from "@/components/ui/skeletons";
-import ShowBooking from "@/components/show-booking";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 // Sample bookings data
 const allBookingsData = [
@@ -141,12 +139,10 @@ export default function BookingsPage() {
   const [error, setError] = useState<Error | null>(null);
   const [bookings, setBookings] = useState(allBookingsData);
   const [showBookingModal, setShowBookingModal] = useState(false);
-  const [selectedDate,] = useState<Date | null>(null);
+  const [selectedDate] = useState<Date | null>(null);
   // const [sortField, ] = useState<string | null>(null);
   // const [sortDirection] = useState<"asc" | "desc">("asc");
-  const [selectedEvent,] = useState<CalendarEvent | null>(
-    null
-  );
+  const [selectedEvent] = useState<CalendarEvent | null>(null);
   console.log(selectedDate);
   console.log(selectedEvent);
   const itemsPerPage = 3;
@@ -432,20 +428,17 @@ export default function BookingsPage() {
 
   return (
     <Layout>
-      <div className="pt-[40px] md:pt-[60px] lg:pt-[81px] px-[40px] md:px-[60px] lg:px-[80px] pb-[50px] md:pb-[75px] lg:pb-[100px]">
-        <div className="flex justify-between items-center mb-[60px]">
-          <h2 className="font-avenirNormal text-2xl md:text-[28px] lg:text-[32px] text-black font-normal tracking-[0.2em] leading-[36px] md:leading-[42px] lg:leading-[48px] uppercase">
-            Bookings
-          </h2>
+      <div className="p-8">
+        <div className="flex justify-end items-center mb-[60px]">
           <Button
-            className="font-avenirNormal h-[51px] text-base font-light text-white leading-[120%] tracking-[0%] bg-[#891D33] rounded-[8px] px-8 "
+            className="font-avenirNormal bg-[#891D33] font-light "
             onClick={() => setShowBookingModal(true)}
           >
             Manual Booking
           </Button>
         </div>
 
-        <div className="bg-white py-[25px] px-[30px] rounded-[15px] shadow-sm mb-[60px]">
+        <div className="bg-white py-[15px] px-[20px] rounded-[15px] shadow-sm mb-[60px]">
           <div className="flex items-center gap-[30px]">
             <SearchInput
               placeholder="Search ......"
@@ -541,25 +534,25 @@ export default function BookingsPage() {
                   <tbody>
                     {bookings.slice(0, 3).map((booking, index) => (
                       <tr key={index} className=" hover:bg-gray-50">
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                        <td className="font-avenirNormal  px-[49.5px] text-sm font-light text-black  tracking-[0%] text-center">
                           {booking.id}
                         </td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                        <td className="font-avenirNormal  px-[49.5px] text-sm font-light text-black  tracking-[0%] text-center">
                           {booking.dressId}
                         </td>
-                        <td className="font-avenirNormal py-[45px] px-[13px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                        <td className="font-avenirNormal  px-[13px] text-sm font-light text-black  tracking-[0%] text-center">
                           {booking.customer}
                         </td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                        <td className="font-avenirNormal  px-[49.5px] text-sm font-light text-black  tracking-[0%] text-center">
                           {booking.price}
                         </td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                        <td className="font-avenirNormal  px-[49.5px] text-sm font-light text-black  tracking-[0%] text-center">
                           {booking.rentalPeriod}
                         </td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                        <td className="font-avenirNormal  px-[49.5px]text-sm font-light text-black  tracking-[0%] text-center">
                           {booking.deliveryType}
                         </td>
-                        <td className="font-avenirNormal py-[45px] px-[49.5px] text-lg font-normal text-black leading-[120%] tracking-[0%] text-center">
+                        <td className="font-avenirNormal  px-[49.5px]text-sm font-light text-black  tracking-[0%] text-center">
                           <span
                             className={`px-2 py-[3px] rounded-full text-sm ${getStatusClass(
                               booking.status

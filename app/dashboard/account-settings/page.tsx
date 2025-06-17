@@ -129,8 +129,6 @@ export default function AccountSettingsPage() {
   return (
     <Layout>
       <div className="p-8">
-        <h2 className="text-2xl font-bold uppercase mb-8">Account Settings</h2>
-
         <div className="space-y-8">
           {/* Business Information */}
           {accountSections.map((section) => (
@@ -236,7 +234,7 @@ export default function AccountSettingsPage() {
 
             <div className="flex justify-between items-center">
               <Link
-              href='/account-settings/deactive'
+                href="/account-settings/deactive"
                 className="px-4 py-2 bg-[#8c1c3a] text-white rounded-md"
                 // onClick={() => setShowDeactivate(true)}
               >

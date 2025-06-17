@@ -1,27 +1,27 @@
-import type React from "react";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import "./globals.css";
-import { Toaster } from "sonner";
+import { Inter } from "next/font/google";
 import localFont from "next/font/local";
+import type React from "react";
+import { Toaster } from "sonner";
+import "./globals.css";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // customize as needed
-  variable: "--font-poppins",
-});
-
-const avenirBold = localFont({
+export const avenirBold = localFont({
   src: "./fonts/avenir/avenir-arabic-black.otf",
   variable: "--font-avenir",
   weight: "100, 200, 300, 400, 500, 600, 700, 800, 900",
   display: "swap",
 });
-const avenirNormal = localFont({
+export const avenirNormal = localFont({
   src: "./fonts/avenir/Avenir Regular.ttf",
   variable: "--font-avenir",
   weight: "100, 200, 300, 400, 500, 600, 700, 800, 900",
   display: "swap",
+});
+
+const inter = Inter({
+  weight: ["300", "400", "500", "600", "700", "800"],
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -36,13 +36,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${poppins.variable} ${avenirBold.variable} ${avenirNormal.variable}`}
-    >
+    <html lang="en" className={cn(inter.className, "font-light")}>
       <body>
-          <Toaster position="top-center" richColors closeButton />
-          {children}
+        <Toaster position="top-center" richColors closeButton />
+        {children}
       </body>
     </html>
   );

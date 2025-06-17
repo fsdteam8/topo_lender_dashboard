@@ -1,17 +1,17 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import {
-  Send,
-  Search,
-  User,
-  Paperclip,
-  AlertCircle,
-  RefreshCw,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useWebSocketChat } from "@/hooks/use-websocket-chat";
+import { cn } from "@/lib/utils";
+import {
+  AlertCircle,
+  Paperclip,
+  RefreshCw,
+  Search,
+  Send,
+  User,
+} from "lucide-react";
 import type React from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // Sample chats data
 const initialChatsData = [
@@ -39,14 +39,17 @@ const initialChatsData = [
 ];
 
 // Sample messages for the active chat
-const initialMessagesData: Record<string, Array<{
-  id: number;
-  sender: "user" | "admin";
-  text: string;
-  timestamp: string;
-  status: "read" | "sending" | "sent" | "delivered" | "error";
-  chatId: string;
-}>> = {
+const initialMessagesData: Record<
+  string,
+  Array<{
+    id: number;
+    sender: "user" | "admin";
+    text: string;
+    timestamp: string;
+    status: "read" | "sending" | "sent" | "delivered" | "error";
+    chatId: string;
+  }>
+> = {
   XXXXXX: [
     {
       id: 1,
@@ -128,10 +131,9 @@ export default function ChatComponent() {
   } = useWebSocketChat(initialChatsData, initialMessagesData);
 
   // Get current messages for active chat
-const currentMessages = useMemo(() => {
-  return activeChat ? allMessages[activeChat] || [] : [];
-}, [activeChat, allMessages]);
-
+  const currentMessages = useMemo(() => {
+    return activeChat ? allMessages[activeChat] || [] : [];
+  }, [activeChat, allMessages]);
 
   // Filter chats based on search query
   const filteredChats = chats.filter(
@@ -231,12 +233,10 @@ const currentMessages = useMemo(() => {
   }, [typingTimeout]);
 
   return (
-    <div className="p-[80px]">
-      <h2 className="text-[32px]  font-normal uppercase mb-[60px]">Chats</h2>
-
+    <div className="p-8 ">
       {/* Connection status indicator */}
       {isWebSocketEnabled && !isConnected && (
-        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-md flex items-center justify-between">
+        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-md flex items-center justify-between ">
           <div className="flex items-center">
             <AlertCircle className="h-5 w-5 text-amber-500 mr-2" />
             <span className="text-sm text-amber-700">
@@ -484,15 +484,15 @@ const currentMessages = useMemo(() => {
                       )}
                     />
                   </div>
-                    <button
-                      className={cn(
-                        "p-3 text-gray-500 rounded-full border border-[#BFBFBF]",
-                        isSending && "opacity-50 cursor-not-allowed"
-                      )}
-                      disabled={isSending}
-                    >
-                      <Paperclip className="h-5 w-5" />
-                    </button>
+                  <button
+                    className={cn(
+                      "p-3 text-gray-500 rounded-full border border-[#BFBFBF]",
+                      isSending && "opacity-50 cursor-not-allowed"
+                    )}
+                    disabled={isSending}
+                  >
+                    <Paperclip className="h-5 w-5" />
+                  </button>
                   {/* <button
                     className={cn(
                       "p-3 bg-white border border-l-0 border-gray-200",
