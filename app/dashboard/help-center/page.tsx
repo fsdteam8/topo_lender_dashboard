@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { Layout } from "@/components/layout";
 import { SearchInput } from "@/components/ui/search-input";
-import { Plus, Minus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
+import { useState } from "react";
 import ContactForm from "./_components/contact-form";
 
 // FAQ sections with questions
@@ -42,12 +42,12 @@ const faqSections = [
         answer: (
           <>
             To edit your dress listing, go to your dashboard {">"} Listings{" "}
-            {">"} click &ldquo;Edit&ldquo; next to the item you want to update. You can
-            adjust the price, description, photos, or availability. <br />{" "}
-            <br />
-            To pause a listing, simply toggle it to &ldquo;inactive&ldquo; — it will no
-            longer appear in the customer search but can be reactivated at any
-            time.
+            {">"} click &ldquo;Edit&ldquo; next to the item you want to update.
+            You can adjust the price, description, photos, or availability.{" "}
+            <br /> <br />
+            To pause a listing, simply toggle it to &ldquo;inactive&ldquo; — it
+            will no longer appear in the customer search but can be reactivated
+            at any time.
           </>
         ),
       },
@@ -116,9 +116,7 @@ const faqSections = [
 ];
 
 export default function HelpCenterPage() {
-  const [openSections, ] = useState<{ [key: string]: boolean }>(
-    {}
-  );
+  const [openSections] = useState<{ [key: string]: boolean }>({});
   const [openQuestions, setOpenQuestions] = useState<{
     [key: string]: boolean;
   }>({});
@@ -139,15 +137,11 @@ export default function HelpCenterPage() {
 
   return (
     <Layout>
-      <div className="px-[80px] pt-[80px] pb-[150px]">
-        <h2 className="text-[32px] font-normal text-black tracking-[20%] uppercase font-avenirNormal leading-[48px]">
-          Help Center
-        </h2>
-
-        <div className="mt-[60px] mb-[30px]">
+      <div className="p-8">
+        <div className=" mb-[30px]">
           <SearchInput
             placeholder="Search......"
-            className="w-full rounded-[15px] shadow-[0px_4px_10px_0px_#0000001A]  bg-white text-[24px] font-normal leading-[120%] tracking-[0%] font-avenirNormal"
+            className="w-full rounded-[15px] shadow-[0px_4px_10px_0px_#0000001A]  bg-white text-[16px] font-normal leading-[120%] tracking-[0%] font-avenirNormal"
           />
         </div>
 
@@ -161,7 +155,7 @@ export default function HelpCenterPage() {
                 className="flex justify-between items-center mb-[30px]"
                 // onClick={() => toggleSection(section.title)}
               >
-                <h3 className="text-2xl font-normal text-black font-avenirNormal tracking-[0%] leading-[120%]">
+                <h3 className="text-xl font-medium text-black font-avenirNormal tracking-[0%] leading-[120%]">
                   {section.title}
                 </h3>
                 {/* {openSections[section.title] ? (
@@ -182,7 +176,7 @@ export default function HelpCenterPage() {
                         className="flex justify-between items-center cursor-pointer"
                         onClick={() => toggleQuestion(item.question)}
                       >
-                        <h4 className="text-xl font-normal text-[#891D33] leading-[120%] font-avenirNormal tracking-[0%]">
+                        <h4 className="text-[16px] font-normal text-[#891D33] leading-[120%] font-avenirNormal tracking-[0%]">
                           {item.question}
                         </h4>
                         <button>
@@ -195,8 +189,8 @@ export default function HelpCenterPage() {
                       </div>
 
                       {openQuestions[item.question] && (
-                        <div className="mt-[15px]">
-                          <p className="text-base font-normal text-black font-avenirNormal leading-[120%] tracking-[0%]">
+                        <div className="mt-[20px]">
+                          <p className="text-base text-[14px] font-normal text-black/60 font-avenirNormal leading-[120%] tracking-[0%]">
                             {item.answer}
                           </p>
                         </div>
@@ -210,7 +204,7 @@ export default function HelpCenterPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-[30px] mt-[30px]">
-          <h3 className="text-2xl font-normal text-black font-avenirNormal leading-[120%] trackgin-[0%] mb-[30px]">
+          <h3 className="text-xl font-medium text-black font-avenirNormal tracking-[0%] leading-[120%] mb-5">
             Contact Support
           </h3>
           {/* contact form  */}

@@ -1,27 +1,28 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
 import { Layout } from "@/components/layout";
-import { ToggleSwitch } from "@/components/ui/toggle-switch";
 import { StatusModal } from "@/components/status-modal";
-import {
-  Filter,
-  Plus,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import type { Dress } from "@/types/listings";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ToggleSwitch } from "@/components/ui/toggle-switch";
 import {
   getAllDresses,
-  updateDressStatus,
-  getMostPopularDress,
   getListingsCounts,
+  getMostPopularDress,
+  updateDressStatus,
 } from "@/services/listings-service";
+import type { Dress } from "@/types/listings";
 import { useQuery } from "@tanstack/react-query";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  Plus,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
 export default function ListingsPage() {
   // State for dresses and filters
@@ -240,6 +241,7 @@ export default function ListingsPage() {
       return res.json();
     },
   });
+
   console.log(data);
 
   // Handle error state
@@ -270,10 +272,7 @@ export default function ListingsPage() {
   return (
     <Layout>
       <div className="p-8 bg-[#fefaf6]">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-medium uppercase tracking-[0.5rem]">
-            MANAGE LISTINGS
-          </h2>
+        <div className="flex justify-end items-center mb-8">
           <div className="flex space-x-4">
             <div className="relative">
               <button className="px-4 py-2 bg-[#891d33] text-white rounded-md flex items-center">
@@ -291,34 +290,43 @@ export default function ListingsPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div className="bg-[#891d33] h-[150px] rounded-md text-white flex flex-col items-start justify-center p-6 shadow-[0px_4px_10px_0px_#0000001A]">
-            <h3 className="text-sm font-medium text-white/80 mb-6 text-start">
-              Most Popular Listing
-            </h3>
-            <p className="text-2xl text-white font-medium text-center">
-              {isLoading
-                ? "Loading..."
-                : mostPopularDress?.name || "No listings"}
-            </p>
-          </div>
+          <Card className="bg-[#891d33] ">
+            <CardHeader>
+              <CardTitle className="text-white/80 text-sm">
+                Most Popular Listing
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[20px] text-white   font-medium text-left">
+                {mostPopularDress?.name || "No listings"}
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="bg-white p-6 rounded-md flex flex-col items-start justify-center h-[150px] shadow-[0px_4px_10px_0px_#0000001A]">
-            <h3 className="text-sm font-medium text-gray-600 mb-6 text-center">
-              Total Listings
-            </h3>
-            <p className="text-[38px] text-black font-bold text-center">
-              {isLoading ? "Loading..." : totalListings}
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-md flex flex-col items-start justify-center h-[150px] shadow-[0px_4px_10px_0px_#0000001A]">
-            <h3 className="text-sm font-medium text-gray-600 mb-6 text-center">
-              Active Listings
-            </h3>
-            <p className="text-[38px] text-black font-bold text-center">
-              {isLoading ? "Loading..." : activeListings}
-            </p>
-          </div>
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle className="text-gray-600 text-sm">
+                Total Listings
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[25px] text-black  font-medium text-left">
+                {totalListings}
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle className="text-gray-600 text-sm">
+                Active Listings
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[25px] text-black  font-medium text-left">
+                {activeListings}
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="bg-white p-6 rounded-lg  mb-8 shadow-[0px_4px_10px_0px_#0000001A]">

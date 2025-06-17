@@ -222,10 +222,10 @@ export default function OverviewPage() {
           {/* Upcoming Orders Section */}
           <div className="bg-white p-6 rounded-[15px] shadow-[0px_4px_10px_0px_#0000001A]">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-medium">Upcoming Orders</h3>
+              <h3 className="text-lg font-medium">Upcoming Orders</h3>
               <Link
                 href="/bookings"
-                className="text-sm text-gray-500 hover:underline"
+                className="text-xs text-gray-500 hover:underline"
               >
                 VIEW ALL
               </Link>

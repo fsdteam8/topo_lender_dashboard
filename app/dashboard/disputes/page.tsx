@@ -1,15 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
-import { StatCard } from "@/components/ui/stat-card";
+import { NewDisputeModal } from "@/components/new-dispute-modal";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
-import { NewDisputeModal } from "@/components/new-dispute-modal";
-import { ChevronDown, Plus } from "lucide-react";
-import { getAllDisputes } from "@/services/disputes-service";
-import type { Dispute } from "@/types/disputes";
-import Link from "next/link";
+import { StatCard } from "@/components/ui/stat-card";
 import {
   Table,
   TableBody,
@@ -18,8 +15,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { getAllDisputes } from "@/services/disputes-service";
+import type { Dispute } from "@/types/disputes";
+import { ChevronDown, Plus } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function DisputesPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,7 +73,9 @@ export default function DisputesPage() {
 
   const totalDisputes = disputes.length;
   const pendingDisputes = disputes.filter((d) => d.status === "Pending").length;
-  const resolvedDisputes = disputes.filter((d) => d.status === "Resolved").length;
+  const resolvedDisputes = disputes.filter(
+    (d) => d.status === "Resolved"
+  ).length;
   const resolutionRate = totalDisputes
     ? Math.round((resolvedDisputes / totalDisputes) * 100)
     : 0;
@@ -86,9 +88,8 @@ export default function DisputesPage() {
 
   return (
     <Layout>
-      <div className="p-[80px]">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-[32px] font-normal uppercase">Disputes</h2>
+      <div className="p-8">
+        <div className="flex justify-end items-center mb-8">
           <div className="flex space-x-[30px]">
             <div className="flex bg-[#8c1c3a] pr-[21px]  rounded-lg items-center  justify-center text-white text-[16px] font-normal  border-[#8c1c3a]">
               <SelectDropdown
@@ -102,7 +103,7 @@ export default function DisputesPage() {
                   "This Year",
                   "All Time",
                 ]}
-                className="bg-[#8c1c3a] pl-[16px] pr-[100px] border-[#8c1c3a]"
+                className="bg-[#8c1c3a] pl-[16px] pr-[20px] border-[#8c1c3a]"
               />
               <ChevronDown />
             </div>
@@ -110,7 +111,7 @@ export default function DisputesPage() {
               onClick={() => setIsModalOpen(true)}
               className="px-4 py-2 bg-[#8c1c3a] text-white rounded-md flex items-center"
             >
-              Submit New Dispute <Plus className="mr-2 h-4 w-4 ml-[30px]" />
+              Submit New Dispute <Plus className="mr-2 h-4 w-4 ml-[10px]" />
             </button>
           </div>
         </div>
@@ -133,7 +134,7 @@ export default function DisputesPage() {
           />
         </div>
 
-        <div className="bg-white py-[25px] px-[30px] rounded-lg mb-8 shadow-[0px_4px_10px_0px_#0000001A]">
+        <div className="bg-white py-[5px] px-[20px] rounded-lg mb-8 shadow-[0px_4px_10px_0px_#0000001A]">
           <div className="flex items-center justify-between">
             <SearchInput
               placeholder="Search ......"
@@ -165,7 +166,7 @@ export default function DisputesPage() {
           <div className="overflow-x-auto">
             <Table className="[&>tbody>tr]:border-0 [&>thead>tr]:border-0">
               <TableHeader>
-                <TableRow  className="border-0">
+                <TableRow className="border-0">
                   <TableHead>Date Submitted</TableHead>
                   <TableHead>Booking ID</TableHead>
                   <TableHead>Customer ID</TableHead>
@@ -190,13 +191,16 @@ export default function DisputesPage() {
                   </TableRow>
                 ) : (
                   currentDisputes.map((dispute) => (
-                    <TableRow key={dispute.id} className=" text-[#000000] text-[18px]">
-                      <TableCell className="py-[34px] ">{dispute.dateSubmitted}</TableCell>
-                      <TableCell className="py-[34px] ">{dispute.bookingId}</TableCell>
-                      <TableCell className="py-[34px] ">{dispute.customerId}</TableCell>
-                      <TableCell className="py-[34px] ">{dispute.dressId}</TableCell>
-                      <TableCell className="py-[34px] ">{dispute.reason}</TableCell>
-                      <TableCell className="py-[34px] ">
+                    <TableRow
+                      key={dispute.id}
+                      className=" text-[#000000] text-[14px]"
+                    >
+                      <TableCell>{dispute.dateSubmitted}</TableCell>
+                      <TableCell>{dispute.bookingId}</TableCell>
+                      <TableCell>{dispute.customerId}</TableCell>
+                      <TableCell>{dispute.dressId}</TableCell>
+                      <TableCell>{dispute.reason}</TableCell>
+                      <TableCell>
                         <Badge
                           variant="outline"
                           className={
@@ -216,7 +220,11 @@ export default function DisputesPage() {
                       </TableCell>
                       <TableCell>
                         <Link href={`/dashboard/disputes/${dispute.id}`}>
-                          <Button variant="outline" size="sm" className="bg-[#891D33] text-white rounded-xl">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="bg-[#891D33] text-white rounded-xl"
+                          >
                             View
                           </Button>
                         </Link>
@@ -233,15 +241,21 @@ export default function DisputesPage() {
             <div className="flex items-center justify-between pt-6 px-2">
               <div className="text-sm text-muted-foreground">
                 Showing <span className="font-medium">{startIndex + 1}</span> to{" "}
-                <span className="font-medium">{Math.min(endIndex, filteredDisputes.length)}</span> of{" "}
-                <span className="font-medium">{filteredDisputes.length}</span> results
+                <span className="font-medium">
+                  {Math.min(endIndex, filteredDisputes.length)}
+                </span>{" "}
+                of{" "}
+                <span className="font-medium">{filteredDisputes.length}</span>{" "}
+                results
               </div>
 
               <div className="flex items-center space-x-1">
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
                   disabled={currentPage === 1}
                 >
                   &lt;
@@ -266,7 +280,9 @@ export default function DisputesPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
                   disabled={currentPage === totalPages}
                 >
                   &gt;

@@ -17,10 +17,10 @@ export const StatCard = memo(function StatCard({
   return (
     <Card className={cn(className)}>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-[18px] font-medium">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-2xl font-bold">{value}</p>
+        <p className="text-xl font-semibold">{value}</p>
       </CardContent>
     </Card>
   );
