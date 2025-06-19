@@ -2,10 +2,9 @@
 
 import { Layout } from "@/components/layout";
 import { StatCard } from "@/components/ui/stat-card";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
-import { useSession } from "next-auth/react";
 
 // Sample dress data
 const dressData = [
@@ -73,33 +72,24 @@ const bookingData = [
 ];
 
 export default function OverviewPage() {
-
-  const session = useSession();
-  const token = session?.data?.user
-  console.log({token})
   return (
     <Layout>
-      <div className="p-8 bg-[#fefaf6]">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold uppercase">OVERVIEW</h2>
-          <div className="flex space-x-4">
-            <div className="relative">
-              <button className="px-4 py-2 bg-[#891d33] text-white rounded-md flex items-center">
-                Monthly
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </button>
-            </div>
-          </div>
+      <div className="p-8">
+        <div className="flex justify-end items-center mb-8">
+          <button className="px-4 py-2 bg-[#891d33] text-white rounded-md flex items-center">
+            Monthly
+            <ChevronDown className="ml-2 h-4 w-4" />
+          </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <StatCard
             title="Total Revenue"
-            value="$#,###"
+            value="$000"
             className="bg-[#891d33] text-white"
           />
-          <StatCard title="Total Rental" value="##" />
-          <StatCard title="Active Booking" value="#" />
+          <StatCard title="Total Rental" value="$00" />
+          <StatCard title="Active Booking" value="$00" />
         </div>
 
         {/* Live Listings Section */}
@@ -232,10 +222,10 @@ export default function OverviewPage() {
           {/* Upcoming Orders Section */}
           <div className="bg-white p-6 rounded-[15px] shadow-[0px_4px_10px_0px_#0000001A]">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-medium">Upcoming Orders</h3>
+              <h3 className="text-lg font-medium">Upcoming Orders</h3>
               <Link
                 href="/bookings"
-                className="text-sm text-gray-500 hover:underline"
+                className="text-xs text-gray-500 hover:underline"
               >
                 VIEW ALL
               </Link>
