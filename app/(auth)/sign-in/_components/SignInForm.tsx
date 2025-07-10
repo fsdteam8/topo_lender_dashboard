@@ -1,4 +1,5 @@
 "use client";
+import { loginAction } from "@/actions/auth/login";
 import AuthHeader from "@/components/shared/Auth/AuthHeader";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,33 +12,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { loginformSchema, LoginFormValues } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
-
-// Define form schema with Zod
-const formSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
-  rememberMe: z.boolean().default(false),
-});
-
-type FormValues = z.infer<typeof formSchema>;
 
 export default function SignInForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginformSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -46,22 +36,18 @@ export default function SignInForm() {
   });
 
   // Form submission handler
-  async function onSubmit(values: FormValues) {
-    try {
-      const res = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-      });
+  async function onSubmit(values: LoginFormValues) {
+    startTransition(() => {
+      loginAction(values).then((res) => {
+        if (!res.success) {
+          toast.error(res.message || "Login failed. Please try again.");
+          return;
+        }
 
-      console.log(res);
-      toast.success("Login successful");
-      // window.location.href = "/";
-      router.push("/dashboard");
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("Login failed. Please check your credentials.");
-    }
+        router.push("/dashboard");
+        toast.success(res.message || "Login successful");
+      });
+    });
   }
 
   return (
@@ -174,6 +160,7 @@ export default function SignInForm() {
           <Button
             type="submit"
             className="font-poppins h-[52px] w-full bg-black text-lg font-semibold leading-[120%] tracking-[0%] rounded-[8px] text-[#F4F4F4] py-[15px]"
+            disabled={isPending}
           >
             Sign In
           </Button>

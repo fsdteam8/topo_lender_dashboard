@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(inter.className, "font-light")}>
       <body>
-        <Toaster position="top-center" richColors closeButton />
+        <Toaster position="bottom-right" richColors closeButton />
         <AuthProvider>
           <QueryProvider>{children}</QueryProvider>
         </AuthProvider>

@@ -17,6 +17,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 const routes = [
   {
     id: 1,
@@ -113,15 +125,35 @@ const Sidebar = () => {
 
         {/* Logout Button */}
         <div className=" p-3">
-          <Button
-            className="w-full justify-start gap-3 "
-            onClick={async () => {
-              await signOut({ redirectTo: "/", redirect: true });
-            }}
-          >
-            <LogOut className="h-5 w-5" />
-            <span>Sign Out</span>
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className="w-full justify-start gap-3">
+                <LogOut className="h-5 w-5" />
+                <span>Sign Out</span>
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Are you sure you want to sign out?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  You will be logged out of your account and redirected to the
+                  homepage. You can sign back in at any time.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={async () => {
+                    await signOut({ redirectTo: "/", redirect: true });
+                  }}
+                >
+                  Sign Out
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
     </div>
