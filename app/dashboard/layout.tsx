@@ -1,16 +1,31 @@
-import AuthProvider from "@/components/Providers/AuthProvider";
-import QueryProvider from "@/components/Providers/query-provider";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import "../globals.css";
-export default function RootLayout({
+import Sidebar from "./_components/sidebar";
+import Topbar from "./_components/top-bar";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cu = await auth();
+
+  if (!cu?.user) redirect("/sign-in");
+
   return (
-    <main>
-      <AuthProvider>
-        <QueryProvider>{children}</QueryProvider>
-      </AuthProvider>
-    </main>
+    <div className="flex min-h-screen flex-col">
+      <Sidebar />
+      {/* Main Content */}
+      <div className="ml-64 flex flex-1 flex-col">
+        {/* Top Bar */}
+        <Topbar name={cu?.user.firstName as string} />
+
+        {children}
+
+        {/* Footer */}
+        {/* <DashboardFooter /> */}
+      </div>
+    </div>
   );
 }

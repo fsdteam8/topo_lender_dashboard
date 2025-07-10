@@ -1,15 +1,7 @@
 "use client";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import Link from "next/link";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import AuthHeader from "@/components/shared/Auth/AuthHeader";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -17,9 +9,17 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import AuthHeader from "@/components/shared/Auth/AuthHeader";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 // Define form schema with Zod
 const formSchema = z.object({
@@ -53,10 +53,8 @@ export default function SignInForm() {
         password: values.password,
         redirect: false,
       });
-      if (res?.error) {
-        throw new Error(res.error);
-      }
-      console.log(res?.status)
+
+      console.log(res);
       toast.success("Login successful");
       // window.location.href = "/";
       router.push("/dashboard");
@@ -64,7 +62,6 @@ export default function SignInForm() {
       console.error("Login error:", error);
       toast.error("Login failed. Please check your credentials.");
     }
-
   }
 
   return (

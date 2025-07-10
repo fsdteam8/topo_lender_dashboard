@@ -1,3 +1,5 @@
+import AuthProvider from "@/components/Providers/AuthProvider";
+import QueryProvider from "@/components/Providers/query-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -39,7 +41,9 @@ export default function RootLayout({
     <html lang="en" className={cn(inter.className, "font-light")}>
       <body>
         <Toaster position="top-center" richColors closeButton />
-        {children}
+        <AuthProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );
