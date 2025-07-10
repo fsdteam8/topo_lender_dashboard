@@ -1,13 +1,13 @@
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const cu = await auth();
+  const isLoggedIn = !!cu?.user;
 
-  console.log(cu);
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
-      <p className="ml-4 text-lg">Redirecting to dashboard...</p>
-    </div>
-  );
+  if (!isLoggedIn) {
+    redirect("/sign-in"); // ✅ Redirect to sign-in page
+  } else {
+    redirect("/dashboard"); // ✅ Redirect to dashboard
+  }
 }
