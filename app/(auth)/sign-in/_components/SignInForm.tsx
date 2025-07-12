@@ -77,7 +77,7 @@ export default function SignInForm() {
                     </div>
                     <Input
                       placeholder="Enter your email"
-                      className="font-poppins w-full md:w-[400px] h-[50px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[52px] pr-4 py-[15px] rounded-[8px]"
+                      className="font-poppins w-full md:w-[400px] h-[40px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[52px] pr-4 py-[15px] rounded-[4px]"
                       {...field}
                     />
                   </div>
@@ -102,7 +102,7 @@ export default function SignInForm() {
                       <Input
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your Password"
-                        className="font-poppins w-full md:w-[400px] h-[50px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[42px] pr-4 py-[15px] rounded-[8px]"
+                        className="font-poppins w-full md:w-[400px] h-[40px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[42px] pr-4 py-[15px] rounded-[4px]"
                         {...field}
                       />
                       <button
@@ -159,7 +159,7 @@ export default function SignInForm() {
           {/* Sign In Button */}
           <Button
             type="submit"
-            className="font-poppins h-[52px] w-full bg-black text-lg font-semibold leading-[120%] tracking-[0%] rounded-[8px] text-[#F4F4F4] py-[15px]"
+            className="font-poppins h-[40px] w-full bg-black text-lg font-medium leading-[120%] tracking-[0%] rounded-[4px] text-[#F4F4F4] py-[15px]"
             disabled={isPending}
           >
             Sign In
