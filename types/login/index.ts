@@ -7,7 +7,7 @@ export type LoginResponse = {
       firstName: string;
       lastName: string;
       email: string;
-      role: "LENDER" | "ADMIN" | "USER"; // You can expand this union if roles are limited
+      role: "LENDER" | "ADMIN" | "USER" | "APPLICANT"; // You can expand this union if roles are limited
       profileImage: string;
       refreshToken: string;
       updatedAt: string; // ISO timestamp string

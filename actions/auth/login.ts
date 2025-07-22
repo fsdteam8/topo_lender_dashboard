@@ -38,11 +38,17 @@ export async function loginAction(data: LoginFormValues) {
 
     const role = response.data.user.role;
 
-    console.log(role);
+    if (role === "APPLICANT") {
+      return {
+        success: false,
+        message: "Your account is waiting for approval",
+      };
+    }
+
     if (role !== "LENDER") {
       return {
         success: false,
-        message: "Unauthorized role. Only LENDER can log in.",
+        message: "You have not access to the lender dashboard",
       };
     }
 
