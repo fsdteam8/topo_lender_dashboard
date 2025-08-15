@@ -2,6 +2,7 @@
 
 import { signIn } from "@/auth";
 import { loginformSchema, LoginFormValues } from "@/schemas/auth";
+import { LoginResponse } from "@/types/login";
 import { cookies } from "next/headers";
 
 export async function loginAction(data: LoginFormValues) {
@@ -26,12 +27,28 @@ export async function loginAction(data: LoginFormValues) {
       }),
     });
 
-    const response = await res.json();
+    const response: LoginResponse = await res.json();
 
     if (!res.ok) {
       return {
         success: false,
         message: response.message || "Login failed",
+      };
+    }
+
+    const role = response.data.user.role;
+
+    if (role === "APPLICANT") {
+      return {
+        success: false,
+        message: "Your account is waiting for approval",
+      };
+    }
+
+    if (role !== "LENDER") {
+      return {
+        success: false,
+        message: "You have not access to the lender dashboard",
       };
     }
 
