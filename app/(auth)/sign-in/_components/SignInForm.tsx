@@ -44,7 +44,7 @@ export default function SignInForm() {
           return;
         }
 
-        router.push("/dashboard");
+        router.push("/");
         toast.success(res.message || "Login successful");
       });
     });
