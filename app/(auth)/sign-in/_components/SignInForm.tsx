@@ -1,15 +1,8 @@
 "use client";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import Link from "next/link";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { loginAction } from "@/actions/auth/login";
+import AuthHeader from "@/components/shared/Auth/AuthHeader";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -17,27 +10,24 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import AuthHeader from "@/components/shared/Auth/AuthHeader";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { loginformSchema, LoginFormValues } from "@/schemas/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-// Define form schema with Zod
-const formSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
-  rememberMe: z.boolean().default(false),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function SignInForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginformSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -46,25 +36,18 @@ export default function SignInForm() {
   });
 
   // Form submission handler
-  async function onSubmit(values: FormValues) {
-    try {
-      const res = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-      });
-      if (res?.error) {
-        throw new Error(res.error);
-      }
-      console.log(res?.status)
-      toast.success("Login successful");
-      // window.location.href = "/";
-      router.push("/dashboard");
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("Login failed. Please check your credentials.");
-    }
+  async function onSubmit(values: LoginFormValues) {
+    startTransition(() => {
+      loginAction(values).then((res) => {
+        if (!res.success) {
+          toast.error(res.message || "Login failed. Please try again.");
+          return;
+        }
 
+        router.push("/dashboard");
+        toast.success(res.message || "Login successful");
+      });
+    });
   }
 
   return (
@@ -94,7 +77,7 @@ export default function SignInForm() {
                     </div>
                     <Input
                       placeholder="Enter your email"
-                      className="font-poppins w-full md:w-[400px] h-[50px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[52px] pr-4 py-[15px] rounded-[8px]"
+                      className="font-poppins w-full md:w-[400px] h-[40px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[52px] pr-4 py-[15px] rounded-[4px]"
                       {...field}
                     />
                   </div>
@@ -119,7 +102,7 @@ export default function SignInForm() {
                       <Input
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your Password"
-                        className="font-poppins w-full md:w-[400px] h-[50px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[42px] pr-4 py-[15px] rounded-[8px]"
+                        className="font-poppins w-full md:w-[400px] h-[40px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[42px] pr-4 py-[15px] rounded-[4px]"
                         {...field}
                       />
                       <button
@@ -176,7 +159,8 @@ export default function SignInForm() {
           {/* Sign In Button */}
           <Button
             type="submit"
-            className="font-poppins h-[52px] w-full bg-black text-lg font-semibold leading-[120%] tracking-[0%] rounded-[8px] text-[#F4F4F4] py-[15px]"
+            className="font-poppins h-[40px] w-full bg-black text-lg font-medium leading-[120%] tracking-[0%] rounded-[4px] text-[#F4F4F4] py-[15px]"
+            disabled={isPending}
           >
             Sign In
           </Button>
