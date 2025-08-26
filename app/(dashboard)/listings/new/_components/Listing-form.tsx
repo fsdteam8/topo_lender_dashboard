@@ -29,24 +29,29 @@ export default function ListingForm() {
   });
 
   function onSubmit(values: ListingFormValues) {
-    // Replace with your submit logic (API call, etc.)
+
     console.log("Listing submitted:", values);
   }
 
   return (
-    <Card className="p-5">
+    <Card className="p-0">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
           className=" space-y-6"
         >
-          <Card className="shadow-none">
+          <Card className="shadow-none border-none p-0">
             <CardHeader>
-              <CardTitle>Basic Details</CardTitle>
             </CardHeader>
-            <CardContent>
-              <BasicDetailsForm form={form} />
+            <CardContent >
+              <div className="flex flex-col gap-7">
+                <BasicDetailsForm form={form} />
+                <Locationavailable form={form} />
+                <MediaForm form={form} />
+                <PricingFees form={form} />
+                <DescriptionDetails form={form} />
+              </div>
             </CardContent>
           </Card>
           <Card className="shadow-none">

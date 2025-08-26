@@ -74,6 +74,8 @@ export const listingSchema = z.object({
   media: z
     .array(z.string().url({ message: "Each media item must be a valid URL." }))
     .nonempty({ message: "At least one media file is required." }),
+
 });
+
 
 export type ListingFormValues = z.infer<typeof listingSchema>;

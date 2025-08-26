@@ -11,6 +11,8 @@ export default async function RootLayout({
 }>) {
   const cu = await auth();
 
+  console.log(cu)
+
   if (!cu?.user) redirect("/sign-in");
 
   console.log(cu);
