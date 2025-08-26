@@ -1,15 +1,38 @@
-export const SIZE_OPTIONS = ["XS", "S", "M", "L", "XL", "XXL"] as const;
-export const CONDITION_OPTIONS = [
-  { value: "new", label: "New" },
-  { value: "like_new", label: "Like New" },
-  { value: "good", label: "Good" },
-  { value: "fair", label: "Fair" },
+export const SIZE_OPTIONS = [
+  "XXS",
+  "XS",
+  "S",
+  "M",
+  "L",
+  "XL",
+  "XXL",
+  "XXXL",
+  "4XL",
+  "5XL",
 ] as const;
+
+export const CONDITION_OPTIONS = [
+  { value: "Brand New", label: "Brand New" },
+  { value: "Like New", label: "Like New" },
+  { value: "Gently Used", label: "Gently Used" },
+  { value: "Used", label: "Used" },
+  { value: "Worn", label: "Worn" },
+  { value: "Damaged", label: "Damaged" },
+  { value: "Altered", label: "Altered" },
+  { value: "Vintage", label: "Vintage" },
+] as const;
+
 export const CATEGORY_OPTIONS = [
-  { value: "clothing", label: "Clothing" },
-  { value: "shoes", label: "Shoes" },
-  { value: "accessories", label: "Accessories" },
-  { value: "electronics", label: "Electronics" },
-  { value: "home", label: "Home & Living" },
-  { value: "other", label: "Other" },
+  { value: "Formal", label: "Formal" },
+  { value: "Casual", label: "Casual" },
+  { value: "Cocktail", label: "Cocktail" },
+  { value: "Bridal", label: "Bridal" },
+  { value: "Party", label: "Party" },
+  { value: "Evening Gown", label: "Evening Gown" },
+  { value: "Ball Gown", label: "Ball Gown" },
+  { value: "Red Carpet", label: "Red Carpet" },
+  { value: "Designer", label: "Designer" },
+  { value: "Haute Couture", label: "Haute Couture" },
+  { value: "Luxury", label: "Luxury" },
+  { value: "Other", label: "Other" },
 ] as const;

@@ -44,7 +44,9 @@ export default function ListingForm() {
           </Card>
 
           <div className="flex items-center justify-end gap-3">
-            <Button type="submit">Save Listing</Button>
+            <Button type="submit" effect="shineHover">
+              Save Listing
+            </Button>
             <Button
               type="button"
               variant="outline"

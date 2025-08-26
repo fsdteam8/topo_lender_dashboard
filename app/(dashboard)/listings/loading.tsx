@@ -1,9 +1,8 @@
-import { Layout } from "@/components/layout"
-import { SkeletonStatCard, SkeletonTable } from "@/components/ui/skeletons"
+import { SkeletonStatCard, SkeletonTable } from "@/components/ui/skeletons";
 
 export default function ListingsLoadingPage() {
   return (
-    <Layout>
+    <>
       <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div className="h-7 w-48 bg-gray-300 rounded animate-pulse"></div>
@@ -41,6 +40,6 @@ export default function ListingsLoadingPage() {
           </div>
         </div>
       </div>
-    </Layout>
-  )
+    </>
+  );
 }

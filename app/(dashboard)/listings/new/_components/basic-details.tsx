@@ -1,13 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  ColorPicker,
-  ColorPickerAlpha,
-  ColorPickerEyeDropper,
-  ColorPickerFormat,
-  ColorPickerHue,
-  ColorPickerOutput,
-  ColorPickerSelection,
-} from "@/components/ui/color-picker";
+import { ColorPicker } from "@/components/ui/color-picker";
 import {
   FormControl,
   FormField,
@@ -28,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { ListingFormValues } from "@/types/listings/index";
 import { UseFormReturn } from "react-hook-form";
 import {
@@ -40,6 +33,8 @@ interface Props {
   form: UseFormReturn<ListingFormValues>;
 }
 const BasicDetailsForm = ({ form }: Props) => {
+  const selectedColor = form.watch("color");
+  console.log(selectedColor);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {/* Name */}
@@ -109,27 +104,19 @@ const BasicDetailsForm = ({ form }: Props) => {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="outline" className="w-full">
+                    <div
+                      style={{ backgroundColor: selectedColor }}
+                      className={cn("h-5 w-5  rounded-md mr-3")}
+                    />{" "}
                     Pick a color
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <ColorPicker
-                    className=" rounded-md border bg-background p-4 shadow-sm w-full"
-                    {...field}
-                  >
-                    <ColorPickerSelection />
-                    <div className="flex items-center gap-4">
-                      <ColorPickerEyeDropper />
-                      <div className="grid w-full gap-1">
-                        <ColorPickerHue />
-                        <ColorPickerAlpha />
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <ColorPickerOutput />
-                      <ColorPickerFormat />
-                    </div>
-                  </ColorPicker>
+                    initialColor={field.value}
+                    onChange={field.onChange}
+                    label="Choose a color"
+                  />
                 </PopoverContent>
               </Popover>
             </FormControl>
@@ -148,7 +135,10 @@ const BasicDetailsForm = ({ form }: Props) => {
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select condition" />
+                  <SelectValue
+                    placeholder="Select condition"
+                    className="text-black"
+                  />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
