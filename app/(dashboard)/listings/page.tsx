@@ -10,7 +10,6 @@ import {
   updateDressStatus,
 } from "@/services/listings-service";
 import type { Dress } from "@/types/listings";
-import { useQuery } from "@tanstack/react-query";
 import {
   ChevronDown,
   ChevronLeft,
@@ -221,27 +220,25 @@ export default function ListingsPage() {
 
   // fetch the data
 
-  const { data } = useQuery({
-    queryKey: ["listings"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/lender/?page=1&limit=10`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  // const { data } = useQuery({
+  //   queryKey: ["listings"],
+  //   queryFn: async () => {
+  //     const res = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/lender/?page=1&limit=10`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
+  //     if (!res.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
 
-      return res.json();
-    },
-  });
-
-  console.log(data);
+  //     return res.json();
+  //   },
+  // });
 
   // Handle error state
   if (error) {

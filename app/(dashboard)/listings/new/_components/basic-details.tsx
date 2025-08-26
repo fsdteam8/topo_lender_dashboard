@@ -33,14 +33,13 @@ interface Props {
   form: UseFormReturn<ListingFormValues>;
 }
 const BasicDetailsForm = ({ form }: Props) => {
-  const selectedColor = form.watch("color");
-  console.log(selectedColor);
+  const selectedColor = form.watch("colour");
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {/* Name */}
       <FormField
         control={form.control}
-        name="name"
+        name="dressName"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Name</FormLabel>
@@ -96,7 +95,7 @@ const BasicDetailsForm = ({ form }: Props) => {
       {/* Color */}
       <FormField
         control={form.control}
-        name="color"
+        name="colour"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Color</FormLabel>

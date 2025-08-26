@@ -3,21 +3,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { ListingFormValues, listingSchema } from "@/types/listings/index";
 import BasicDetailsForm from "./basic-details";
+import DescriptionAndDetailsForm from "./description-and-details-form";
+import MediaForm from "./media-form";
+import PricingAndFeesForm from "./pricing-and-fees-form";
 
 export default function ListingForm() {
   const form = useForm<ListingFormValues>({
     resolver: zodResolver(listingSchema),
     defaultValues: {
-      name: "",
-      brand: "",
-      size: "M",
-      color: "#000000",
-      condition: "new",
-      category: "other",
+      rentalPrice: {
+        fourDays: 0,
+        eightDays: 0,
+      },
     },
   });
 
@@ -40,6 +47,33 @@ export default function ListingForm() {
             </CardHeader>
             <CardContent>
               <BasicDetailsForm form={form} />
+            </CardContent>
+          </Card>
+          <Card className="shadow-none">
+            <CardHeader>
+              <CardTitle>Media</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <MediaForm form={form} />
+            </CardContent>
+          </Card>
+          <Card className="shadow-none">
+            <CardHeader>
+              <CardTitle>Price & Fees</CardTitle>
+              <CardDescription>
+                Note: This listing price is inclusive of dry-cleaning fees.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PricingAndFeesForm form={form} />
+            </CardContent>
+          </Card>
+          <Card className="shadow-none">
+            <CardHeader>
+              <CardTitle>Description & Details</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DescriptionAndDetailsForm form={form} />
             </CardContent>
           </Card>
 
