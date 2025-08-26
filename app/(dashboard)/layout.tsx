@@ -15,6 +15,8 @@ export default async function RootLayout({
 
   if (!cu?.user) redirect("/sign-in");
 
+  console.log(cu);
+
   return (
     <div className="flex min-h-screen flex-col">
       <Sidebar />

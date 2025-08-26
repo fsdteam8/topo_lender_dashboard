@@ -3,32 +3,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { ListingFormValues, listingSchema } from "@/types/listings/index";
 import BasicDetailsForm from "./basic-details";
-import Locationavailable from "./Locationavailable";
-import MediaForm from "./MediaForm";
-import PricingFees from "./Pricing&Fees";
-import DescriptionDetails from "./Description&Details";
+import DescriptionAndDetailsForm from "./description-and-details-form";
+import MediaForm from "./media-form";
+import PricingAndFeesForm from "./pricing-and-fees-form";
 
 export default function ListingForm() {
   const form = useForm<ListingFormValues>({
     resolver: zodResolver(listingSchema),
     defaultValues: {
-      name: "",
-      brand: "",
-      size: "M",
-      color: "#000000",
-      condition: "new",
-      category: "other",
-      locations: [""],
-      media: null,
-      rentalPrice4days: "",
-      rentalPrice8days: "",
-      description: "",
-      materials: "",
-      careInstructions: ""
+      rentalPrice: {
+        fourDays: 0,
+        eightDays: 0,
+      },
     },
   });
 
@@ -58,9 +54,38 @@ export default function ListingForm() {
               </div>
             </CardContent>
           </Card>
+          <Card className="shadow-none">
+            <CardHeader>
+              <CardTitle>Media</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <MediaForm form={form} />
+            </CardContent>
+          </Card>
+          <Card className="shadow-none">
+            <CardHeader>
+              <CardTitle>Price & Fees</CardTitle>
+              <CardDescription>
+                Note: This listing price is inclusive of dry-cleaning fees.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PricingAndFeesForm form={form} />
+            </CardContent>
+          </Card>
+          <Card className="shadow-none">
+            <CardHeader>
+              <CardTitle>Description & Details</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DescriptionAndDetailsForm form={form} />
+            </CardContent>
+          </Card>
 
           <div className="flex items-center justify-end gap-3">
-            <Button type="submit">Save Listing</Button>
+            <Button type="submit" effect="shineHover">
+              Save Listing
+            </Button>
             <Button
               type="button"
               variant="outline"

@@ -1,6 +1,5 @@
 "use client";
 
-import { Layout } from "@/components/layout";
 import { StatusModal } from "@/components/status-modal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToggleSwitch } from "@/components/ui/toggle-switch";
@@ -11,7 +10,6 @@ import {
   updateDressStatus,
 } from "@/services/listings-service";
 import type { Dress } from "@/types/listings";
-import { useQuery } from "@tanstack/react-query";
 import {
   ChevronDown,
   ChevronLeft,
@@ -222,55 +220,52 @@ export default function ListingsPage() {
 
   // fetch the data
 
-  const { data } = useQuery({
-    queryKey: ["listings"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/lender/?page=1&limit=10`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  // const { data } = useQuery({
+  //   queryKey: ["listings"],
+  //   queryFn: async () => {
+  //     const res = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/lender/?page=1&limit=10`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
+  //     if (!res.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
 
-      return res.json();
-    },
-  });
-
-  console.log(data);
+  //     return res.json();
+  //   },
+  // });
 
   // Handle error state
   if (error) {
     return (
-      <Layout>
-        <div className="p-8">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <h2 className="text-2xl font-bold text-red-800 mb-4">
-              Something went wrong!
-            </h2>
-            <p className="text-red-600 mb-6">
-              We encountered an error while loading the listings. Please try
-              again later.
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-[#891d33] text-white rounded-md hover:bg-[#732032] transition-colors"
-            >
-              Try again
-            </button>
-          </div>
+      <div className="p-8">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+          <h2 className="text-2xl font-bold text-red-800 mb-4">
+            Something went wrong!
+          </h2>
+          <p className="text-red-600 mb-6">
+            We encountered an error while loading the listings. Please try again
+            later.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-[#891d33] text-white rounded-md hover:bg-[#732032] transition-colors"
+          >
+            Try again
+          </button>
         </div>
-      </Layout>
+      </div>
     );
   }
 
   return (
-      <><div className="p-8 bg-[#fefaf6]">
+    <>
+      <div className="p-8 bg-[#fefaf6]">
         <div className="flex justify-end items-center mb-8">
           <div className="flex space-x-4">
             <div className="relative">
@@ -650,6 +645,7 @@ export default function ListingsPage() {
         onConfirm={confirmStatusChange}
         dress={selectedDress}
         newStatus={newStatus}
-      /></>
+      />
+    </>
   );
 }

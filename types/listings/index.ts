@@ -1,7 +1,16 @@
 import { z } from "zod";
 
+export const rentalPriceSchema = z.object({
+  fourDays: z
+    .number({ required_error: "4-day price is required" })
+    .min(0, { message: "Price must be positive" }),
+  eightDays: z
+    .number({ required_error: "8-day price is required" })
+    .min(0, { message: "Price must be positive" }),
+});
+
 export const listingSchema = z.object({
-  name: z
+  dressName: z
     .string()
     .min(2, { message: "Name must be at least 2 characters." })
     .max(120, { message: "Name must be at most 120 characters." }),
@@ -9,54 +18,62 @@ export const listingSchema = z.object({
     .string()
     .min(2, { message: "Brand must be at least 2 characters." })
     .max(80, { message: "Brand must be at most 80 characters." }),
-  size: z.enum(["XS", "S", "M", "L", "XL", "XXL"], {
-    required_error: "Please select a size.",
-  }),
-  color: z
+  size: z.enum(
+    ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL", "4XL", "5XL", "Custom"],
+    { required_error: "Please select a size." }
+  ),
+  colour: z
     .string()
     .min(1, { message: "Please enter a color." })
     .max(40, { message: "Color must be at most 40 characters." }),
-  condition: z.enum(["new", "like_new", "good", "fair"], {
-    required_error: "Please select a condition.",
-  }),
-  category: z.enum(
-    ["clothing", "shoes", "accessories", "electronics", "home", "other"],
-    {
-      required_error: "Please select a category.",
-    }
+  condition: z.enum(
+    [
+      "Brand New",
+      "Like New",
+      "Gently Used",
+      "Used",
+      "Worn",
+      "Damaged",
+      "Altered",
+      "Vintage",
+    ],
+    { required_error: "Please select a condition." }
   ),
-  locations: z
-    .array(
-      z.string().min(1, "Location is required")
-    )
-    .min(1, "At least one location is required"),
-  media: z.instanceof(File, { message: "Please upload a valid file" })
-    .nullable()
-    .optional(),
-  rentalPrice4days: z
-    .string()
-    .nonempty("Rental price for 4 days is required")
-    .regex(/^\d+(\.\d{1,2})?$/, "Must be a valid number"),
-
-  rentalPrice8days: z
-    .string()
-    .nonempty("Rental price for 8 days is required")
-    .regex(/^\d+(\.\d{1,2})?$/, "Must be a valid number"),
-
+  category: z.enum(
+    [
+      "Formal",
+      "Casual",
+      "Cocktail",
+      "Bridal",
+      "Party",
+      "Evening Gown",
+      "Ball Gown",
+      "Red Carpet",
+      "Designer",
+      "Haute Couture",
+      "Luxury",
+      "Other",
+    ],
+    { required_error: "Please select a category." }
+  ),
   description: z
     .string()
-    .min(10, "Description must be at least 10 characters")
-    .max(1000, "Description cannot exceed 1000 characters"),
-
-  materials: z
+    .max(1000, { message: "Description must be at most 1000 characters." })
+    .optional(),
+  material: z
     .string()
-    .min(1, "Materials are required")
-    .max(200, "Materials cannot exceed 200 characters"),
-
+    .max(120, { message: "Material must be at most 120 characters." })
+    .optional(),
   careInstructions: z
-    .string()
-    .min(1, "Care instructions are required")
-    .max(500, "Care instructions cannot exceed 500 characters"),
+    .enum(
+      ["Dry Clean Only", "Hand Wash", "Machine Wash", "Delicate Wash", "Other"],
+      { required_error: "Please select care instructions." }
+    )
+    .optional(),
+  rentalPrice: rentalPriceSchema,
+  media: z
+    .array(z.string().url({ message: "Each media item must be a valid URL." }))
+    .nonempty({ message: "At least one media file is required." }),
 
 });
 

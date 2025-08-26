@@ -1,5 +1,6 @@
 import AuthProvider from "@/components/Providers/AuthProvider";
 import QueryProvider from "@/components/Providers/query-provider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -42,7 +43,9 @@ export default function RootLayout({
       <body>
         <Toaster position="bottom-right" richColors closeButton />
         <AuthProvider>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          </QueryProvider>
         </AuthProvider>
       </body>
     </html>
