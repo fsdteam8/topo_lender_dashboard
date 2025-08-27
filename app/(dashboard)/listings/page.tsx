@@ -10,16 +10,11 @@ import {
   updateDressStatus,
 } from "@/services/listings-service";
 import type { Dress } from "@/types/listings";
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  Filter,
-  Plus,
-} from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import ListingSearchHeader from "./_components/searchbar/listing-search-header";
 
 export default function ListingsPage() {
   // State for dresses and filters
@@ -322,118 +317,12 @@ export default function ListingsPage() {
           </Card>
         </div>
 
-        <div className="bg-white p-6 rounded-lg  mb-8 shadow-[0px_4px_10px_0px_#0000001A]">
-          <div className="flex justify-between flex-wrap gap-4">
-            <div className="">
-              <div className="relative w-[500px]">
-                <input
-                  type="text"
-                  placeholder="Search....."
-                  className="w-full h-10 pl-10 pr-4 rounded-md border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#891d33]"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <svg
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </div>
-            </div>
+        <ListingSearchHeader />
 
-            <div className="relative w-[200px]">
-              <select
-                className="h-10 w-full pl-4 pr-8 text-[#595959] rounded-md border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#891d33] appearance-none"
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-              >
-                <option value="All">Select Status</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-            </div>
-
-            <div className="relative w-[200px]">
-              <select
-                className="h-10 w-full pl-4 pr-8 text-[#595959] rounded-md border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#891d33] appearance-none"
-                value={sizeFilter}
-                onChange={(e) => setSizeFilter(e.target.value)}
-              >
-                <option value="All">Select Size</option>
-                <option value="XS">XS</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-            </div>
-
-            <div className="relative w-[200px]">
-              <select
-                className="h-10 w-full pl-4 pr-8 text-[#595959] rounded-md border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#891d33] appearance-none"
-                value={conditionFilter}
-                onChange={(e) => setConditionFilter(e.target.value)}
-              >
-                <option value="All">Select Condition</option>
-                <option value="New">New</option>
-                <option value="Excellent">Excellent</option>
-                <option value="Good">Good</option>
-                <option value="Fair">Fair</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-            </div>
-
-            <div className="relative w-[200px]">
-              <select
-                className="h-10 w-full pl-4 pr-8 text-[#595959] rounded-md border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#891d33] appearance-none"
-                value={deliveryFilter}
-                onChange={(e) => setDeliveryFilter(e.target.value)}
-              >
-                <option value="All">Delivery Method</option>
-                <option value="Pickup">Pickup</option>
-                <option value="Shipping">Shipping</option>
-                <option value="Both">Both</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-            </div>
-
-            <button
-              className="p-2.5 border rounded-full hover:bg-gray-50"
-              onClick={clearFilters}
-              title="Clear filters"
-            >
-              <Filter className="h-5 w-5 text-red-800" />
-            </button>
-          </div>
-
-          {filteredDresses.length === 0 && !isLoading && (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 text-center">
-              <p className="text-yellow-800">
-                No listings match your filters. Try adjusting your search
-                criteria.
-              </p>
-              <button
-                onClick={clearFilters}
-                className="mt-2 text-[#891d33] underline text-sm"
-              >
-                Clear all filters
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-[0px_4px_10px_0px_#0000001A]">
+        <div
+          className="bg-white p-6 rounded-lg shadow-[0px_4px_10px_0px_#0000001A]"
+          onClick={clearFilters}
+        >
           {isLoading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#891d33]"></div>

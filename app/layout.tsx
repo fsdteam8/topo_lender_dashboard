@@ -3,28 +3,15 @@ import QueryProvider from "@/components/Providers/query-provider";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
+import { Raleway } from "next/font/google";
 import type React from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-export const avenirBold = localFont({
-  src: "./fonts/avenir/avenir-arabic-black.otf",
-  variable: "--font-avenir",
-  weight: "100, 200, 300, 400, 500, 600, 700, 800, 900",
-  display: "swap",
-});
-export const avenirNormal = localFont({
-  src: "./fonts/avenir/Avenir Regular.ttf",
-  variable: "--font-avenir",
-  weight: "100, 200, 300, 400, 500, 600, 700, 800, 900",
-  display: "swap",
-});
-
-const inter = Inter({
-  weight: ["300", "400", "500", "600", "700", "800"],
+const raleway = Raleway({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-raleway",
 });
 
 export const metadata: Metadata = {
@@ -39,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn(inter.className, "font-light")}>
+    <html lang="en" className={cn(raleway.className, "font-light")}>
       <body>
         <Toaster position="bottom-right" richColors closeButton />
         <AuthProvider>
