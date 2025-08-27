@@ -88,9 +88,14 @@ export type RentalPrice = {
   eightDays: number;
 };
 
+export type lenderId = {
+  email: string;
+  _id: string;
+};
+
 export type Listing = {
-  id: string; // comes from transform in toJSON
-  lenderId: string; // ObjectId serialized to string
+  _id: string; // comes from transform in toJSON
+  lenderId: lenderId; // ObjectId serialized to string
   dressId: string;
   dressName: string;
   brand?: string;
