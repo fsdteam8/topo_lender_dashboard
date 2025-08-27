@@ -6,12 +6,14 @@ interface FilterStore {
   sizeFilter: string;
   conditionFilter: string;
   deliveryFilter: string;
+  page: number; // new state
   setSearchTerm: (value: string) => void;
   setStatusFilter: (value: string) => void;
   setSizeFilter: (value: string) => void;
   setConditionFilter: (value: string) => void;
   setDeliveryFilter: (value: string) => void;
-  resetFilters: () => void; // new function
+  setPage: (value: number) => void; // new setter
+  resetFilters: () => void;
 }
 
 export const useListingFilterStrate = create<FilterStore>((set) => ({
@@ -20,11 +22,13 @@ export const useListingFilterStrate = create<FilterStore>((set) => ({
   sizeFilter: "All",
   conditionFilter: "All",
   deliveryFilter: "All",
+  page: 1, // default page
   setSearchTerm: (value) => set({ searchTerm: value }),
   setStatusFilter: (value) => set({ statusFilter: value }),
   setSizeFilter: (value) => set({ sizeFilter: value }),
   setConditionFilter: (value) => set({ conditionFilter: value }),
   setDeliveryFilter: (value) => set({ deliveryFilter: value }),
+  setPage: (value) => set({ page: value }),
   resetFilters: () =>
     set({
       searchTerm: "",
@@ -32,5 +36,6 @@ export const useListingFilterStrate = create<FilterStore>((set) => ({
       sizeFilter: "All",
       conditionFilter: "All",
       deliveryFilter: "All",
+      page: 1, // reset page too
     }),
 }));
