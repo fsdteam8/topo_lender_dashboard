@@ -108,7 +108,7 @@ export default function ListingForm({ token }: Props) {
   }
 
   return (
-    <Card className="p-5">
+    <Card className="p-0">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
