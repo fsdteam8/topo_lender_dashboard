@@ -3,6 +3,7 @@
 import { useEdgeStore } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
 import { CloudUpload, Upload, X } from "lucide-react";
+import Image from "next/image"; // <-- use Next.js Image
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -39,7 +40,7 @@ export function FileUploader({
     onUploadStateChange?.(files.some((f) => f.uploading));
   }, [files, onUploadStateChange]);
 
-  // Merge incoming `values` (URLs) with any local/uploading files. Preserves in-progress uploads.
+  // Merge incoming `values` (URLs) with any local/uploading files
   useEffect(() => {
     setFiles((prev) => {
       const uploadingOrLocal = prev.filter(
@@ -185,15 +186,17 @@ export function FileUploader({
     [onChange]
   );
 
-  // Revoke any remaining previews on unmount
   useEffect(() => {
+    // Copy the current previews into a local array and clear the ref immediately
+    const previews = Array.from(previewUrlsRef.current);
+    previewUrlsRef.current.clear();
+
     return () => {
-      previewUrlsRef.current.forEach((p) => {
+      previews.forEach((p) => {
         try {
           URL.revokeObjectURL(p);
         } catch {}
       });
-      previewUrlsRef.current.clear();
     };
   }, []);
 
@@ -234,8 +237,8 @@ export function FileUploader({
                 className="rounded-md max-h-32"
               />
             ) : (
-              <img
-                src={f.url || f.preview}
+              <Image
+                src={f.url || f.preview!}
                 alt={f.name}
                 width={120}
                 height={120}

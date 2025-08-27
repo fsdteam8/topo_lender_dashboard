@@ -17,7 +17,6 @@ import {
   Filter,
   Plus,
 } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -48,8 +47,8 @@ export default function ListingsPage() {
 
   const itemsPerPage = 3;
 
-  const session = useSession();
-  const token = session?.data?.user?.accessToken;
+  // const session = useSession();
+  // const token = session?.data?.user?.accessToken;
 
   // Load data
   useEffect(() => {
