@@ -74,6 +74,78 @@ export const listingSchema = z.object({
   media: z
     .array(z.string().url({ message: "Each media item must be a valid URL." }))
     .nonempty({ message: "At least one media file is required." }),
+  pickupOption: z.enum(["Local", "Australia-wide", "Both"], {
+    required_error: "Pickup option is required",
+  }),
 });
 
 export type ListingFormValues = z.infer<typeof listingSchema>;
+
+// Backend Response Schema
+
+export type RentalPrice = {
+  fourDays: number;
+  eightDays: number;
+};
+
+export type Listing = {
+  id: string; // comes from transform in toJSON
+  lenderId: string; // ObjectId serialized to string
+  dressId: string;
+  dressName: string;
+  brand?: string;
+  size:
+    | "XXS"
+    | "XS"
+    | "S"
+    | "M"
+    | "L"
+    | "XL"
+    | "XXL"
+    | "XXXL"
+    | "4XL"
+    | "5XL"
+    | "Custom";
+  status: "available" | "booked" | "not-available";
+  colour?: string;
+  condition:
+    | "Brand New"
+    | "Like New"
+    | "Gently Used"
+    | "Used"
+    | "Worn"
+    | "Damaged"
+    | "Altered"
+    | "Vintage";
+  category:
+    | "Formal"
+    | "Casual"
+    | "Cocktail"
+    | "Bridal"
+    | "Party"
+    | "Evening Gown"
+    | "Ball Gown"
+    | "Red Carpet"
+    | "Designer"
+    | "Haute Couture"
+    | "Luxury"
+    | "Other";
+  media: string[];
+  description?: string;
+  rentalPrice: RentalPrice;
+  material?: string;
+  careInstructions?:
+    | "Dry Clean Only"
+    | "Hand Wash"
+    | "Machine Wash"
+    | "Delicate Wash"
+    | "Other";
+  occasion: string[];
+  insurance: boolean;
+  pickupOption: "Local" | "Australia-wide" | "Both";
+  approvalStatus: "pending" | "approved" | "rejected";
+  reasonsForRejection?: string;
+  isActive: boolean;
+  createdAt: string; // ISO string from timestamps
+  updatedAt: string; // ISO string from timestamps
+};

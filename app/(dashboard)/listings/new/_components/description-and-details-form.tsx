@@ -68,8 +68,8 @@ const DescriptionAndDetailsForm = ({ form }: Props) => {
           <FormItem>
             <FormLabel>Care Instructions</FormLabel>
             <Select
+              value={field.value || ""} // ✅ controlled
               onValueChange={field.onChange}
-              defaultValue={field.value || ""}
             >
               <FormControl>
                 <SelectTrigger>
@@ -82,6 +82,31 @@ const DescriptionAndDetailsForm = ({ form }: Props) => {
                 <SelectItem value="Machine Wash">Machine Wash</SelectItem>
                 <SelectItem value="Delicate Wash">Delicate Wash</SelectItem>
                 <SelectItem value="Other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="pickupOption"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Pickup Option</FormLabel>
+            <Select
+              value={field.value || ""} // ✅ controlled
+              onValueChange={field.onChange}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select pickup option" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="Local">Local</SelectItem>
+                <SelectItem value="Australia-wide">Australia-wide</SelectItem>
+                <SelectItem value="Both">Both</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />
