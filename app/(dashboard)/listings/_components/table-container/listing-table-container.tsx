@@ -1,6 +1,7 @@
 "use client";
 import EmptyContainer from "@/components/ui/custom/EmptyContainer";
 import ErrorContainer from "@/components/ui/custom/ErrorContainer";
+import FancyLoader from "@/components/ui/custom/fancy-loader";
 import { DataTable } from "@/components/ui/data-table";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import useDebounce from "@/hooks/useDebounc";
@@ -11,7 +12,6 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Loader2 } from "lucide-react";
 import { useListingFilterStrate } from "../searchbar/listing-searchbar-state";
 import { listingColumn } from "./listing-column";
 
@@ -79,11 +79,7 @@ const ListingTableContainer = ({ token }: Props) => {
   let content;
 
   if (isLoading) {
-    content = (
-      <div className="min-h-[400px] flex justify-center items-center">
-        <Loader2 className="animate-spin text-primary" />
-      </div>
-    );
+    content = <FancyLoader message="Fetching your listings, please wait..." />;
   } else if (isError) {
     content = <ErrorContainer message={error.message} />;
   } else if (data && data.data?.data.length === 0) {
