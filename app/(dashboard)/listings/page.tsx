@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -21,12 +22,12 @@ export default async function ListingsPage() {
                 <ChevronDown className="ml-2 h-4 w-4" />
               </button>
             </div> */}
-            <Link href="/listings/new">
-              <button className="px-4 py-2 bg-[#891d33] text-white rounded-md flex items-center">
+            <Button asChild effect="shineHover">
+              <Link href="/listings/new">
                 <span className="mr-2">Add New Listing</span>{" "}
                 <Plus className="mr-2 h-4 w-4 text-white" />
-              </button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
 
@@ -36,15 +37,6 @@ export default async function ListingsPage() {
 
         <ListingTableContainer token={cu.user.accessToken} />
       </div>
-
-      {/* Status Modal */}
-      {/* <StatusModal
-        isOpen={showStatusModal}
-        onClose={() => setShowStatusModal(false)}
-        onConfirm={confirmStatusChange}
-        dress={selectedDress}
-        newStatus={newStatus}
-      /> */}
     </>
   );
 }
