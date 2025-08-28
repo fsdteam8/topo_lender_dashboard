@@ -37,15 +37,6 @@ export default async function ListingsPage() {
 
         <ListingTableContainer token={cu.user.accessToken} />
       </div>
-
-      {/* Status Modal */}
-      {/* <StatusModal
-        isOpen={showStatusModal}
-        onClose={() => setShowStatusModal(false)}
-        onConfirm={confirmStatusChange}
-        dress={selectedDress}
-        newStatus={newStatus}
-      /> */}
     </>
   );
 }
