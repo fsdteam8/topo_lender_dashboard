@@ -17,7 +17,8 @@ import {
   listingSchema,
 } from "@/types/listings/index";
 import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader2, MoveLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import BasicDetailsForm from "./basic-details";
 import DescriptionAndDetailsForm from "./description-and-details-form";
@@ -35,6 +36,7 @@ interface ApiProps {
 }
 
 export default function ListingForm({ token }: Props) {
+  const router = useRouter();
   const { mutate: createListing, isPending } = useMutation({
     mutationKey: ["listing-create"],
     mutationFn: (reqBody: ListingFormValues) =>
@@ -108,64 +110,78 @@ export default function ListingForm({ token }: Props) {
   }
 
   return (
-    <Card className="p-0">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          noValidate
-          className=" space-y-6"
+    <Card className="p-5  border-0 space-y-5">
+      <CardHeader className="p-0">
+        <Button
+          className="w-fit"
+          effect="expandIcon"
+          icon={MoveLeft}
+          iconPlacement="left"
+          variant="link"
+          onClick={() => router.back()}
         >
-          <Card className="shadow-none">
-            <CardHeader>
-              <CardTitle>Basic Details</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <BasicDetailsForm form={form} />
-            </CardContent>
-          </Card>
-          <Card className="shadow-none">
-            <CardHeader>
-              <CardTitle>Media</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <MediaForm form={form} />
-            </CardContent>
-          </Card>
-          <Card className="shadow-none">
-            <CardHeader>
-              <CardTitle>Price & Fees</CardTitle>
-              <CardDescription>
-                Note: This listing price is inclusive of dry-cleaning fees.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <PricingAndFeesForm form={form} />
-            </CardContent>
-          </Card>
-          <Card className="shadow-none">
-            <CardHeader>
-              <CardTitle>Description & Details</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <DescriptionAndDetailsForm form={form} />
-            </CardContent>
-          </Card>
+          Back Now
+        </Button>
+      </CardHeader>
+      <CardContent className="p-0">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            noValidate
+            className=" space-y-6"
+          >
+            <Card className="shadow-none">
+              <CardHeader>
+                <CardTitle>Basic Details</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <BasicDetailsForm form={form} />
+              </CardContent>
+            </Card>
+            <Card className="shadow-none">
+              <CardHeader>
+                <CardTitle>Media</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <MediaForm form={form} />
+              </CardContent>
+            </Card>
+            <Card className="shadow-none">
+              <CardHeader>
+                <CardTitle>Price & Fees</CardTitle>
+                <CardDescription>
+                  Note: This listing price is inclusive of dry-cleaning fees.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <PricingAndFeesForm form={form} />
+              </CardContent>
+            </Card>
+            <Card className="shadow-none">
+              <CardHeader>
+                <CardTitle>Description & Details</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <DescriptionAndDetailsForm form={form} />
+              </CardContent>
+            </Card>
 
-          <div className="flex items-center justify-end gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => form.reset()}
-            >
-              Reset
-            </Button>
-            <Button type="submit" effect="shineHover" disabled={isPending}>
-              Save Listing{" "}
-              {isPending && <Loader2 className="animate-spin ml-2" />}
-            </Button>
-          </div>
-        </form>
-      </Form>
+            <div className="flex items-center justify-end gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => form.reset()}
+              >
+                Reset
+              </Button>
+              <Button type="submit" effect="shineHover" disabled={isPending}>
+                Save Listing{" "}
+                {isPending && <Loader2 className="animate-spin ml-2" />}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
     </Card>
   );
 }

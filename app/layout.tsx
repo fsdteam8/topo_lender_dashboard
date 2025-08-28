@@ -4,6 +4,7 @@ import { EdgeStoreProvider } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import type React from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -34,6 +35,8 @@ export default function RootLayout({
             <EdgeStoreProvider>{children}</EdgeStoreProvider>
           </QueryProvider>
         </AuthProvider>
+
+        <NextTopLoader showSpinner={false} color="#891d33" />
       </body>
     </html>
   );
