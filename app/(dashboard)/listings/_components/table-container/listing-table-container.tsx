@@ -22,20 +22,44 @@ interface Props {
 interface APiProps {
   status: boolean;
   message: string;
-  data: Listing[];
+  data: {
+    data: Listing[];
+    pagination: {
+      currentPage: number;
+      itemsPerPage: number;
+      totalItems: number;
+      totalPages: number;
+    };
+  };
 }
 
 // ?page=1&limit=5&search=zara&condition=Worn&status=available&pickupOption=Local&size=L
 const ListingTableContainer = ({ token }: Props) => {
-  const { page, setPage, searchTerm, statusFilter } = useListingFilterStrate();
+  const {
+    page,
+    setPage,
+    searchTerm,
+    statusFilter,
+    sizeFilter,
+    conditionFilter,
+    pickupFilter,
+  } = useListingFilterStrate();
 
   const searchvalue = useDebounce(searchTerm);
 
   const { data, isLoading, isError, error } = useQuery<APiProps>({
-    queryKey: ["lender-all-listing", page, searchvalue, statusFilter],
+    queryKey: [
+      "lender-all-listing",
+      page,
+      searchvalue,
+      statusFilter,
+      sizeFilter,
+      conditionFilter,
+      pickupFilter,
+    ],
     queryFn: () =>
       fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender?page=${page}&limit=5&search=${searchvalue}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender?page=${page}&limit=5&search=${searchvalue}&status=${statusFilter}&size=${sizeFilter}&condition=${conditionFilter}&pickupOption=${pickupFilter}`,
         {
           headers: {
             "content-type": "application/json",
@@ -46,7 +70,7 @@ const ListingTableContainer = ({ token }: Props) => {
   });
 
   const table = useReactTable({
-    data: data?.data ?? [],
+    data: data?.data?.data ?? [],
     columns: listingColumn,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -62,29 +86,36 @@ const ListingTableContainer = ({ token }: Props) => {
     );
   } else if (isError) {
     content = <ErrorContainer message={error.message} />;
-  } else if (data && data.data.length === 0) {
-    content = <EmptyContainer message="" />;
-  } else if (data && data.data && data.data.length > 0) {
+  } else if (data && data.data?.data.length === 0) {
+    content = <EmptyContainer message="No listings found for your search." />;
+  } else if (data && data.data && data.data.data.length > 0) {
     content = (
       <>
         <div className="bg-white">
           <DataTable table={table} columns={listingColumn} />
         </div>
-        {2 > 1 && (
+      </>
+    );
+  }
+  return (
+    <div>
+      {content}
+
+      <div>
+        {data?.data.pagination && data.data.pagination.totalPages > 1 && (
           <div className="mt-4 w-full  flex justify-end">
             <div>
               <PaginationControls
-                currentPage={page}
+                currentPage={data.data.pagination.currentPage}
                 onPageChange={(page) => setPage(page)}
-                totalPages={5}
+                totalPages={data.data.pagination.totalPages}
               />
             </div>
           </div>
         )}
-      </>
-    );
-  }
-  return <div>{content}</div>;
+      </div>
+    </div>
+  );
 };
 
 export default ListingTableContainer;

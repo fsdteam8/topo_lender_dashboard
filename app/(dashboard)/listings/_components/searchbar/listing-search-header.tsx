@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Filter } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { FC } from "react";
 import { useListingFilterStrate } from "./listing-searchbar-state";
 
@@ -19,9 +20,9 @@ const ListingSearchHeader: FC = () => {
     statusFilter,
     setStatusFilter,
     conditionFilter,
-    deliveryFilter,
+    pickupFilter,
     setConditionFilter,
-    setDeliveryFilter,
+    setPickupOption,
     setSizeFilter,
     sizeFilter,
     resetFilters,
@@ -55,6 +56,8 @@ const ListingSearchHeader: FC = () => {
   ];
   const deliveryOptions = ["All", "Local", "Australia-wide", "Both"];
 
+  const router = useRouter();
+
   return (
     <div className="bg-white p-6 rounded-lg mb-8 shadow-[0px_4px_10px_0px_#0000001A]">
       <div className="flex flex-wrap gap-4 justify-between">
@@ -85,10 +88,7 @@ const ListingSearchHeader: FC = () => {
 
         {/* Status Filter */}
         <div className="w-[200px]">
-          <Select
-            value={statusFilter !== "All" ? statusFilter : undefined}
-            onValueChange={setStatusFilter}
-          >
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
             <SelectTrigger>
               <SelectValue placeholder="Select Status" />
             </SelectTrigger>
@@ -104,10 +104,7 @@ const ListingSearchHeader: FC = () => {
 
         {/* Size Filter */}
         <div className="w-[200px]">
-          <Select
-            value={sizeFilter !== "All" ? sizeFilter : undefined}
-            onValueChange={setSizeFilter}
-          >
+          <Select value={sizeFilter} onValueChange={setSizeFilter}>
             <SelectTrigger>
               <SelectValue placeholder="Select Size" />
             </SelectTrigger>
@@ -123,10 +120,7 @@ const ListingSearchHeader: FC = () => {
 
         {/* Condition Filter */}
         <div className="w-[200px]">
-          <Select
-            value={conditionFilter !== "All" ? conditionFilter : undefined}
-            onValueChange={setConditionFilter}
-          >
+          <Select value={conditionFilter} onValueChange={setConditionFilter}>
             <SelectTrigger>
               <SelectValue placeholder="Select Condition" />
             </SelectTrigger>
@@ -142,12 +136,9 @@ const ListingSearchHeader: FC = () => {
 
         {/* Delivery Filter */}
         <div className="w-[200px]">
-          <Select
-            value={deliveryFilter !== "All" ? deliveryFilter : undefined}
-            onValueChange={setDeliveryFilter}
-          >
+          <Select value={pickupFilter} onValueChange={setPickupOption}>
             <SelectTrigger>
-              <SelectValue placeholder="Delivery Method" />
+              <SelectValue placeholder="Pickup Option" />
             </SelectTrigger>
             <SelectContent>
               {deliveryOptions.map((option) => (
@@ -162,7 +153,10 @@ const ListingSearchHeader: FC = () => {
         <div className="flex items-center">
           <Button
             variant="outline"
-            onClick={resetFilters}
+            onClick={() => {
+              resetFilters();
+              router.refresh();
+            }}
             className="p-2.5 border rounded-full hover:bg-gray-50"
           >
             <Filter className="h-5 w-5 text-red-800" />

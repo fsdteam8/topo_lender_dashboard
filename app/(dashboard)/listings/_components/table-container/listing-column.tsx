@@ -48,6 +48,10 @@ export const listingColumn: ColumnDef<Listing>[] = [
     header: "Condition",
   },
   {
+    accessorKey: "pickupOption",
+    header: "Pickup",
+  },
+  {
     accessorKey: "status",
     cell: ({ row }) => <StatusController data={row.original} />,
   },
