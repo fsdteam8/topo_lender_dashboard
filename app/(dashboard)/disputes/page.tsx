@@ -1,6 +1,5 @@
 "use client";
 
-import { Layout } from "@/components/layout";
 import { NewDisputeModal } from "@/components/new-dispute-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -87,7 +86,7 @@ export default function DisputesPage() {
   const currentDisputes = filteredDisputes.slice(startIndex, endIndex);
 
   return (
-    <Layout>
+    <>
       <div className="p-8">
         <div className="flex justify-end items-center mb-8">
           <div className="flex space-x-[30px]">
@@ -298,6 +297,6 @@ export default function DisputesPage() {
         onClose={() => setIsModalOpen(false)}
         onSuccess={handleDisputeSuccess}
       />
-    </Layout>
+    </>
   );
 }

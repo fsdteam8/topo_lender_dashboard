@@ -2,11 +2,9 @@
 "use client";
 
 import { BookingModal } from "@/components/booking-modal";
-import { Layout } from "@/components/layout";
 import ShowBooking from "@/components/show-booking";
 import { Button } from "@/components/ui/button";
 import { type CalendarEvent } from "@/components/ui/google-style-calendar";
-import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
 import { SkeletonTable } from "@/components/ui/skeletons";
@@ -145,7 +143,7 @@ export default function BookingsPage() {
   const [selectedEvent] = useState<CalendarEvent | null>(null);
   console.log(selectedDate);
   console.log(selectedEvent);
-  const itemsPerPage = 3;
+  console.log(currentPage);
 
   // Convert bookings to calendar events for the calendar
   // const calendarEvents = useMemo(() => {
@@ -404,7 +402,7 @@ export default function BookingsPage() {
   // Handle error state
   if (error) {
     return (
-      <Layout>
+      <>
         <div className="p-8">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <h2 className="text-2xl font-bold text-red-800 mb-4">
@@ -422,12 +420,12 @@ export default function BookingsPage() {
             </button>
           </div>
         </div>
-      </Layout>
+      </>
     );
   }
 
   return (
-    <Layout>
+    <>
       <div className="p-8">
         <div className="flex justify-end items-center mb-[60px]">
           <Button
@@ -574,7 +572,7 @@ export default function BookingsPage() {
                 </table>
               </div>
 
-              {bookings.length > 0 && (
+              {/* {bookings.length > 0 && (
                 <div className="mt-6">
                   <Pagination
                     currentPage={currentPage}
@@ -583,7 +581,7 @@ export default function BookingsPage() {
                     onPageChange={setCurrentPage}
                   />
                 </div>
-              )}
+              )} */}
             </>
           )}
         </div>
@@ -596,6 +594,6 @@ export default function BookingsPage() {
         onSave={handleCreateBooking}
         dresses={dressesData}
       />
-    </Layout>
+    </>
   );
 }
