@@ -73,6 +73,7 @@ export function PaginationControls({
               handleChange(currentPage - 1);
             }}
             aria-disabled={currentPage === 1}
+            className="h-[40px] hover:bg-primary/5"
           />
         </PaginationItem>
 
@@ -104,6 +105,7 @@ export function PaginationControls({
               handleChange(currentPage + 1);
             }}
             aria-disabled={currentPage === totalPages}
+            className="h-[40px] hover:bg-primary/5"
           />
         </PaginationItem>
       </PaginationContent>

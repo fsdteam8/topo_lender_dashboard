@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Listing } from "@/types/listings/index";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
@@ -50,6 +51,32 @@ export const listingColumn: ColumnDef<Listing>[] = [
   {
     accessorKey: "pickupOption",
     header: "Pickup",
+  },
+  {
+    header: "Approval",
+    cell: ({ row }) => {
+      const status = row.original.approvalStatus;
+
+      const statusColor: Record<string, string> = {
+        approved:
+          "bg-green-100 text-green-700 border border-green-300 hover:bg-green-200",
+        rejected:
+          "bg-red-100 text-red-700 border border-red-300 hover:bg-red-200",
+        pending:
+          "bg-yellow-100 text-yellow-700 border border-yellow-300 hover:bg-yellow-200",
+      };
+
+      return (
+        <Badge
+          className={
+            statusColor[status] ||
+            "bg-gray-100 text-gray-700 border border-gray-300"
+          }
+        >
+          {status}
+        </Badge>
+      );
+    },
   },
   {
     accessorKey: "status",

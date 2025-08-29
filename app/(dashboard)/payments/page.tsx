@@ -1,7 +1,5 @@
 "use client";
 
-import { Layout } from "@/components/layout";
-import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectDropdown } from "@/components/ui/select-dropdown";
 import { StatCard } from "@/components/ui/stat-card";
@@ -58,11 +56,10 @@ const paymentDetailsData = [
 ];
 
 export default function PaymentsPage() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [showPayoutDetails, setShowPayoutDetails] = useState(false);
 
   return (
-    <Layout>
+    <>
       <div className="p-8">
         <div className="flex justify-end items-center mb-8">
           <div className="flex space-x-4">
@@ -153,14 +150,14 @@ export default function PaymentsPage() {
             </table>
           </div>
 
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <Pagination
               currentPage={currentPage}
               totalResults={paymentsData.length}
               resultsPerPage={3}
               onPageChange={setCurrentPage}
             />
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -249,6 +246,6 @@ export default function PaymentsPage() {
           </div>
         </div>
       )}
-    </Layout>
+    </>
   );
 }

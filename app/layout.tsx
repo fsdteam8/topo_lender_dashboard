@@ -36,7 +36,7 @@ export default function RootLayout({
           </QueryProvider>
         </AuthProvider>
 
-        <NextTopLoader showSpinner={false} color="#891d33" />
+        <NextTopLoader showSpinner={false} color="#ed6b85" />
       </body>
     </html>
   );
