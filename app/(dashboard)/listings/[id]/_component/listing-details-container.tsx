@@ -1,9 +1,10 @@
 "use client";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SkeletonWrapper from "@/components/ui/skeleton-wrapper";
 import { Listing } from "@/types/listings/index";
 import { useQuery } from "@tanstack/react-query";
-import { Check, X } from "lucide-react";
+import { AlertTriangle, Check, X } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
@@ -60,6 +61,15 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
   return (
     <div className="p-8 bg-[#fefaf6] space-y-8">
       <h2 className="text-[20px] font-normal uppercase  ">LISTINGS DETAILS</h2>
+
+      {data?.data.approvalStatus === "rejected" && (
+        <Alert className="mb-6 border-red-200 bg-red-50">
+          <AlertTriangle className="h-4 w-4 text-primary" />
+          <AlertDescription className="text-red-500 font-medium">
+            {data?.data.reasonsForRejection}
+          </AlertDescription>
+        </Alert>
+      )}
 
       <SkeletonWrapper isLoading={isLoading || isRefetching}>
         <Card className="grid grid-cols-1 lg:grid-cols-12 ">
