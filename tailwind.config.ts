@@ -45,11 +45,6 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      fontFamily: {
-        poppins: ["var(--font-poppins)", "sans-serif"],
-        avenir: ["var(--font-avenir)", "sans-serif"],
-        avenirNormal: ["var(--font-avenir)", "sans-serif"],
-      },
     },
     keyframes: {
       shine: {
@@ -61,6 +56,12 @@ const config: Config = {
         "0%": { "background-position": "0% 50%" },
         "50%": { "background-position": "100% 50%" },
         "100%": { "background-position": "0% 50%" },
+      },
+      ping: {
+        "75%, 100%": {
+          transform: "scale(2)",
+          opacity: "0",
+        },
       },
     },
     animation: {
