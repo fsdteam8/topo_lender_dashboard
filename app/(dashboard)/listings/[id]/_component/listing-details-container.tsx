@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SkeletonWrapper from "@/components/ui/skeleton-wrapper";
 import { Listing } from "@/types/listings/index";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangle, Check, X } from "lucide-react";
+import { AlertTriangle, X } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
@@ -99,7 +99,7 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
                 </p>
               </div>
               <div className="flex space-x-3">
-                <Link href={`/dashboard/listings/dressId/edit`}>
+                <Link href={`/listings/${data?.data._id}/edit`}>
                   <button className="px-4 py-2 bg-[#891d33] text-white rounded-md">
                     Edit Details
                   </button>
@@ -136,18 +136,21 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
               <div className="flex items-center gap-2">
                 <span className="font-medium">Status:</span>
                 <span
-                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-2xl text-sm font-medium ${
+                  className={`inline-flex items-center gap-1 px-4 py-1 rounded-2xl text-sm font-medium ${
                     isActive
                       ? "bg-green-100 text-green-700"
                       : "bg-red-100 text-red-700"
                   }`}
                 >
+                  {isActive ? "Active" : "Inactive"}
                   {isActive ? (
-                    <Check className="w-4 h-4" />
+                    <div className="relative">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75"></div>
+                    </div>
                   ) : (
                     <X className="w-4 h-4" />
                   )}
-                  {isActive ? "Active" : "Inactive"}
                 </span>
               </div>
             </div>
