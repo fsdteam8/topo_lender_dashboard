@@ -112,6 +112,7 @@ export default function ListingForm({ token, initialId }: Props) {
     mutationFn: (
       reqBody: ListingFormValues & {
         approvalStatus: "pending" | "approved" | "rejected";
+        isActive: boolean;
       }
     ) =>
       fetch(
@@ -192,6 +193,7 @@ export default function ListingForm({ token, initialId }: Props) {
       editListing({
         ...values,
         approvalStatus: "pending",
+        isActive: false,
       });
     } else {
       createListing(values);
