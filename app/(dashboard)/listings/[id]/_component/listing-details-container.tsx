@@ -1,14 +1,20 @@
 "use client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SkeletonWrapper from "@/components/ui/skeleton-wrapper";
 import { Listing } from "@/types/listings/index";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, X } from "lucide-react";
 import moment from "moment";
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import AvailabilityCalendar from "./availability-calendar";
+const AlertModal = dynamic(() => import("@/components/ui/custom/alert-modal"), {
+  ssr: false,
+});
 
 interface Props {
   listingId: string;
@@ -22,6 +28,10 @@ interface ApiProps {
 }
 
 const ListingDetailsContainer = ({ listingId, token }: Props) => {
+  const [isRouteChanging, setIsRouteChangin] = useState(false);
+  const [editAlertDialog, setEditAlertDialog] = useState(false);
+
+  const router = useRouter();
   const { data, isLoading, isError, error, refetch, isRefetching } =
     useQuery<ApiProps>({
       queryKey: ["listing", listingId],
@@ -36,6 +46,12 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
           }
         ).then((res) => res.json()),
     });
+
+  useEffect(() => {
+    return () => {
+      setIsRouteChangin(false);
+    };
+  }, []);
 
   if (isError) {
     return (
@@ -99,11 +115,14 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
                 </p>
               </div>
               <div className="flex space-x-3">
-                <Link href={`/listings/${data?.data._id}/edit`}>
-                  <button className="px-4 py-2 bg-[#891d33] text-white rounded-md">
-                    Edit Details
-                  </button>
-                </Link>
+                {/* <Link href={`/listings/${data?.data._id}/edit`}> */}
+                <Button
+                  effect="ringHover"
+                  onClick={() => setEditAlertDialog((p) => !p)}
+                >
+                  Edit Details
+                </Button>
+                {/* </Link> */}
               </div>
             </div>
 
@@ -201,6 +220,18 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
           </Card>
         </SkeletonWrapper>
       </div>
+
+      <AlertModal
+        loading={isRouteChanging}
+        onConfirm={() => {
+          setIsRouteChangin(true);
+          router.push(`/listings/${data?.data._id}/edit`);
+        }}
+        onClose={() => setEditAlertDialog(false)}
+        title="Edit Listing Confirmation"
+        message="Editing this listing will require admin re-approval. Your changes may temporarily affect its visibility and impact your business performance. Do you want to continue?"
+        isOpen={editAlertDialog}
+      />
     </div>
   );
 };

@@ -45,28 +45,29 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-    },
-    keyframes: {
-      shine: {
-        "0%": { backgroundPosition: "200% 0" },
-        "25%": { backgroundPosition: "-200% 0" },
-        "100%": { backgroundPosition: "-200% 0" },
-      },
-      gradientFlow: {
-        "0%": { "background-position": "0% 50%" },
-        "50%": { "background-position": "100% 50%" },
-        "100%": { "background-position": "0% 50%" },
-      },
-      ping: {
-        "75%, 100%": {
-          transform: "scale(2)",
-          opacity: "0",
+      keyframes: {
+        shine: {
+          "0%": { backgroundPosition: "200% 0" },
+          "25%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
+        gradientFlow: {
+          "0%": { "background-position": "0% 50%" },
+          "50%": { "background-position": "100% 50%" },
+          "100%": { "background-position": "0% 50%" },
+        },
+        ping: {
+          "75%, 100%": {
+            transform: "scale(2)",
+            opacity: "0",
+          },
         },
       },
-    },
-    animation: {
-      shine: "shine 3s ease-out infinite",
-      "gradient-flow": "gradientFlow 10s ease 0s infinite normal none running",
+      animation: {
+        shine: "shine 3s ease-out infinite",
+        "gradient-flow":
+          "gradientFlow 10s ease 0s infinite normal none running",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
