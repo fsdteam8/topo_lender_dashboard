@@ -33,8 +33,8 @@ const AlertModal = ({
   }
   return (
     <Modal
-      title={title ?? "¿Estás seguro?"}
-      description={message ?? "Esta acción no se puede deshacer."}
+      title={title ?? "Are you sure?"}
+      description={message ?? "This action cannot be undone."}
       isOpen={isOpen}
       onClose={onClose}
     >
@@ -45,10 +45,10 @@ const AlertModal = ({
           onClick={onClose}
           className="text-primary hover:text-primary/80"
         >
-          Cancelar
+          Cancel
         </Button>
         <Button disabled={loading} variant="destructive" onClick={onConfirm}>
-          Continuar {loading && <Loader2 className="animate-spin" />}
+          Continue {loading && <Loader2 className="animate-spin" />}
         </Button>
       </div>
     </Modal>
