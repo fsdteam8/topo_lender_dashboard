@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { redirect } from "next/navigation";
 import "../globals.css";
 import Sidebar from "./_components/sidebar";
@@ -21,7 +22,7 @@ export default async function RootLayout({
         {/* Top Bar */}
         <Topbar name={cu?.user.firstName as string} />
 
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
 
         {/* Footer */}
         {/* <DashboardFooter /> */}

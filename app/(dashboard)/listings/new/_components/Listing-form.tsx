@@ -109,7 +109,11 @@ export default function ListingForm({ token, initialId }: Props) {
   });
   const { mutate: editListing, isPending: isUpdating } = useMutation({
     mutationKey: ["listing-create"],
-    mutationFn: (reqBody: ListingFormValues) =>
+    mutationFn: (
+      reqBody: ListingFormValues & {
+        approvalStatus: "pending" | "approved" | "rejected";
+      }
+    ) =>
       fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender/listings/${initialId}`,
         {
@@ -185,7 +189,10 @@ export default function ListingForm({ token, initialId }: Props) {
 
   function onSubmit(values: ListingFormValues) {
     if (initialId) {
-      editListing(values);
+      editListing({
+        ...values,
+        approvalStatus: "pending",
+      });
     } else {
       createListing(values);
     }

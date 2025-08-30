@@ -3,6 +3,11 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SkeletonWrapper from "@/components/ui/skeleton-wrapper";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Listing } from "@/types/listings/index";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, X } from "lucide-react";
@@ -116,12 +121,28 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
               </div>
               <div className="flex space-x-3">
                 {/* <Link href={`/listings/${data?.data._id}/edit`}> */}
-                <Button
-                  effect="ringHover"
-                  onClick={() => setEditAlertDialog((p) => !p)}
-                >
-                  Edit Details
-                </Button>
+                {!isActive ? (
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button disabled={!isActive}>Edit Details</Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-[200px]">
+                        Your listing is under review and cannot be updated until
+                        approval / Rejection
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                ) : (
+                  <Button
+                    effect="ringHover"
+                    onClick={() => setEditAlertDialog((p) => !p)}
+                    disabled={!isActive}
+                  >
+                    Edit Details
+                  </Button>
+                )}
+
                 {/* </Link> */}
               </div>
             </div>
