@@ -1,5 +1,4 @@
 "use client";
-import EmptyContainer from "@/components/ui/custom/EmptyContainer";
 import ErrorContainer from "@/components/ui/custom/ErrorContainer";
 import FancyLoader from "@/components/ui/custom/fancy-loader";
 import { DataTable } from "@/components/ui/data-table";
@@ -82,9 +81,7 @@ const ListingTableContainer = ({ token }: Props) => {
     content = <FancyLoader message="Fetching your listings, please wait..." />;
   } else if (isError) {
     content = <ErrorContainer message={error.message} />;
-  } else if (data && data.data?.data.length === 0) {
-    content = <EmptyContainer message="No listings found for your search." />;
-  } else if (data && data.data && data.data.data.length > 0) {
+  } else if (data && data.data) {
     content = (
       <>
         <div className="bg-white">
