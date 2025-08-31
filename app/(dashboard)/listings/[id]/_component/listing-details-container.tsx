@@ -77,7 +77,8 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
     );
   }
 
-  const isActive = data?.data.approvalStatus === "approved";
+  const isApproved = data?.data.approvalStatus === "approved";
+  const isRejected = data?.data.approvalStatus === "rejected";
 
   return (
     <div className="p-8 bg-[#fefaf6] space-y-8">
@@ -121,10 +122,12 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
               </div>
               <div className="flex space-x-3">
                 {/* <Link href={`/listings/${data?.data._id}/edit`}> */}
-                {!isActive ? (
+                {!isApproved && !isRejected ? (
                   <Tooltip>
                     <TooltipTrigger>
-                      <Button disabled={!isActive}>Edit Details</Button>
+                      <Button disabled={!isApproved || !isRejected}>
+                        Edit Details
+                      </Button>
                     </TooltipTrigger>
                     <TooltipContent>
                       <p className="max-w-[200px]">
@@ -137,7 +140,6 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
                   <Button
                     effect="ringHover"
                     onClick={() => setEditAlertDialog((p) => !p)}
-                    disabled={!isActive}
                   >
                     Edit Details
                   </Button>
@@ -177,13 +179,13 @@ const ListingDetailsContainer = ({ listingId, token }: Props) => {
                 <span className="font-medium">Status:</span>
                 <span
                   className={`inline-flex items-center gap-1 px-4 py-1 rounded-2xl text-sm font-medium ${
-                    isActive
+                    isApproved
                       ? "bg-green-100 text-green-700"
                       : "bg-red-100 text-red-700"
                   }`}
                 >
-                  {isActive ? "Active" : "Inactive"}
-                  {isActive ? (
+                  {isApproved ? "Active" : "Inactive"}
+                  {isApproved ? (
                     <div className="relative">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75"></div>
