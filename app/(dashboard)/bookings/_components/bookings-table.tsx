@@ -11,7 +11,7 @@ import React from "react";
 
 const BookingsTable = () => {
   return (
-    <div className="bg-white p-5 rounded-lg mt-8 shadow-[0px_4px_10px_0px_#0000001A]">
+    <div className="bg-white p-5 rounded-lg shadow-[0px_4px_10px_0px_#0000001A]">
       <Table>
         <TableHeader>
           <TableRow className="border-none">
