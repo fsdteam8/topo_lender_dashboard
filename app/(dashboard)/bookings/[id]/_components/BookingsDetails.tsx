@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import AboutBooking from "./about-booking";
 import AboutOrder from "./about-order";
+import AboutPayment from "./about-payment";
 
 interface Props {
   token: string;
@@ -35,6 +36,7 @@ const BookingsDetails = ({ token }: Props) => {
     <div className="grid grid-cols-2 gap-8">
       <AboutBooking bookingDetails={bookingDetails} isLoading={isLoading} />
       <AboutOrder bookingDetails={bookingDetails} isLoading={isLoading} />
+      <AboutPayment bookingDetails={bookingDetails} isLoading={isLoading} />
     </div>
   );
 };
