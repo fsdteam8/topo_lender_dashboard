@@ -12,10 +12,11 @@ import {
 import { Search } from "lucide-react";
 import React from "react";
 import { useBookingsFilter } from "../states/useBookingsFilter";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ManualBookings from "./manual-bookings";
 
 const BookingsHeader = () => {
-  const { setSearch, setDeliveryType, setDate, setStatus } =
-    useBookingsFilter();
+  const { setSearch, setDate } = useBookingsFilter();
 
   return (
     <div>
@@ -24,7 +25,15 @@ const BookingsHeader = () => {
           Bookings
         </h1>
 
-        <Button>Manual Booking</Button>
+        <div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Manual Booking</Button>
+            </DialogTrigger>
+
+            <ManualBookings />
+          </Dialog>
+        </div>
       </div>
 
       <div className="flex items-center gap-10 bg-white p-5  rounded-lg shadow-[0px_4px_10px_0px_#0000001A] mt-8">
