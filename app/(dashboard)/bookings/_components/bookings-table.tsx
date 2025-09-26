@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookingsResponse } from "@/types/bookings/bookingTypes";
+import { useBookingsFilter } from "../states/useBookingsFilter";
 
 interface Props {
   token: string;
@@ -21,11 +22,13 @@ interface Props {
 const BookingsTable = ({ token }: Props) => {
   const [page, setPage] = React.useState(1);
 
+  const { search, date, deliveryType, status } = useBookingsFilter();
+
   const { data, isLoading, isFetching } = useQuery<BookingsResponse>({
-    queryKey: ["all-bookings", page],
+    queryKey: ["all-bookings", page, search, date, deliveryType, status],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/customer/bookings/all?page=${page}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/customer/bookings/all?page=${page}&search=${search}&date=${date}&status=${status}`,
         {
           headers: {
             "Content-Type": "application/json",

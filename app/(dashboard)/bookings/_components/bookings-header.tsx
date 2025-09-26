@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,8 +11,12 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import React from "react";
+import { useBookingsFilter } from "../states/useBookingsFilter";
 
 const BookingsHeader = () => {
+  const { setSearch, setDeliveryType, setDate, setStatus } =
+    useBookingsFilter();
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -26,6 +32,7 @@ const BookingsHeader = () => {
           <Input
             className="pl-7 w-[220px]"
             placeholder="Search...."
+            onChange={(e) => setSearch(e.target.value)}
           />
 
           <Search className="h-4 w-4 text-gray-500 absolute top-1/3 left-2" />
@@ -34,12 +41,11 @@ const BookingsHeader = () => {
         <div>
           <Select>
             <SelectTrigger className="w-[220px]">
-              <SelectValue placeholder="Theme" />
+              <SelectValue placeholder="Delivery type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="light">Shipping</SelectItem>
+              <SelectItem value="dark">Local Pickup</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -47,27 +53,24 @@ const BookingsHeader = () => {
         <div>
           <Select>
             <SelectTrigger className="w-[220px]">
-              <SelectValue placeholder="Theme" />
+              <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="light">Pending</SelectItem>
+              <SelectItem value="dark">Disputed</SelectItem>
+              <SelectItem value="system">Completed</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <div>
-          <Select>
-            <SelectTrigger className="w-[220px]">
-              <SelectValue placeholder="Theme" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="flex items-center gap-5">
+          <div>
+            <input
+              type="date"
+              className="w-[180px] focus-visible:ring-0 border border-input h-9 rounded-md text-base shadow-sm px-3 py-1"
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
         </div>
       </div>
     </div>
