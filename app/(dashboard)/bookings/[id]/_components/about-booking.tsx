@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import BookingDetailsSkeleton from "./booking-details-skeleton";
 
 type StatusHistory = {
