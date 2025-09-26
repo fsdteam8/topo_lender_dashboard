@@ -3,6 +3,7 @@
 import { BookingsResponse } from "@/types/bookings/bookingTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import AboutBooking from "./about-booking";
 
 interface Props {
   token: string;
@@ -12,11 +13,7 @@ const BookingsDetails = ({ token }: Props) => {
   const params = useParams();
   const id = params.id;
 
-  const {
-    data: bookingDetails = {},
-    isLoading,
-    isFetching,
-  } = useQuery<BookingsResponse>({
+  const { data: bookingDetails = {}, isLoading } = useQuery<BookingsResponse>({
     queryKey: ["all-bookings"],
     queryFn: async () => {
       const res = await fetch(
@@ -33,7 +30,11 @@ const BookingsDetails = ({ token }: Props) => {
     },
   });
 
-  return <div>BookingsDetails</div>;
+  return (
+    <div>
+      <AboutBooking bookingDetails={bookingDetails} isLoading={isLoading} />
+    </div>
+  );
 };
 
 export default BookingsDetails;
