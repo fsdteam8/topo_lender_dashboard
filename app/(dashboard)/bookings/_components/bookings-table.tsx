@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookingsResponse } from "@/types/bookings/bookingTypes";
-import { useBookingsFilter } from "../states/useBookingsFilter";
+import { useBookingsFilter } from "./states/useBookingsFilter";
 
 interface Props {
   token: string;

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import React from "react";
-import { useBookingsFilter } from "../states/useBookingsFilter";
+import { useBookingsFilter } from "./states/useBookingsFilter";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ManualBookings from "./manual-bookings";
 
