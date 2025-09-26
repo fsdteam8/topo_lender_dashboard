@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookingsResponse } from "@/types/bookings/bookingTypes";
 import { useBookingsFilter } from "./states/useBookingsFilter";
+import Link from "next/link";
 
 interface Props {
   token: string;
@@ -40,8 +41,6 @@ const BookingsTable = ({ token }: Props) => {
       return json.data;
     },
   });
-
-  console.log("bookings data : ", data);
 
   const bookings = data?.bookings ?? [];
   const paginationInfo = data?.paginationInfo;
@@ -114,7 +113,9 @@ const BookingsTable = ({ token }: Props) => {
                     ))}
                   </TableCell>
                   <TableCell className="text-center space-x-5">
-                    <Button>View</Button>
+                    <Link href={`/bookings/${item.id}`}>
+                      <Button>View</Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))
