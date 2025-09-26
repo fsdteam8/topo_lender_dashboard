@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import AboutBooking from "./about-booking";
 import AboutOrder from "./about-order";
 import AboutPayment from "./about-payment";
+import AboutAnalytics from "./about-analytics";
 
 interface Props {
   token: string;
@@ -37,6 +38,7 @@ const BookingsDetails = ({ token }: Props) => {
       <AboutBooking bookingDetails={bookingDetails} isLoading={isLoading} />
       <AboutOrder bookingDetails={bookingDetails} isLoading={isLoading} />
       <AboutPayment bookingDetails={bookingDetails} isLoading={isLoading} />
+      <AboutAnalytics bookingDetails={bookingDetails} isLoading={isLoading} />
     </div>
   );
 };
