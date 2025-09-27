@@ -7,6 +7,7 @@ import AboutBooking from "./about-booking";
 import AboutOrder from "./about-order";
 import AboutPayment from "./about-payment";
 import AboutAnalytics from "./about-analytics";
+import DisputeForm from "./dispute-form";
 
 interface Props {
   token: string;
@@ -34,11 +35,17 @@ const BookingsDetails = ({ token }: Props) => {
   });
 
   return (
-    <div className="grid grid-cols-2 gap-8">
-      <AboutBooking bookingDetails={bookingDetails} isLoading={isLoading} />
-      <AboutOrder bookingDetails={bookingDetails} isLoading={isLoading} />
-      <AboutPayment bookingDetails={bookingDetails} isLoading={isLoading} />
-      <AboutAnalytics bookingDetails={bookingDetails} isLoading={isLoading} />
+    <div>
+      <div className="grid grid-cols-2 gap-8">
+        <AboutBooking bookingDetails={bookingDetails} isLoading={isLoading} />
+        <AboutOrder bookingDetails={bookingDetails} isLoading={isLoading} />
+        <AboutPayment bookingDetails={bookingDetails} isLoading={isLoading} />
+        <AboutAnalytics bookingDetails={bookingDetails} isLoading={isLoading} />
+      </div>
+
+      <div>
+        <DisputeForm />
+      </div>
     </div>
   );
 };
