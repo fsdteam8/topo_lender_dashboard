@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface IBookingFilter {
+interface IPaymentsFilter {
   search: string;
   setSearch: (value: string) => void;
   deliveryType: string;
@@ -18,7 +18,7 @@ const initialStates = {
   date: "",
 };
 
-export const useBookingsFilter = create<IBookingFilter>((set) => ({
+export const usePaymentsFilter = create<IPaymentsFilter>((set) => ({
   ...initialStates,
   setSearch: (value: string) => set({ search: value }),
   setDeliveryType: (value: string) => set({ deliveryType: value }),

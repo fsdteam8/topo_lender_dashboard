@@ -12,24 +12,41 @@ import {
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-import { BookingsResponse } from "@/types/bookings/bookingTypes";
-import { useBookingsFilter } from "./states/useBookingsFilter";
 import Link from "next/link";
+import { usePaymentsFilter } from "./states/usePaymentsFilter";
 
 interface Props {
   token: string;
 }
 
-const BookingsTable = ({ token }: Props) => {
+type Payout = {
+  _id: string;
+  lenderId: string;
+  bookingId: string;
+  bookingAmount: number;
+  requestedAmount: number;
+  commission: number;
+  status: string;
+  requestedAt: string;
+};
+
+type PayoutsResponse = {
+  payouts: Payout[];
+  total: number;
+  page: number;
+  limit: number;
+};
+
+const PaymentsTable = ({ token }: Props) => {
   const [page, setPage] = React.useState(1);
 
-  const { search, date, deliveryType, status } = useBookingsFilter();
+  const { search } = usePaymentsFilter();
 
-  const { data, isLoading, isFetching } = useQuery<BookingsResponse>({
-    queryKey: ["all-bookings", page, search, date, deliveryType, status],
+  const { data, isLoading, isFetching } = useQuery<PayoutsResponse>({
+    queryKey: ["payouts", page, search],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/customer/bookings/all?page=${page}&search=${search}&date=${date}&status=${status}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/payout/my?page=${page}&limit=10?search=${search}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -42,8 +59,7 @@ const BookingsTable = ({ token }: Props) => {
     },
   });
 
-  const bookings = data?.bookings ?? [];
-  const paginationInfo = data?.paginationInfo;
+  const payouts = data?.payouts ?? [];
 
   return (
     <div className="bg-white p-5 rounded-lg mt-8 shadow-[0px_4px_10px_0px_#0000001A]">
@@ -51,15 +67,21 @@ const BookingsTable = ({ token }: Props) => {
         <Table className="min-w-[1000px]">
           <TableHeader>
             <TableRow className="border-none">
-              <TableHead className="w-[100px] text-center">Order ID</TableHead>
-              <TableHead className="w-[100px] text-center">Dress ID</TableHead>
-              <TableHead className="w-[100px] text-center">Customer</TableHead>
-              <TableHead className="w-[100px] text-center">Price</TableHead>
+              <TableHead className="w-[100px] text-center">Payout ID</TableHead>
               <TableHead className="w-[100px] text-center">
-                Rental Period
+                Booking ID
               </TableHead>
               <TableHead className="w-[100px] text-center">
-                Delivery Type
+                Booking Amount
+              </TableHead>
+              <TableHead className="w-[100px] text-center">
+                Requested Amount
+              </TableHead>
+              <TableHead className="w-[100px] text-center">
+                Commission
+              </TableHead>
+              <TableHead className="w-[100px] text-center">
+                Requested At
               </TableHead>
               <TableHead className="w-[100px] text-center">Status</TableHead>
               <TableHead className="w-[100px] text-center">Action</TableHead>
@@ -77,43 +99,39 @@ const BookingsTable = ({ token }: Props) => {
                   ))}
                 </TableRow>
               ))
-            ) : bookings.length > 0 ? (
-              bookings.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="text-center">{item.id}</TableCell>
-                  <TableCell className="text-center">{item.dressId}</TableCell>
+            ) : payouts.length > 0 ? (
+              payouts.map((item) => (
+                <TableRow key={item._id}>
+                  <TableCell className="text-center">{item._id}</TableCell>
                   <TableCell className="text-center">
-                    {item.customer._id}
+                    {item.bookingId}
                   </TableCell>
                   <TableCell className="text-center">
-                    {" "}
-                    {`$ ${item.totalAmount}`}
+                    ${item.bookingAmount}
                   </TableCell>
-                  <TableCell className="text-center flex justify-center gap-2 mt-5">
-                    <p>{new Date(item.rentalStartDate).toLocaleDateString()}</p>{" "}
-                    -
-                    <span>
-                      {new Date(item.rentalEndDate).toLocaleDateString()}
+                  <TableCell className="text-center">
+                    ${item.requestedAmount}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {item.commission}%
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {new Date(item.requestedAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <span
+                      className={`px-2 rounded-3xl font-semibold text-xs py-1 ${
+                        item.status === "pending" &&
+                        "text-orange-600 bg-orange-200"
+                      } ${
+                        item.status === "paid" && "text-green-600 bg-green-200"
+                      }`}
+                    >
+                      {item.status}
                     </span>
                   </TableCell>
-                  <TableCell className="text-center">
-                    {`${item.deliveryMethod}`}
-                  </TableCell>
-                  <TableCell className="text-center space-x-1">
-                    {item.statusHistory.map((status) => (
-                      <span
-                        key={status._id}
-                        className={`px-2 rounded-3xl font-semibold text-xs py-1 ${
-                          status.status === "Pending" &&
-                          "text-orange-600 bg-orange-200"
-                        }`}
-                      >
-                        {status.status}
-                      </span>
-                    ))}
-                  </TableCell>
                   <TableCell className="text-center space-x-5">
-                    <Link href={`/bookings/${item.id}`}>
+                    <Link href={`/payouts/${item._id}`}>
                       <Button>View</Button>
                     </Link>
                   </TableCell>
@@ -125,7 +143,7 @@ const BookingsTable = ({ token }: Props) => {
                   colSpan={8}
                   className="text-center py-6 text-gray-500"
                 >
-                  No bookings found
+                  No payouts found
                 </TableCell>
               </TableRow>
             )}
@@ -133,17 +151,17 @@ const BookingsTable = ({ token }: Props) => {
         </Table>
       </div>
 
-      {paginationInfo && (
+      {data && (
         <div className="flex justify-between items-center mt-4 text-sm">
           <span>
-            Page {paginationInfo.currentPage} of {paginationInfo.totalPages} •{" "}
-            {paginationInfo.totalData} records
+            Page {data.page} of {Math.ceil(data.total / data.limit)} •{" "}
+            {data.total} records
           </span>
           <div className="space-x-2">
             <Button
               variant="outline"
               size="sm"
-              disabled={!paginationInfo.hasPrevPage}
+              disabled={page <= 1}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
             >
               Previous
@@ -151,7 +169,7 @@ const BookingsTable = ({ token }: Props) => {
             <Button
               variant="outline"
               size="sm"
-              disabled={!paginationInfo.hasNextPage}
+              disabled={page >= Math.ceil(data.total / data.limit)}
               onClick={() => setPage((p) => p + 1)}
             >
               Next
@@ -163,4 +181,4 @@ const BookingsTable = ({ token }: Props) => {
   );
 };
 
-export default BookingsTable;
+export default PaymentsTable;

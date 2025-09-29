@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import React from "react";
-import { useBookingsFilter } from "./states/useBookingsFilter";
+import { usePaymentsFilter } from "./states/usePaymentsFilter";
 
 const PaymentFilter = () => {
-  const { setSearch, setDate } = useBookingsFilter();
+  const { setSearch, setDate } = usePaymentsFilter();
 
   return (
     <div>
