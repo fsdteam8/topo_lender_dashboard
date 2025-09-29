@@ -56,24 +56,30 @@ const routes = [
   },
   {
     id: 5,
+    label: "Subscription Plans",
+    icon: ShoppingBag,
+    href: "/subscription-plans",
+  },
+  {
+    id: 6,
     label: "Disputes",
     icon: Video,
     href: "/disputes",
   },
   {
-    id: 6,
+    id: 7,
     label: "Chats",
     icon: DollarSign,
     href: "/chats",
   },
   {
-    id: 7,
+    id: 8,
     label: "Help Center",
     icon: BarChart3,
     href: "/help-center",
   },
   {
-    id: 8,
+    id: 9,
     label: "Account Settings",
     icon: Settings,
     href: "/account-settings",
