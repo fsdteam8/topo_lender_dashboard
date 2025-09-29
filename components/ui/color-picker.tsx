@@ -13,7 +13,7 @@ interface ColorPickerProps {
 }
 
 export function ColorPicker({
-  initialColor = "#000000",
+  initialColor = "red",
   onChange,
   label = "Color",
 }: ColorPickerProps) {
@@ -41,18 +41,11 @@ export function ColorPicker({
         />
         <div className="flex-1 flex gap-2">
           <Input
-            type="color"
-            id="color-picker"
-            value={color}
-            onChange={handleColorChange}
-            className="h-10 w-20 p-1 cursor-pointer"
-          />
-          <Input
             type="text"
             value={color}
             onChange={handleColorChange}
             className="h-10 flex-1"
-            placeholder="#000000"
+            placeholder="Red"
             pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
             title="Hexadecimal color code (e.g. #FF0000)"
           />
