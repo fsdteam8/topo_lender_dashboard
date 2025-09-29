@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { BookingsResponse } from "@/types/bookings/bookingTypes";
 import { useBookingsFilter } from "./states/useBookingsFilter";
 import Link from "next/link";
+import PayoutButton from "./payout-button";
 
 interface Props {
   token: string;
@@ -112,10 +113,12 @@ const BookingsTable = ({ token }: Props) => {
                       </span>
                     ))}
                   </TableCell>
-                  <TableCell className="text-center space-x-5">
+                  <TableCell className="text-center flex items-center justify-center space-x-5">
                     <Link href={`/bookings/${item.id}`}>
                       <Button>View</Button>
                     </Link>
+
+                    <PayoutButton id={item.id} token={token} />
                   </TableCell>
                 </TableRow>
               ))
