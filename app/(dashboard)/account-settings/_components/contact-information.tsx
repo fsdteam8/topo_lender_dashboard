@@ -35,9 +35,9 @@ const ContactInformation = ({
   } = useSettingStore();
 
   useEffect(() => {
-    if (userInfo.firstName) setFirstName(userInfo.firstName);
-    if (userInfo.lastName) setLastName(userInfo.lastName);
-    if (userInfo.phoneNumber) setPhoneNumber(userInfo.phoneNumber);
+    if (userInfo?.firstName) setFirstName(userInfo?.firstName);
+    if (userInfo?.lastName) setLastName(userInfo?.lastName);
+    if (userInfo?.phoneNumber) setPhoneNumber(userInfo?.phoneNumber);
   }, [userInfo, setFirstName, setLastName, setPhoneNumber]);
 
   const updateUserInfo = useMutation({
@@ -110,7 +110,7 @@ const ContactInformation = ({
               disabled
               className="focus-visible:ring-0"
               placeholder="Enter Email Address"
-              value={userInfo.email}
+              value={userInfo?.email}
             />
           </div>
 
