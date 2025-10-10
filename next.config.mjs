@@ -9,6 +9,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    reactRefresh: false, // 🚫 Fast Refresh Disabled
+  },
 }
 
 export default nextConfig
