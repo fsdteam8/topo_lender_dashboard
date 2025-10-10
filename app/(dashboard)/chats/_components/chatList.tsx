@@ -37,7 +37,7 @@ export default function ChatList({
             onClick={() => onSelect(conversation.id)}
           >
             <div className="bg-red-300 rounded-full p-2 flex-shrink-0">
-              <User className="h-5 w-5 text-gray-800" />
+              <User className="h-5 w-5 text-pink-800" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex justify-between items-center">
