@@ -250,7 +250,7 @@ export default function ChatMessages({
               disabled={isFetchingNextPage}
               variant="outline"
               size="sm"
-              className="bg-white border-gray-300 hover:bg-gray-50 shadow-sm"
+              className="bg-slate-50 border-gray-200 rounded-full font-light text-[12px] hover:bg-slate-100/80 text text shadow-sm"
             >
               {isFetchingNextPage ? (
                 <>
@@ -258,7 +258,7 @@ export default function ChatMessages({
                   Loading...
                 </>
               ) : (
-                'Load More Messages'
+                'Load More Messages....'
               )}
             </Button>
           </div>
@@ -300,7 +300,7 @@ export default function ChatMessages({
                     {isMyMessage &&
                       hoveredMessageId === message.id &&
                       !editingMessageId && (
-                        <div className="absolute -top-9 right-0 flex gap-1 bg-white rounded-lg p-1 shadow-md border border-gray-200">
+                        <div className="absolute top-[50%] translate-y-[-50%] -left-[85px] flex gap-1 bg-white rounded-lg p-1 shadow-md border border-gray-200">
                           <button
                             onClick={() => handleEditClick(message)}
                             className="p-1.5 hover:bg-gray-50 rounded transition-colors"
