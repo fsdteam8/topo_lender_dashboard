@@ -169,7 +169,7 @@ export default function ChatMessages({
             height={200}
             className="rounded-xl max-w-[280px] md:max-w-[400px] cursor-pointer object-cover transition-transform group-hover:scale-[1.02]"
             onClick={() => setPreviewImage(url)}
-            style={{ width: '100%', height: 'auto' }}
+            style={{ width: '100%', height: '300px' }}
             unoptimized={url.startsWith('blob:') || url.startsWith('data:')}
           />
           <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition">
@@ -196,7 +196,7 @@ export default function ChatMessages({
 
     // Other files (PDF, Docs, etc.)
     return (
-      <div className="mt-2 flex items-center gap-2 p-2 bg-gray-100 rounded-lg">
+      <div className="mt-2 flex items-center gap-2 p-2 bg-gray-100 text-gray-700 rounded-lg">
         <File className="h-5 w-5 text-gray-600" />
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium truncate">{fileName}</p>
@@ -300,13 +300,13 @@ export default function ChatMessages({
                     {isMyMessage &&
                       hoveredMessageId === message.id &&
                       !editingMessageId && (
-                        <div className="absolute top-[50%] translate-y-[-50%] -left-[85px] flex gap-1 bg-white rounded-lg p-1 shadow-md border border-gray-200">
+                        <div className="absolute top-[50%] translate-y-[-50%] -left-[75px] flex gap-1 bg-white rounded-lg p-1 shadow-md border border-gray-200">
                           <button
                             onClick={() => handleEditClick(message)}
                             className="p-1.5 hover:bg-gray-50 rounded transition-colors"
                             title="Edit message"
                           >
-                            <Edit3 className="h-3.5 w-3.5 text-gray-700" />
+                            <Edit3 className="h-3 w-3 text-gray-700" />
                           </button>
                           <button
                             onClick={() => handleDeleteClick(message.id)}
@@ -353,7 +353,7 @@ export default function ChatMessages({
                             variant="default"
                             size="sm"
                             disabled={isEditing}
-                            className="h-8 bg-[#891D33] hover:bg-[#891D33]/90"
+                            className="h-8 bg-[#891D33] hover:bg-[#891D33]/70"
                           >
                             <CloseIcon className="h-3 w-3 mr-1" />
                             Cancel
