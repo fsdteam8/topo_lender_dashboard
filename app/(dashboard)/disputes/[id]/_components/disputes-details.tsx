@@ -13,15 +13,15 @@ interface Props {
   token: string;
 }
 
-const BookingsDetails = ({ token }: Props) => {
+const DisputesDetails = ({ token }: Props) => {
   const params = useParams();
   const id = params.id;
 
-  const { data: bookingDetails = {}, isLoading } = useQuery<BookingsResponse>({
+  const { data: disputesDetails = {}, isLoading } = useQuery<BookingsResponse>({
     queryKey: ["all-bookings"],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/customer/bookings/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender/disputes/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -34,13 +34,15 @@ const BookingsDetails = ({ token }: Props) => {
     },
   });
 
+  console.log("disputesDetails : ", disputesDetails)
+
   return (
     <div>
       <div className="grid grid-cols-2 gap-8">
-        <AboutBooking bookingDetails={bookingDetails} isLoading={isLoading} />
-        <AboutOrder bookingDetails={bookingDetails} isLoading={isLoading} />
-        <AboutPayment bookingDetails={bookingDetails} isLoading={isLoading} />
-        <AboutAnalytics bookingDetails={bookingDetails} isLoading={isLoading} />
+        <AboutBooking bookingDetails={disputesDetails} isLoading={isLoading} />
+        <AboutOrder bookingDetails={disputesDetails} isLoading={isLoading} />
+        <AboutPayment bookingDetails={disputesDetails} isLoading={isLoading} />
+        <AboutAnalytics bookingDetails={disputesDetails} isLoading={isLoading} />
       </div>
 
       <div>
@@ -50,4 +52,4 @@ const BookingsDetails = ({ token }: Props) => {
   );
 };
 
-export default BookingsDetails;
+export default DisputesDetails;

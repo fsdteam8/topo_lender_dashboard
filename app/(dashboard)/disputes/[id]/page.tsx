@@ -1,6 +1,6 @@
 import React from "react";
-import BookingsDetails from "./_components/BookingsDetails";
 import { auth } from "@/auth";
+import DisputesDetails from "./_components/disputes-details";
 
 const page = async () => {
   const cu = await auth();
@@ -9,7 +9,7 @@ const page = async () => {
 
   return (
     <div className="p-10">
-      <BookingsDetails token={token as string} />
+      <DisputesDetails token={token as string} />
     </div>
   );
 };
