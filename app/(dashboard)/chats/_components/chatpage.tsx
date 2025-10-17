@@ -93,7 +93,9 @@ export default function ChatPage() {
           minute: '2-digit',
         }),
         participants: conv.participants,
-        name, // 🆕 Add chat partner name
+        name,
+        status: conv.status, // ✅ add this
+        flagged: conv.flagged || { status: false }, // ✅ add this
       }
     }) || []
 
