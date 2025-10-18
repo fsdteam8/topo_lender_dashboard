@@ -10,14 +10,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus, Search } from "lucide-react";
-import React from "react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import ManualBookings from "./manual-bookings";
+import React, { useState } from "react";
 import DisputeCard from "./dispute-card";
 import { useDisputesFilter } from "./states/useDisputesFilter";
+import { SubmitDisputeModal } from "./submit-dispute-modal";
 
 const DisputeHeader = () => {
   const { setSearch } = useDisputesFilter();
+  const [open, setOpen] = useState(false);
 
   return (
     <div>
@@ -38,7 +38,10 @@ const DisputeHeader = () => {
             </SelectContent>
           </Select>
 
-          <Button className="flex items-center gap-2">
+          <Button
+            onClick={() => setOpen(true)}
+            className="flex items-center gap-2"
+          >
             <span>Submit New Dispute</span>{" "}
             <span>
               <Plus />
@@ -77,6 +80,10 @@ const DisputeHeader = () => {
           </Select>
         </div>
       </div>
+
+      {open && (
+        <SubmitDisputeModal open={open} onOpenChange={() => setOpen(false)} />
+      )}
     </div>
   );
 };
