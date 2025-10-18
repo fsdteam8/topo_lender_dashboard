@@ -4,36 +4,32 @@ import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 
-type StatusHistory = {
-  _id: string;
-  status: string;
-};
+interface RentalPrice {
+  fourDays?: number;
+  eightDays?: number;
+}
 
-type BookingDetails = {
-  id?: string;
-  statusHistory?: StatusHistory[];
-  customer?: { _id?: string };
-  listing?: { 
-    dressName?: string;
-    media?: string[];
-    dressId?: string;
-    brand?: string;
-  };
-  rentalStartDate?: string;
-  rentalEndDate?: string;
-  totalAmount?: number;
-  createdAt?: string;
-};
+interface Listing {
+  media?: string[];
+  dressId?: string;
+  brand?: string;
+  rentalPrice?: RentalPrice;
+}
 
-type AboutBookingProps = {
-  bookingDetails?: BookingDetails;
-  isLoading?: boolean;
-};
+interface Booking {
+  listing?: Listing;
+}
 
-const AboutOrder: React.FC<AboutBookingProps> = ({
-  bookingDetails,
-  isLoading,
-}) => {
+interface DisputeDetails {
+  booking?: Booking;
+}
+
+interface AboutOrderProps {
+  disputesDetails?: DisputeDetails | null;
+  isLoading: boolean;
+}
+
+const AboutOrder: React.FC<AboutOrderProps> = ({ disputesDetails, isLoading }) => {
   if (isLoading) {
     return (
       <div className="bg-white p-5 rounded-lg shadow-[0px_4px_10px_0px_#0000001A]">
@@ -54,6 +50,8 @@ const AboutOrder: React.FC<AboutBookingProps> = ({
     );
   }
 
+  const listing = disputesDetails?.booking?.listing;
+
   return (
     <div className="bg-white p-5 rounded-lg shadow-[0px_4px_10px_0px_#0000001A]">
       <div>
@@ -63,20 +61,25 @@ const AboutOrder: React.FC<AboutBookingProps> = ({
       <div className="mt-4 flex items-start gap-4">
         <div>
           <Image
-            src={bookingDetails?.listing?.media?.[0] ?? "/placeholder.png"}
-            alt="media.png"
+            src={listing?.media?.[0] ?? "/placeholder.png"}
+            alt="listing image"
             width={1000}
             height={1000}
-            className="h-[150px] w-[150px]"
+            className="h-[150px] w-[150px] object-cover rounded-md"
           />
         </div>
 
         <div className="space-y-2">
           <h1 className="text-lg font-medium">
-            Dress ID : {bookingDetails?.listing?.dressId}
+            Dress ID: {listing?.dressId ?? "N/A"}
           </h1>
-          <h1>Brand: {bookingDetails?.listing?.brand}</h1>
-          <h1>Price: ${bookingDetails?.totalAmount ?? 0}</h1>
+          <h1>Brand: {listing?.brand ?? "N/A"}</h1>
+          <h1>
+            Price: ${listing?.rentalPrice?.fourDays ?? 0} (four days)
+          </h1>
+          <h1>
+            Price: ${listing?.rentalPrice?.eightDays ?? 0} (eight days)
+          </h1>
         </div>
       </div>
     </div>

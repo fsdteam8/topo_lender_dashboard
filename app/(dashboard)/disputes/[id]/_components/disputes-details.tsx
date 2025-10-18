@@ -3,11 +3,12 @@
 import { BookingsResponse } from "@/types/bookings/bookingTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import AboutBooking from "./about-booking";
 import AboutOrder from "./about-order";
-import AboutPayment from "./about-payment";
-import AboutAnalytics from "./about-analytics";
+import AboutAnalytics from "./dispute-description";
 import DisputeForm from "./dispute-form";
+import AboutDisputes from "./about-dispute";
+import DisputeReason from "./dispute-reason";
+import DisputeDescription from "./dispute-description";
 
 interface Props {
   token: string;
@@ -34,15 +35,13 @@ const DisputesDetails = ({ token }: Props) => {
     },
   });
 
-  console.log("disputesDetails : ", disputesDetails)
-
   return (
     <div>
       <div className="grid grid-cols-2 gap-8">
-        <AboutBooking bookingDetails={disputesDetails} isLoading={isLoading} />
-        <AboutOrder bookingDetails={disputesDetails} isLoading={isLoading} />
-        <AboutPayment bookingDetails={disputesDetails} isLoading={isLoading} />
-        <AboutAnalytics bookingDetails={disputesDetails} isLoading={isLoading} />
+        <AboutDisputes disputesDetails={disputesDetails} isLoading={isLoading} />
+        <AboutOrder disputesDetails={disputesDetails} isLoading={isLoading} />
+        <DisputeReason disputesDetails={disputesDetails} isLoading={isLoading} />
+        <DisputeDescription disputesDetails={disputesDetails} isLoading={isLoading} />
       </div>
 
       <div>
