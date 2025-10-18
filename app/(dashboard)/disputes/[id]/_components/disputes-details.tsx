@@ -11,6 +11,7 @@ import DisputeReason from "./dispute-reason";
 import DisputeDescription from "./dispute-description";
 import MediaEvidence from "./media-evidence";
 import DisputeTimeline from "./dispute-timeline";
+import DisputeAction from "./dispute-action";
 
 interface Props {
   token: string;
@@ -40,7 +41,9 @@ const DisputesDetails = ({ token }: Props) => {
   return (
     <div>
       <div>
-        <h1 className="tracking-widest uppercase font-medium text-xl mb-8">Dispute Details</h1>
+        <h1 className="tracking-widest uppercase font-medium text-xl mb-8">
+          Dispute Details
+        </h1>
       </div>
 
       <div className="grid grid-cols-2 gap-8">
@@ -69,6 +72,10 @@ const DisputesDetails = ({ token }: Props) => {
 
       <div>
         <DisputeForm />
+      </div>
+
+      <div>
+        <DisputeAction />
       </div>
     </div>
   );
