@@ -9,6 +9,7 @@ import DisputeForm from "./dispute-form";
 import AboutDisputes from "./about-dispute";
 import DisputeReason from "./dispute-reason";
 import DisputeDescription from "./dispute-description";
+import MediaEvidence from "./media-evidence";
 
 interface Props {
   token: string;
@@ -38,10 +39,23 @@ const DisputesDetails = ({ token }: Props) => {
   return (
     <div>
       <div className="grid grid-cols-2 gap-8">
-        <AboutDisputes disputesDetails={disputesDetails} isLoading={isLoading} />
+        <AboutDisputes
+          disputesDetails={disputesDetails}
+          isLoading={isLoading}
+        />
         <AboutOrder disputesDetails={disputesDetails} isLoading={isLoading} />
-        <DisputeReason disputesDetails={disputesDetails} isLoading={isLoading} />
-        <DisputeDescription disputesDetails={disputesDetails} isLoading={isLoading} />
+        <DisputeReason
+          disputesDetails={disputesDetails}
+          isLoading={isLoading}
+        />
+        <DisputeDescription
+          disputesDetails={disputesDetails}
+          isLoading={isLoading}
+        />
+        <MediaEvidence
+          disputesDetails={disputesDetails}
+          isLoading={isLoading}
+        />
       </div>
 
       <div>
