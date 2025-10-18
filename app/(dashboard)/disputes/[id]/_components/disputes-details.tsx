@@ -10,6 +10,7 @@ import AboutDisputes from "./about-dispute";
 import DisputeReason from "./dispute-reason";
 import DisputeDescription from "./dispute-description";
 import MediaEvidence from "./media-evidence";
+import DisputeTimeline from "./dispute-timeline";
 
 interface Props {
   token: string;
@@ -38,6 +39,10 @@ const DisputesDetails = ({ token }: Props) => {
 
   return (
     <div>
+      <div>
+        <h1 className="tracking-widest uppercase font-medium text-xl mb-8">Dispute Details</h1>
+      </div>
+
       <div className="grid grid-cols-2 gap-8">
         <AboutDisputes
           disputesDetails={disputesDetails}
@@ -53,6 +58,10 @@ const DisputesDetails = ({ token }: Props) => {
           isLoading={isLoading}
         />
         <MediaEvidence
+          disputesDetails={disputesDetails}
+          isLoading={isLoading}
+        />
+        <DisputeTimeline
           disputesDetails={disputesDetails}
           isLoading={isLoading}
         />
