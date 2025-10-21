@@ -21,7 +21,7 @@ const DisputesDetails = ({ token }: Props) => {
   const params = useParams();
   const id = params.id;
 
-  const { data: disputesDetails = {}, isLoading } = useQuery<BookingsResponse>({
+  const { data: disputesDetails = {}, isLoading } = useQuery({
     queryKey: ["all-bookings"],
     queryFn: async () => {
       const res = await fetch(
