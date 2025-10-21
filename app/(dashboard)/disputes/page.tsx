@@ -9,7 +9,7 @@ const page = async () => {
 
   return (
     <div className="p-10 space-y-8">
-      <DisputeHeader />
+      <DisputeHeader token={token as string} />
       <DisputesTable token={token as string} />
     </div>
   );
