@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import AboutDisputes from "../_components/about-dispute";
+import EscalateForm from "./_components/escalate-form";
 
 const page = () => {
   const { id } = useParams();
@@ -38,6 +39,8 @@ const page = () => {
           disputesDetails={disputesDetails}
           isLoading={isLoading}
         />
+
+        <EscalateForm />
       </div>
     </div>
   );
