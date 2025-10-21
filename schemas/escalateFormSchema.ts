@@ -5,7 +5,7 @@ export const escalateFormSchema = z.object({
   description: z
     .string()
     .min(10, { message: "Description must be at least 10 characters long" }),
-  priority: z.enum(["Standard", "High"], {
+  priority: z.enum(['Low', 'Medium', 'High'], {
     errorMap: () => ({ message: "Please select a valid priority" }),
   }),
   evidence: z

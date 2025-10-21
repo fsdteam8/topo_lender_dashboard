@@ -15,13 +15,33 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { escalateFormSchema } from "@/schemas/escalateFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 type FormValues = z.input<typeof escalateFormSchema>;
 
+interface EscalateData {
+  reason: string;
+  description: string;
+  priority: string;
+  confirmed: boolean;
+  scheduleCall: boolean;
+  evidence: Array<{
+    filename: string;
+    url: string;
+  }>;
+}
+
 const EscalateForm = () => {
+  const { id } = useParams();
+  const session = useSession();
+  const token = session?.data?.user?.accessToken;
   const [image, setImage] = useState<File | null>(null);
 
   const form = useForm<FormValues>({
@@ -29,22 +49,65 @@ const EscalateForm = () => {
     defaultValues: {
       reason: "",
       description: "",
-      priority: "Standard",
+      priority: "Low",
       evidence: [],
     },
   });
 
+  const escalateMutation = useMutation({
+    mutationFn: async (data: EscalateData) => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender/disputes/${id}/escalate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || errorData.message || "Failed to escalate dispute");
+      }
+
+      return response.json();
+    },
+    onSuccess: (data) => {
+      console.log("Escalation successful:", data);
+      const message = data?.message || data?.data?.message || "Dispute escalated successfully!";
+      toast.success(message);
+      form.reset();
+      setImage(null);
+    },
+    onError: (error: Error) => {
+      console.error("Escalation failed:", error);
+      toast.error(error.message || "Failed to escalate dispute");
+    },
+  });
+
   const onSubmit = (values: FormValues) => {
-    console.log("values : ", values);
+    const escalateData: EscalateData = {
+      reason: values.reason,
+      description: values.description,
+      priority: values.priority,
+      confirmed: true,
+      scheduleCall: true,
+      evidence: values.evidence || [],
+    };
+
+    escalateMutation.mutate(escalateData);
   };
 
   return (
     <div>
-      <h1 className="text-xl font-medium mb-5">Escalation Details</h1>
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="bg-white p-6 rounded-lg space-y-5 shadow-[0px_4px_10px_0px_#0000001A]">
+            <h1 className="text-xl font-medium mb-5">Escalation Details</h1>
+
             {/* reason field */}
             <FormField
               control={form.control}
@@ -145,20 +208,27 @@ const EscalateForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Priority Label *</FormLabel>
-
-                  <RadioGroup
-                    className="flex items-center gap-5 border bg-background px-3 py-2 text-base h-12 rounded-md"
-                    defaultValue="Standard"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="Standard" id="Standard" />
-                      <Label htmlFor="Standard">Standard</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="High" id="High" />
-                      <Label htmlFor="High">High</Label>
-                    </div>
-                  </RadioGroup>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="flex items-center gap-5 border bg-background px-3 py-2 text-base h-12 rounded-md"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Low" id="Low" />
+                        <Label htmlFor="Low">Low</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Medium" id="Medium" />
+                        <Label htmlFor="Medium">Medium</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="High" id="High" />
+                        <Label htmlFor="High">High</Label>
+                      </div>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -171,7 +241,16 @@ const EscalateForm = () => {
               </h1>
 
               <div className="flex items-center gap-5">
-                <Button type="submit">Escalate Dispute</Button>
+                <Button disabled={escalateMutation.isPending} type="submit">
+                  {escalateMutation.isPending ? (
+                    <div className="flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Escalate Dispute
+                    </div>
+                  ) : (
+                    "Escalate Dispute"
+                  )}
+                </Button>
                 <Button type="button" variant="outline">
                   Contact Support
                 </Button>
