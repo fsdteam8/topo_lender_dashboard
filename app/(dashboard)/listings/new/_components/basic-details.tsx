@@ -1,39 +1,39 @@
-import { Button } from "@/components/ui/button";
-import { ColorPicker } from "@/components/ui/color-picker";
+import { Button } from '@/components/ui/button'
+import { ColorPicker } from '@/components/ui/color-picker'
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { ListingFormValues } from "@/types/listings/index";
-import { UseFormReturn } from "react-hook-form";
+} from '@/components/ui/select'
+import { cn } from '@/lib/utils'
+import { ListingFormValues } from '@/types/listings/index'
+import { UseFormReturn } from 'react-hook-form'
 import {
   CATEGORY_OPTIONS,
   CONDITION_OPTIONS,
   SIZE_OPTIONS,
-} from "./form-constants";
+} from './form-constants'
 
 interface Props {
-  form: UseFormReturn<ListingFormValues>;
+  form: UseFormReturn<ListingFormValues>
 }
 const BasicDetailsForm = ({ form }: Props) => {
-  const selectedColor = form.watch("colour");
+  const selectedColor = form.watch('colour')
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {/* Name */}
@@ -73,7 +73,10 @@ const BasicDetailsForm = ({ form }: Props) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Size</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select
+              onValueChange={field.onChange}
+              defaultValue={field.value || ''}
+            >
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a size" />
@@ -105,8 +108,8 @@ const BasicDetailsForm = ({ form }: Props) => {
                   <Button variant="outline" className="w-full">
                     <div
                       style={{ backgroundColor: selectedColor }}
-                      className={cn("h-5 w-5  rounded-md mr-3")}
-                    />{" "}
+                      className={cn('h-5 w-5  rounded-md mr-3')}
+                    />{' '}
                     Pick a color
                   </Button>
                 </PopoverTrigger>
@@ -131,7 +134,10 @@ const BasicDetailsForm = ({ form }: Props) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Condition</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select
+              onValueChange={field.onChange}
+              defaultValue={field.value || ''}
+            >
               <FormControl>
                 <SelectTrigger>
                   <SelectValue
@@ -179,7 +185,7 @@ const BasicDetailsForm = ({ form }: Props) => {
         )}
       />
     </div>
-  );
-};
+  )
+}
 
-export default BasicDetailsForm;
+export default BasicDetailsForm
