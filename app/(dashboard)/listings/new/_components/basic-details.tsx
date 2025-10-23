@@ -73,7 +73,7 @@ const BasicDetailsForm = ({ form }: Props) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Size</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select onValueChange={field.onChange}>
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a size" />

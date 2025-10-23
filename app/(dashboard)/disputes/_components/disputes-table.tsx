@@ -87,37 +87,37 @@ const DisputesTable = ({ token }: Props) => {
               ))
             ) : disputes.length > 0 ? (
               disputes.map((dispute) => (
-                <TableRow key={dispute._id}>
+                <TableRow key={dispute?._id}>
                   <TableCell className="text-center">
-                    {new Date(dispute.createdAt).toLocaleDateString()}
+                    {new Date(dispute?.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="text-center">
-                    {dispute.booking._id}
+                    {dispute?.booking?._id}
                   </TableCell>
                   <TableCell className="text-center">
-                    {dispute.booking.customer._id}
+                    {dispute?.booking?.customer?._id}
                   </TableCell>
                   <TableCell className="text-center">
-                    {dispute.booking.listing.dressId}
+                    {dispute?.booking?.listing?.dressId}
                   </TableCell>
                   <TableCell className="text-center">
-                    {dispute.issueType}
+                    {dispute?.issueType}
                   </TableCell>
                   <TableCell className="text-center">
                     <span
                       className={`px-2 rounded-3xl font-semibold text-xs py-1 ${
-                        dispute.status === "Pending"
+                        dispute?.status === "Pending"
                           ? "text-orange-600 bg-orange-200"
                           : dispute.status === "Resolved"
                           ? "text-green-600 bg-green-200"
                           : "text-blue-600 bg-blue-200"
                       }`}
                     >
-                      {dispute.status}
+                      {dispute?.status}
                     </span>
                   </TableCell>
                   <TableCell className="text-center">
-                    <Link href={`/disputes/${dispute._id}`}>
+                    <Link href={`/disputes/${dispute?._id}`}>
                       <Button>View</Button>
                     </Link>
                   </TableCell>
