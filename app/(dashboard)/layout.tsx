@@ -1,18 +1,19 @@
-import { auth } from "@/auth";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { redirect } from "next/navigation";
-import "../globals.css";
-import Sidebar from "./_components/sidebar";
-import Topbar from "./_components/top-bar";
+import { auth } from '@/auth'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { redirect } from 'next/navigation'
+// import '../globals.css'
+import Sidebar from './_components/sidebar'
+import Topbar from './_components/top-bar'
+import ClientProvider from '@/components/Providers/clientProvider'
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const cu = await auth();
+  const cu = await auth()
 
-  if (!cu?.user) redirect("/sign-in");
+  if (!cu?.user) redirect('/sign-in')
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -20,6 +21,7 @@ export default async function RootLayout({
       {/* Main Content */}
       <div className="ml-64 flex flex-1 flex-col">
         {/* Top Bar */}
+        <ClientProvider session={cu} />
         <Topbar name={cu?.user.firstName as string} />
 
         <TooltipProvider>{children}</TooltipProvider>
@@ -28,5 +30,5 @@ export default async function RootLayout({
         {/* <DashboardFooter /> */}
       </div>
     </div>
-  );
+  )
 }
