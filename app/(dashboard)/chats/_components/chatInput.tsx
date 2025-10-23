@@ -22,7 +22,6 @@ export default function ChatInput({ onSend, disabled = false }: Props) {
     setFile(null)
   }
 
-  // ✅ Input সর্বদা ফোকাসে রাখবে যখন message খালি হবে
   useEffect(() => {
     if (!disabled) {
       inputRef.current?.focus()
