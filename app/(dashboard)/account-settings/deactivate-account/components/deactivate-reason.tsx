@@ -11,8 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 const formSchema = z.object({
@@ -26,7 +28,12 @@ const formSchema = z.object({
 
 type FormValue = z.input<typeof formSchema>;
 
-const DeactivateReason = () => {
+type DeactivationPayload = {
+  reason: string;
+  feedback: string;
+};
+
+const DeactivateReason = ({ token }: { token: string }) => {
   const form = useForm<FormValue>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,8 +42,41 @@ const DeactivateReason = () => {
     },
   });
 
-  const onSubmit = (value: FormValue) => {
-    console.log("value: ", value);
+  const { mutateAsync, isPending } = useMutation({
+    mutationKey: ["start-deactivation"],
+    mutationFn: async (payload: DeactivationPayload) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender/account/deactivate/start`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to start deactivation");
+      }
+
+      return await res.json();
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message);
+    },
+    onError: (error) => {
+      toast.error(error?.message);
+    },
+  });
+
+  const onSubmit = async (value: FormValue) => {
+    try {
+      await mutateAsync(value);
+    } catch (error) {
+      console.log(`error from start deactivation : ${error}`);
+    }
   };
 
   return (
@@ -86,7 +126,9 @@ const DeactivateReason = () => {
             )}
           />
 
-          <Button type="submit">Start Deactivation</Button>
+          <Button disabled={isPending} type="submit">
+            {isPending ? "Starting Deactivation..." : "Start Deactivation"}
+          </Button>
         </form>
       </Form>
     </Card>
