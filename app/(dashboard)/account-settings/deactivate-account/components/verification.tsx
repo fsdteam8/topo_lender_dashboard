@@ -18,28 +18,28 @@ import { toast } from "sonner";
 import z from "zod";
 
 const formSchema = z.object({
-  email: z.string().email(),
+  code: z.string().min(1, { message: "code is required" }),
 });
 
 type FormValue = z.input<typeof formSchema>;
 
-interface ConfirmDeactivationPayload {
-  email: string;
+interface verification {
+  code: string;
 }
 
-const ConfirmDeactivation = ({ token }: { token: string }) => {
+const Verification = ({ token }: { token: string }) => {
   const form = useForm<FormValue>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      code: "",
     },
   });
 
   const { mutateAsync, isPending } = useMutation({
-    mutationKey: ["confirm-deactivation"],
-    mutationFn: async (payload: ConfirmDeactivationPayload) => {
+    mutationKey: ["verification"],
+    mutationFn: async (payload: verification) => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender/account/deactivate/send-code`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender/account/deactivate/verify-code`,
         {
           method: "POST",
           headers: {
@@ -51,7 +51,7 @@ const ConfirmDeactivation = ({ token }: { token: string }) => {
       );
 
       if (!res.ok) {
-        throw new Error("Failed to confirm deactivation");
+        throw new Error("Failed to verification");
       }
 
       return await res.json();
@@ -68,25 +68,26 @@ const ConfirmDeactivation = ({ token }: { token: string }) => {
     try {
       await mutateAsync(value);
     } catch (error) {
-      console.log(`error from confirm deactivation : ${error}`);
+      console.log(`error from verification : ${error}`);
     }
   };
 
   return (
     <Card className="p-6 bg-white shadow-[0px_4px_10px_0px_#0000001A] mt-8 border-none">
-      <h1 className="text-xl font-medium mb-5">Send Deactivation Code</h1>
+      <h1 className="text-xl font-medium mb-5">Confirm Deactivation</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="email"
+            name="code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-red-700">Enter Email *</FormLabel>
+                <FormLabel className="text-red-700">
+                  Enter Verification Code *
+                </FormLabel>
                 <FormControl>
                   <Input
-                    type="email"
-                    placeholder="Enter your email"
+                    placeholder="Enter verification code"
                     {...field}
                     className="h-[50px]"
                   />
@@ -98,7 +99,7 @@ const ConfirmDeactivation = ({ token }: { token: string }) => {
           />
 
           <Button disabled={isPending} type="submit">
-            {isPending ? "Sending Deactivation Code..." : "Send Deactivation Code"}
+            {isPending ? "Confirm Deactivation..." : "Confirm Deactivation"}
           </Button>
         </form>
       </Form>
@@ -106,4 +107,4 @@ const ConfirmDeactivation = ({ token }: { token: string }) => {
   );
 };
 
-export default ConfirmDeactivation;
+export default Verification;
