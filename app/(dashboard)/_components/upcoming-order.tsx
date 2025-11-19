@@ -2,32 +2,32 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-// Sample booking data
-const bookingData = [
-  {
-    id: "########",
-    dressId: "MG-XXXXXX",
-    date: "Sep 5-7, 2023",
-    customer: "XXXXXXX",
-    image: "/woman-orange-dress.png",
-  },
-  {
-    id: "########",
-    dressId: "MG-XXXXXX",
-    date: "Sep 5-7, 2023",
-    customer: "XXXXXXX",
-    image: "/two-women-dresses.png",
-  },
-  {
-    id: "########",
-    dressId: "MG-XXXXXX",
-    date: "Sep 5-7, 2023",
-    customer: "XXXXXXX",
-    image: "/woman-yellow-dress.png",
-  },
-];
+// Define TypeScript interfaces
+interface Customer {
+  _id: string;
+  name?: string;
+  email?: string;
+}
 
-const UpcomingOrder = () => {
+interface MasterDress {
+  _id: string;
+  thumbnail?: string;
+  name?: string;
+}
+
+interface UpcomingOrder {
+  _id: string;
+  masterdressId: MasterDress;
+  rentalStartDate: string;
+  rentalEndDate: string;
+  customer: Customer;
+}
+
+interface UpcomingOrderProps {
+  upcomingOrders: UpcomingOrder[];
+}
+
+const UpcomingOrder = ({ upcomingOrders }: UpcomingOrderProps) => {
   return (
     <div className="bg-white p-6 rounded-[15px] shadow-[0px_4px_10px_0px_#0000001A]">
       <div className="flex justify-between items-center mb-6">
@@ -40,26 +40,40 @@ const UpcomingOrder = () => {
         </Link>
       </div>
 
-      <div className="space-y-6 ">
-        {bookingData.map((booking, index) => (
-          <div key={index} className="flex space-x-4 bg-[#FEFAF6]">
-            <div className="w-20 h-24 overflow-hidden">
+      <div className="space-y-4">
+        {upcomingOrders?.map((order, index) => (
+          <div
+            key={order._id || index}
+            className="flex bg-[#FEFAF6] rounded-[8px] overflow-hidden"
+          >
+            {/* Image Container - Fixed alignment */}
+            <div className="w-24 h-28  relative">
               <Image
-                src={booking.image || "/placeholder.svg"}
-                alt={`Booking ${index + 1}`}
-                width={80}
-                height={96}
-                className="object-cover w-full h-full rounded-l-[8px]"
+                src={order?.masterdressId?.thumbnail || "/placeholder.svg"}
+                alt={`Dress for booking ${order._id}`}
+                fill
+                className="object-cover"
+                sizes="80px"
               />
             </div>
-            <div className="rounded-r-[8px] p-2">
-              <p className="text-sm font-medium">BOOKING ID: {booking.id}</p>
-              <p className="text-xs text-gray-500">
-                Dress Id : {booking.dressId}
+
+            {/* Content Container */}
+            <div className="flex-1 pt-2 px-4 space-y-1 h-28">
+              <p className="text-sm font-medium">BOOKING ID: {order?._id}</p>
+              <p className="text-sm text-gray-500">
+                Dress Id: {order?.masterdressId?._id}
               </p>
-              <p className="text-xs text-gray-500">{booking.date}</p>
-              <p className="text-xs text-gray-500">
-                Customer: {booking.customer}
+              <p className="text-sm text-gray-500 flex items-center gap-2">
+                <span>
+                  {new Date(order?.rentalStartDate).toLocaleDateString()}
+                </span>
+                <span>-</span>
+                <span>
+                  {new Date(order?.rentalEndDate).toLocaleDateString()}
+                </span>
+              </p>
+              <p className="text-sm text-gray-500">
+                Customer ID: {order?.customer?._id}
               </p>
             </div>
           </div>

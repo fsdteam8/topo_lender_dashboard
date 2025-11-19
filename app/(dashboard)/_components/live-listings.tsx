@@ -21,7 +21,7 @@ const LiveListings = ({ liveListings }) => {
           <div key={index} className="flex bg-[#FEFAF6]">
             <div className="w-20 h-24 overflow-hidden">
               <Image
-                src={dress?.media[0] || "/placeholder.svg"}
+                src={dress?.thumbnail || "/placeholder.svg"}
                 alt={`Dress ${index + 1}`}
                 width={80}
                 height={96}
@@ -30,8 +30,8 @@ const LiveListings = ({ liveListings }) => {
             </div>
             <div className="px-4 pt-2 rounded-r-[8px]">
               <p className="font-medium">DRESS ID : {dress?.masterDressId}</p>
-              <p className="text-sm">Brand: {dress.brand}</p>
-              <p className="text-sm">Price: {dress.price}</p>
+              <p className="text-sm">Brand: {dress?.brand}</p>
+              <p className="text-sm">Price: {dress?.price}</p>
             </div>
           </div>
         ))}

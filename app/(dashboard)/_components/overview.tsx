@@ -27,7 +27,8 @@ const Overview = ({ token }: { token: string }) => {
     },
   });
 
-  const liveListings = data?.liveListings;
+  const liveListings = data?.liveListings || [];
+  const upcomingOrders = data?.upcomingOrders || [];
 
   return (
     <div>
@@ -47,7 +48,7 @@ const Overview = ({ token }: { token: string }) => {
         <Calendar />
 
         {/* Upcoming Orders Section */}
-        <UpcomingOrder />
+        <UpcomingOrder upcomingOrders={upcomingOrders} />
       </div>
     </div>
   );
