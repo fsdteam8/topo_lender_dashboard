@@ -4,7 +4,6 @@ import { Layout } from "@/components/layout";
 import { SearchInput } from "@/components/ui/search-input";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
-import ContactForm from "./_components/contact-form";
 
 // FAQ sections with questions
 const faqSections = [
@@ -121,13 +120,6 @@ export default function HelpCenterPage() {
     [key: string]: boolean;
   }>({});
 
-  // const toggleSection = (title: string) => {
-  //   setOpenSections((prev) => ({
-  //     ...prev,
-  //     [title]: !prev[title],
-  //   }));
-  // };
-
   const toggleQuestion = (question: string) => {
     setOpenQuestions((prev) => ({
       ...prev,
@@ -138,13 +130,6 @@ export default function HelpCenterPage() {
   return (
     <Layout>
       <div className="p-8">
-        <div className=" mb-[30px]">
-          <SearchInput
-            placeholder="Search......"
-            className="w-full rounded-[15px] shadow-[0px_4px_10px_0px_#0000001A]  bg-white text-[16px] font-normal leading-[120%] tracking-[0%] font-avenirNormal"
-          />
-        </div>
-
         <div className="space-y-[30px]">
           {faqSections.map((section) => (
             <div
@@ -158,11 +143,6 @@ export default function HelpCenterPage() {
                 <h3 className="text-xl font-medium text-black font-avenirNormal tracking-[0%] leading-[120%]">
                   {section.title}
                 </h3>
-                {/* {openSections[section.title] ? (
-                  <Minus className="h-4 w-4 text-gray-500" />
-                ) : (
-                  <Plus className="h-4 w-4 text-gray-500" />
-                )} */}
               </div>
 
               {!openSections[section.title] && (
@@ -201,14 +181,6 @@ export default function HelpCenterPage() {
               )}
             </div>
           ))}
-        </div>
-
-        <div className="bg-white rounded-lg shadow-sm p-[30px] mt-[30px]">
-          <h3 className="text-xl font-medium text-black font-avenirNormal tracking-[0%] leading-[120%] mb-5">
-            Contact Support
-          </h3>
-          {/* contact form  */}
-          <ContactForm />
         </div>
       </div>
     </Layout>
