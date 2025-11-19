@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-// Define TypeScript interfaces
 interface Customer {
   _id: string;
   name?: string;
@@ -25,9 +25,23 @@ interface UpcomingOrder {
 
 interface UpcomingOrderProps {
   upcomingOrders: UpcomingOrder[];
+  isLoading: boolean;
 }
 
-const UpcomingOrder = ({ upcomingOrders }: UpcomingOrderProps) => {
+const UpcomingOrder = ({ upcomingOrders, isLoading }: UpcomingOrderProps) => {
+  const OrderSkeleton = () => (
+    <div className="flex bg-[#FEFAF6] rounded-[8px] overflow-hidden">
+      <Skeleton className="w-24 h-28 rounded-l-[8px]" />
+
+      <div className="flex-1 pt-2 px-4 space-y-3 h-28">
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-3 w-1/2" />
+        <Skeleton className="h-3 w-2/3" />
+        <Skeleton className="h-3 w-1/2" />
+      </div>
+    </div>
+  );
+
   return (
     <div className="bg-white p-6 rounded-[15px] shadow-[0px_4px_10px_0px_#0000001A]">
       <div className="flex justify-between items-center mb-6">
@@ -41,44 +55,52 @@ const UpcomingOrder = ({ upcomingOrders }: UpcomingOrderProps) => {
       </div>
 
       <div className="space-y-4">
-        {upcomingOrders?.map((order, index) => (
-          <div
-            key={order._id || index}
-            className="flex bg-[#FEFAF6] rounded-[8px] overflow-hidden"
-          >
-            {/* Image Container - Fixed alignment */}
-            <div className="w-24 h-28  relative">
-              <Image
-                src={order?.masterdressId?.thumbnail || "/placeholder.svg"}
-                alt={`Dress for booking ${order._id}`}
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
-            </div>
+        {isLoading ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <OrderSkeleton key={index} />
+          ))
+        ) : upcomingOrders?.length > 0 ? (
+          upcomingOrders.map((order, index) => (
+            <div
+              key={order._id || index}
+              className="flex bg-[#FEFAF6] rounded-[8px] overflow-hidden"
+            >
+              <div className="w-24 h-28 relative">
+                <Image
+                  src={order?.masterdressId?.thumbnail || "/placeholder.svg"}
+                  alt={`Dress for booking ${order._id}`}
+                  fill
+                  className="object-cover"
+                  sizes="80px"
+                />
+              </div>
 
-            {/* Content Container */}
-            <div className="flex-1 pt-2 px-4 space-y-1 h-28">
-              <p className="text-sm font-medium">BOOKING ID: {order?._id}</p>
-              <p className="text-sm text-gray-500">
-                Dress Id: {order?.masterdressId?._id}
-              </p>
-              <p className="text-sm text-gray-500 flex items-center gap-2">
-                <span>Rental Period : </span>
-                <span>
-                  {new Date(order?.rentalStartDate).toLocaleDateString()}
-                </span>
-                <span>-</span>
-                <span>
-                  {new Date(order?.rentalEndDate).toLocaleDateString()}
-                </span>
-              </p>
-              <p className="text-sm text-gray-500">
-                Customer ID: {order?.customer?._id}
-              </p>
+              <div className="flex-1 pt-2 px-4 space-y-1 h-28">
+                <p className="text-sm font-medium">BOOKING ID: {order?._id}</p>
+                <p className="text-sm text-gray-500">
+                  Dress Id: {order?.masterdressId?._id}
+                </p>
+                <p className="text-sm text-gray-500 flex items-center gap-2">
+                  <span>Rental Period : </span>
+                  <span>
+                    {new Date(order?.rentalStartDate).toLocaleDateString()}
+                  </span>
+                  <span>-</span>
+                  <span>
+                    {new Date(order?.rentalEndDate).toLocaleDateString()}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-500">
+                  Customer ID: {order?.customer?._id}
+                </p>
+              </div>
             </div>
+          ))
+        ) : (
+          <div className="text-center py-8 text-gray-500">
+            No upcoming orders found
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

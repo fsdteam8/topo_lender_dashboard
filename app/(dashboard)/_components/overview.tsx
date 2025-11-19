@@ -48,7 +48,7 @@ const Overview = ({ token }: { token: string }) => {
         <Calendar />
 
         {/* Upcoming Orders Section */}
-        <UpcomingOrder upcomingOrders={upcomingOrders} />
+        <UpcomingOrder upcomingOrders={upcomingOrders} isLoading={isLoading} />
       </div>
     </div>
   );
