@@ -45,7 +45,7 @@ const Overview = ({ token }: { token: string }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Calendar Section */}
-        <Calendar />
+        <Calendar token={token} />
 
         {/* Upcoming Orders Section */}
         <UpcomingOrder upcomingOrders={upcomingOrders} isLoading={isLoading} />
