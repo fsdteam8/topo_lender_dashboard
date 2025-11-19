@@ -64,6 +64,7 @@ const UpcomingOrder = ({ upcomingOrders }: UpcomingOrderProps) => {
                 Dress Id: {order?.masterdressId?._id}
               </p>
               <p className="text-sm text-gray-500 flex items-center gap-2">
+                <span>Rental Period : </span>
                 <span>
                   {new Date(order?.rentalStartDate).toLocaleDateString()}
                 </span>
