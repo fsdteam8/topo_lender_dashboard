@@ -27,6 +27,8 @@ const Overview = ({ token }: { token: string }) => {
     },
   });
 
+  const liveListings = data?.liveListings;
+
   return (
     <div>
       <OverviewFilter />
@@ -37,7 +39,7 @@ const Overview = ({ token }: { token: string }) => {
 
       {/* Live Listings Section */}
       <div>
-        <LiveListings />
+        <LiveListings liveListings={liveListings} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
