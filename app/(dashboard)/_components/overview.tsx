@@ -1,17 +1,38 @@
+"use client";
 import React from "react";
 import OverviewFilter from "./overview-filter";
 import States from "./states";
 import LiveListings from "./live-listings";
 import Calendar from "./calendar";
 import UpcomingOrder from "./upcoming-order";
+import { useQuery } from "@tanstack/react-query";
 
-const Overview = () => {
+const Overview = ({ token }: { token: string }) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["overview"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender/overview`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+      return data?.data;
+    },
+  });
+
   return (
     <div>
       <OverviewFilter />
 
       <div>
-        <States />
+        <States data={data} isLoading={isLoading} />
       </div>
 
       {/* Live Listings Section */}
