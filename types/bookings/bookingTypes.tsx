@@ -1,38 +1,42 @@
 interface Customer {
   _id: string;
+  email: string;
 }
 
-interface Listing {
-  lenderId: string;
-}
-
-interface Status {
+interface StatusHistory {
   _id: string;
   status: string;
+  timestamp: string;
+  updatedBy: string;
 }
 
 interface Booking {
-  id: string;
+  _id: string;
   customer: Customer;
-  listing: Listing;
   dressId: string;
-  createdAt: string;
+  dressName: string;
   totalAmount: number;
   rentalStartDate: string;
   rentalEndDate: string;
+  rentalDurationDays: number;
   deliveryMethod: string;
-  statusHistory: Status[];
+  paymentStatus: string;
+  deliveryStatus: string;
+  statusHistory: StatusHistory[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface PaginationInfo {
   currentPage: number;
   totalPages: number;
-  totalData: number;
+  totalItems: number;
+  itemsPerPage: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
 }
 
 export interface BookingsResponse {
-  bookings: Booking[];
-  paginationInfo: PaginationInfo;
+  data: Booking[];
+  pagination: PaginationInfo;
 }
