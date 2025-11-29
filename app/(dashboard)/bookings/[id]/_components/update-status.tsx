@@ -79,7 +79,7 @@ const UpdateStatus = ({
         <div
           className={`h-2 w-full rounded-3xl ${
             deliveryStatus === statusValue ? "bg-primary" : "bg-[#d9d9d9]"
-          }`}
+          } ${statusValue === "Dress Returned" ? "hidden" : "block"}`}
         ></div>
       </div>
 
