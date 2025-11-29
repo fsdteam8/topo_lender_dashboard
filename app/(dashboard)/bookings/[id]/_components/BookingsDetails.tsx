@@ -40,7 +40,10 @@ const BookingsDetails = ({ token }: Props) => {
       <h1 className="uppercase text-2xl mb-8">Booking Details</h1>
 
       <div className="mb-10">
-        <DeliveryStatus bookingDetails={bookingDetails} />
+        <DeliveryStatus
+          bookingDetails={bookingDetails}
+          token={token}
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-8">

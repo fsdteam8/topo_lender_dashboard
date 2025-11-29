@@ -6,15 +6,20 @@ import PickupStatus from "./pickup-status";
 interface Props {
   bookingDetails: {
     deliveryMethod?: string;
+    deliveryStatus?: string;
   };
+  token: string;
 }
 
-const DeliveryStatus = ({ bookingDetails }: Props) => {
+const DeliveryStatus = ({ bookingDetails, token }: Props) => {
   return (
     <div>
       {bookingDetails?.deliveryMethod === "Shipping" ? (
-        <ShippingStatus bookingDetails={bookingDetails} />
-      ) : ( 
+        <ShippingStatus
+          deliveryStatus={bookingDetails?.deliveryStatus}
+          token={token}
+        />
+      ) : (
         <PickupStatus bookingDetails={bookingDetails} />
       )}
     </div>

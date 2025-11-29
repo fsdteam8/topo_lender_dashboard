@@ -1,51 +1,49 @@
-import React from "react";
-import { BookingDetails } from "./about-booking";
+"use client";
+import React, { useState } from "react";
 import { Box, Check, FileText, Truck, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useParams } from "next/navigation";
+import UpdateStatus from "./update-status";
 
 interface Props {
-  bookingDetails: {
-    deliveryMethod?: string;
-  };
+  deliveryStatus?: string;
+  token: string;
 }
 
-const ShippingStatus = ({ bookingDetails }: Props) => {
+const ShippingStatus = ({ deliveryStatus, token }: Props) => {
+  const [status, setStatus] = useState("");
+
+
+  const params = useParams();
+  const bookingId = params.id;
+
+  
+
   return (
     <div className="flex w-full gap-8">
-      {/* order confirmed */}
-      <div className="w-full">
-        <div className="flex items-center  gap-8">
-          <div className="p-5 rounded-full bg-white flex flex-col justify-center items-center">
-            <Check className="h-8 w-8 font-bold" />
-          </div>
-
-          <div className="h-2 w-full bg-primary rounded-3xl"></div>
-        </div>
-
-        <h3 className="font-medium my-3">Order Confirmed</h3>
-
-        <Button>Fulfil Order</Button>
-      </div>
+      {/* confirm order */}
+      <UpdateStatus
+        deliveryStatus={deliveryStatus as string}
+        statusValue="Confirmed"
+        IconName={Check}
+        bookingId={bookingId as string}
+        btnName="Fulfil Order"
+        status="Confirmed"
+        title="Order Confirmed"
+        token={token}
+      />
 
       {/* fulfil order */}
-      <div className="w-full">
-        <div className="flex items-center  gap-8">
-          <div className="p-5 rounded-full bg-white flex flex-col justify-center items-center">
-            <FileText className="h-8 w-8 font-bold" />
-          </div>
-
-          <div className="h-2 w-full bg-primary rounded-3xl"></div>
-        </div>
-
-        <h3 className="font-medium my-3">Label Ready</h3>
-
-        <Button
-          variant={"outline"}
-          className="border border-primary text-primary hover:text-primary"
-        >
-          Fulfil Order
-        </Button>
-      </div>
+      <UpdateStatus
+        deliveryStatus={deliveryStatus as string}
+        statusValue="PreparingShipment"
+        IconName={FileText}
+        bookingId={bookingId as string}
+        btnName="Print Shipping Label"
+        status="PreparingShipment"
+        title="Label Ready"
+        token={token}
+      />
 
       {/* dress shipped */}
       <div className="w-full">
