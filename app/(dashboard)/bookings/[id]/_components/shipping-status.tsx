@@ -13,11 +13,8 @@ interface Props {
 const ShippingStatus = ({ deliveryStatus, token }: Props) => {
   const [status, setStatus] = useState("");
 
-
   const params = useParams();
   const bookingId = params.id;
-
-  
 
   return (
     <div className="flex w-full gap-8">
@@ -28,7 +25,6 @@ const ShippingStatus = ({ deliveryStatus, token }: Props) => {
         IconName={Check}
         bookingId={bookingId as string}
         btnName="Fulfil Order"
-        status="Confirmed"
         title="Order Confirmed"
         token={token}
       />
@@ -40,30 +36,19 @@ const ShippingStatus = ({ deliveryStatus, token }: Props) => {
         IconName={FileText}
         bookingId={bookingId as string}
         btnName="Print Shipping Label"
-        status="PreparingShipment"
         title="Label Ready"
         token={token}
       />
 
-      {/* dress shipped */}
-      <div className="w-full">
-        <div className="flex items-center  gap-8">
-          <div className="p-5 rounded-full bg-white flex flex-col justify-center items-center">
-            <Truck className="h-8 w-8 font-bold" />
-          </div>
-
-          <div className="h-2 w-full bg-primary rounded-3xl"></div>
-        </div>
-
-        <h3 className="font-medium my-3">Dress Shipped</h3>
-
-        <Button
-          variant={"outline"}
-          className="border border-primary text-primary hover:text-primary"
-        >
-          Mark as Shipped
-        </Button>
-      </div>
+      <UpdateStatus
+        deliveryStatus={deliveryStatus as string}
+        statusValue="ShippedToCustomer"
+        IconName={Truck}
+        bookingId={bookingId as string}
+        btnName="Mark as Shipped"
+        title="Dress Shipped"
+        token={token}
+      />
 
       {/* return due */}
       <div className="w-full">

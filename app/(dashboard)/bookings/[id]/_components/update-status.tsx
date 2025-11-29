@@ -10,7 +10,6 @@ interface Props {
   statusValue: string;
   IconName: LucideIcon;
   btnName: string;
-  status: string;
   title: string;
   token: string;
   bookingId: string;
@@ -21,7 +20,6 @@ const UpdateStatus = ({
   statusValue,
   IconName,
   btnName,
-  status,
   title,
   token,
   bookingId,
@@ -39,7 +37,7 @@ const UpdateStatus = ({
             "Content-Type": "application/json",
             Authorization: `bearer ${token}`,
           },
-          body: JSON.stringify({ deliveryStatus: status }),
+          body: JSON.stringify({ deliveryStatus: statusValue }),
         }
       );
       return await res.json();
