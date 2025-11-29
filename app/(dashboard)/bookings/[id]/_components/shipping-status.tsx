@@ -40,6 +40,7 @@ const ShippingStatus = ({ deliveryStatus, token }: Props) => {
         token={token}
       />
 
+      {/* mark as shipped */}
       <UpdateStatus
         deliveryStatus={deliveryStatus as string}
         statusValue="ShippedToCustomer"
@@ -51,44 +52,26 @@ const ShippingStatus = ({ deliveryStatus, token }: Props) => {
       />
 
       {/* return due */}
-      <div className="w-full">
-        <div className="flex items-center  gap-8">
-          <div className="p-5 rounded-full bg-white flex flex-col justify-center items-center">
-            <Undo2 className="h-8 w-8 font-bold" />
-          </div>
-
-          <div className="h-2 w-full bg-primary rounded-3xl"></div>
-        </div>
-
-        <h3 className="font-medium my-3">Return Due</h3>
-
-        <Button
-          variant={"outline"}
-          className="border border-primary text-primary hover:text-primary"
-        >
-          Mark as Returned
-        </Button>
-      </div>
+      <UpdateStatus
+        deliveryStatus={deliveryStatus as string}
+        statusValue="Return Due"
+        IconName={Undo2}
+        bookingId={bookingId as string}
+        btnName="Mark as Returned"
+        title="Return Due"
+        token={token}
+      />
 
       {/* dress returned */}
-      <div>
-        <div className="flex items-center  gap-8">
-          <div className="p-5 rounded-full bg-white flex flex-col justify-center items-center">
-            <Box className="h-8 w-8 font-bold" />
-          </div>
-
-          <div className="h-2 w-full bg-primary rounded-3xl hidden"></div>
-        </div>
-
-        <h3 className="font-medium my-3">Dress Returned</h3>
-
-        <Button
-          variant={"outline"}
-          className="border border-primary text-primary hover:text-primary"
-        >
-          Escalate Dispute
-        </Button>
-      </div>
+      <UpdateStatus
+        deliveryStatus={deliveryStatus as string}
+        statusValue="Dress Returned"
+        IconName={Box}
+        bookingId={bookingId as string}
+        btnName="Escalate Dispute"
+        title="Dress Returned"
+        token={token}
+      />
     </div>
   );
 };
