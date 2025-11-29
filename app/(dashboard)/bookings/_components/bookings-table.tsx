@@ -16,6 +16,7 @@ import { BookingsResponse } from "@/types/bookings/bookingTypes";
 import { useBookingsFilter } from "./states/useBookingsFilter";
 import Link from "next/link";
 import PayoutButton from "./payout-button";
+import AcceptRejectButton from "./accept-reject-button";
 
 interface Props {
   token: string;
@@ -179,11 +180,18 @@ const BookingsTable = ({ token }: Props) => {
                       <Link href={`/bookings/${item?._id}`}>
                         <Button size="sm">View</Button>
                       </Link>
-                      <PayoutButton
-                        paymentStatus={item?.paymentStatus}
-                        id={item?._id}
-                        token={token}
-                      />
+                       <PayoutButton
+                          paymentStatus={item?.paymentStatus}
+                          id={item?._id}
+                          token={token}
+                        />
+                      {item?.deliveryStatus === "Pending" && (
+                        <AcceptRejectButton
+                          bookingId={item?._id}
+                          lenderId={item?.allocatedLender?.lenderId}
+                          token={token}
+                        />
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>

@@ -54,7 +54,11 @@ const PayoutButton = ({
 
   return (
     <Button
-      disabled={paymentStatus === "Pending" || isPending}
+      disabled={
+        paymentStatus === "Pending" ||
+        paymentStatus === "NotCharged" ||
+        isPending
+      }
       onClick={() => handlePayout(id)}
       className="bg-black hover:bg-[#000000ce] disabled:bg-[#000000ce] disabled:cursor-not-allowed"
     >
