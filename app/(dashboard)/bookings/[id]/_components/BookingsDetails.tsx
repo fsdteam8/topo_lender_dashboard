@@ -39,7 +39,7 @@ const BookingsDetails = ({ token }: Props) => {
     <div>
       <h1 className="uppercase text-2xl mb-8">Booking Details</h1>
 
-      <div className="mb-8">
+      <div className="mb-10">
         <DeliveryStatus bookingDetails={bookingDetails} />
       </div>
 

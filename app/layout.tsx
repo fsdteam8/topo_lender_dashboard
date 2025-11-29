@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn(raleway.className, "font-light")}>
-      <body>
+      <body className="bg-[#f7f2ee]">
         <Toaster position="bottom-right" richColors closeButton />
         <AuthProvider>
           <QueryProvider>
