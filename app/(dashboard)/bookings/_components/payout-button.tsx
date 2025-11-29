@@ -6,7 +6,15 @@ import { LoaderCircle } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 
-const PayoutButton = ({ id, token }: { id: string; token: string }) => {
+const PayoutButton = ({
+  id,
+  token,
+  paymentStatus,
+}: {
+  id: string;
+  token: string;
+  paymentStatus: string;
+}) => {
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["create-payout"],
     mutationFn: async (bookingId) => {
@@ -46,9 +54,9 @@ const PayoutButton = ({ id, token }: { id: string; token: string }) => {
 
   return (
     <Button
-      disabled={isPending}
+      disabled={paymentStatus === "Pending" || isPending}
       onClick={() => handlePayout(id)}
-      className="bg-black hover:bg-[#000000ce] disabled:bg-[#000000ce]"
+      className="bg-black hover:bg-[#000000ce] disabled:bg-[#000000ce] disabled:cursor-not-allowed"
     >
       {isPending ? (
         <h1 className="flex items-center gap-2">

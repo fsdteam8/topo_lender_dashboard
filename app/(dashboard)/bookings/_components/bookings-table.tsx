@@ -47,11 +47,14 @@ const BookingsTable = ({ token }: Props) => {
   const paginationInfo = data?.pagination;
 
   // Helper function to get current status from statusHistory
-  const getCurrentStatus = (statusHistory: Array<{ status: string; timestamp: string; _id: string }>) => {
+  const getCurrentStatus = (
+    statusHistory: Array<{ status: string; timestamp: string; _id: string }>
+  ) => {
     if (!statusHistory || statusHistory.length === 0) return "Unknown";
     // Sort by timestamp descending and get the latest status
-    const sorted = [...statusHistory].sort((a, b) => 
-      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    const sorted = [...statusHistory].sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
     );
     return sorted[0].status;
   };
@@ -77,8 +80,12 @@ const BookingsTable = ({ token }: Props) => {
           <TableHeader>
             <TableRow className="border-none">
               <TableHead className="w-[100px] text-center">Order ID</TableHead>
-              <TableHead className="w-[100px] text-center">Dress Name</TableHead>
-              <TableHead className="w-[100px] text-center">Customer Email</TableHead>
+              <TableHead className="w-[100px] text-center">
+                Dress Name
+              </TableHead>
+              <TableHead className="w-[100px] text-center">
+                Customer Email
+              </TableHead>
               <TableHead className="w-[100px] text-center">Price</TableHead>
               <TableHead className="w-[100px] text-center">
                 Rental Period
@@ -86,8 +93,12 @@ const BookingsTable = ({ token }: Props) => {
               <TableHead className="w-[100px] text-center">
                 Delivery Type
               </TableHead>
-              <TableHead className="w-[100px] text-center">Payment Status</TableHead>
-              <TableHead className="w-[100px] text-center">Delivery Status</TableHead>
+              <TableHead className="w-[100px] text-center">
+                Payment Status
+              </TableHead>
+              <TableHead className="w-[100px] text-center">
+                Delivery Status
+              </TableHead>
               <TableHead className="w-[100px] text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
@@ -120,36 +131,46 @@ const BookingsTable = ({ token }: Props) => {
                   </TableCell>
                   <TableCell className="text-center">
                     <div className="flex flex-col items-center space-y-1">
-                      <span>{new Date(item?.rentalStartDate).toLocaleDateString()}</span>
+                      <span>
+                        {new Date(item?.rentalStartDate).toLocaleDateString()}
+                      </span>
                       <span className="text-gray-500">to</span>
-                      <span>{new Date(item?.rentalEndDate).toLocaleDateString()}</span>
+                      <span>
+                        {new Date(item?.rentalEndDate).toLocaleDateString()}
+                      </span>
                       <span className="text-xs text-gray-500">
                         ({item?.rentalDurationDays} days)
                       </span>
                     </div>
                   </TableCell>
                   <TableCell className="text-center">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      item?.deliveryMethod === "Shipping" 
-                        ? "bg-blue-100 text-blue-800"
-                        : "bg-green-100 text-green-800"
-                    }`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        item?.deliveryMethod === "Shipping"
+                          ? "bg-blue-100 text-blue-800"
+                          : "bg-green-100 text-green-800"
+                      }`}
+                    >
                       {item?.deliveryMethod}
                     </span>
                   </TableCell>
                   <TableCell className="text-center">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      item?.paymentStatus === "Paid"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-orange-100 text-orange-800"
-                    }`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        item?.paymentStatus === "Paid"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-orange-100 text-orange-800"
+                      }`}
+                    >
                       {item?.paymentStatus}
                     </span>
                   </TableCell>
                   <TableCell className="text-center">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      getStatusBadgeStyle(item?.deliveryStatus)
-                    }`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadgeStyle(
+                        item?.deliveryStatus
+                      )}`}
+                    >
                       {item?.deliveryStatus}
                     </span>
                   </TableCell>
@@ -158,7 +179,11 @@ const BookingsTable = ({ token }: Props) => {
                       <Link href={`/bookings/${item?._id}`}>
                         <Button size="sm">View</Button>
                       </Link>
-                      <PayoutButton id={item?._id} token={token} />
+                      <PayoutButton
+                        paymentStatus={item?.paymentStatus}
+                        id={item?._id}
+                        token={token}
+                      />
                     </div>
                   </TableCell>
                 </TableRow>
