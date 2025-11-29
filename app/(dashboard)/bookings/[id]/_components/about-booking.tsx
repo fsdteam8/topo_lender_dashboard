@@ -8,7 +8,7 @@ type StatusHistory = {
   status: string;
 };
 
-type BookingDetails = {
+export type BookingDetails = {
   id?: string;
   statusHistory?: StatusHistory[];
   customer?: { _id?: string };
