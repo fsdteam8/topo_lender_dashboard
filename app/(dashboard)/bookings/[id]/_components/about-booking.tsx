@@ -12,7 +12,7 @@ type BookingDetails = {
   id?: string;
   statusHistory?: StatusHistory[];
   customer?: { _id?: string };
-  listing?: { dressName?: string };
+  dressName?: string;
   rentalStartDate?: string;
   rentalEndDate?: string;
   totalAmount?: number;
@@ -60,7 +60,7 @@ const AboutBooking: React.FC<AboutBookingProps> = ({
 
       <div className="mt-4 space-y-2 text-sm">
         <h1>Customer ID: {bookingDetails?.customer?._id ?? "N/A"}</h1>
-        <h1>Dress: {bookingDetails?.listing?.dressName ?? "N/A"}</h1>
+        <h1>Dress: {bookingDetails?.dressName ?? "N/A"}</h1>
         <h1>
           Rental Period:{" "}
           {bookingDetails?.rentalStartDate
