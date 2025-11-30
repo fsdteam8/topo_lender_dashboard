@@ -43,8 +43,8 @@ const UpdateStatus = ({
       return await res.json();
     },
     onSuccess: (data) => {
-      toast.success(data?.message);
       queryClient.invalidateQueries({ queryKey: ["all-bookings"] });
+      toast.success(data?.message);
     },
     onError: (error) => {
       toast.error(error?.message);

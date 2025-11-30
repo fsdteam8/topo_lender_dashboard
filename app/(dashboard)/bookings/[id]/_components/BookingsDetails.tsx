@@ -43,6 +43,7 @@ const BookingsDetails = ({ token }: Props) => {
         <DeliveryStatus
           bookingDetails={bookingDetails}
           token={token}
+          isLoading={isLoading}
         />
       </div>
 

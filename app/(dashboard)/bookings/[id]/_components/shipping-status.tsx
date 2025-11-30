@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Check, FileText, Truck, Undo2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
 import UpdateStatus from "./update-status";
 
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const ShippingStatus = ({ deliveryStatus, token }: Props) => {
-  const [status, setStatus] = useState("");
 
   const params = useParams();
   const bookingId = params.id;
