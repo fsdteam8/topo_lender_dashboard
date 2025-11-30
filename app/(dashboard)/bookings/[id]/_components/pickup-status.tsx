@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import UpdateStatus from "./update-status";
-import { Box, Check, FileText, Truck, Undo2 } from "lucide-react";
+import { Box, Check, MapPinCheck, MapPinned, Truck, Undo2 } from "lucide-react";
 import { useParams } from "next/navigation";
 
 interface Props {
@@ -30,10 +30,10 @@ const PickupStatus = ({ deliveryStatus, token }: Props) => {
       <UpdateStatus
         deliveryStatus={deliveryStatus as string}
         statusValue="PreparingShipment"
-        IconName={FileText}
+        IconName={MapPinned}
         bookingId={bookingId as string}
-        btnName="Print Shipping Label"
-        title="Label Ready"
+        btnName="Confirm Pick Up time"
+        title="Pickup Scheduled"
         token={token}
       />
 
@@ -41,10 +41,10 @@ const PickupStatus = ({ deliveryStatus, token }: Props) => {
       <UpdateStatus
         deliveryStatus={deliveryStatus as string}
         statusValue="ShippedToCustomer"
-        IconName={Truck}
+        IconName={MapPinCheck}
         bookingId={bookingId as string}
-        btnName="Mark as Shipped"
-        title="Dress Shipped"
+        btnName="Item Successfully Picked Up"
+        title="Dress Collected"
         token={token}
       />
 
