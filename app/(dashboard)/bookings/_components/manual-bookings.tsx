@@ -1,3 +1,4 @@
+"use client";
 import {
   DialogContent,
   DialogHeader,
@@ -8,8 +9,24 @@ import DateRange from "./date-range";
 import DressName from "./dress-name";
 import Description from "./description";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
 
 const ManualBookings = () => {
+  const session = useSession();
+  const token = session?.data?.user?.accessToken;
+
+  const { data: listingInfo } = useQuery({
+    queryKey: ["lender-all-listing"],
+    queryFn: () =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lender`, {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res) => res.json()),
+  });
+
   return (
     <div>
       <DialogContent className="lg:max-w-[800px]">
@@ -18,7 +35,7 @@ const ManualBookings = () => {
         </DialogHeader>
 
         <form>
-          <DressName />
+          <DressName listingInfo={listingInfo} />
           <DateRange />
           <Description />
 
