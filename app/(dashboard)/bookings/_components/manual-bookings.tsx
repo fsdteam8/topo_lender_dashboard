@@ -7,7 +7,6 @@ import {
 import React, { useState } from "react";
 import DateRange from "./date-range";
 import DressName from "./dress-name";
-import Description from "./description";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
@@ -16,6 +15,8 @@ const ManualBookings = () => {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [rentalDurationDays, setRentalDurationDays] = useState<number>(0);
+  const [selectedDressId, setSelectedDressId] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState<string>("");
 
   const session = useSession();
   const token = session?.data?.user?.accessToken;
@@ -29,6 +30,7 @@ const ManualBookings = () => {
           Authorization: `Bearer ${token}`,
         },
       }).then((res) => res.json()),
+    enabled: !!token,
   });
 
   return (
@@ -39,7 +41,13 @@ const ManualBookings = () => {
         </DialogHeader>
 
         <form>
-          <DressName listingInfo={listingInfo} />
+          <DressName
+            selectedDressId={selectedDressId}
+            setSelectedDressId={setSelectedDressId}
+            selectedSize={selectedSize}
+            setSelectedSize={setSelectedSize}
+            listingInfo={listingInfo}
+          />
           <DateRange
             startDate={startDate}
             setStartDate={setStartDate}
@@ -48,7 +56,6 @@ const ManualBookings = () => {
             rentalDurationDays={rentalDurationDays}
             setRentalDurationDays={setRentalDurationDays}
           />
-          <Description />
 
           <div className="text-center mt-10">
             <Button>Manual Booking</Button>
