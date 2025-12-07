@@ -1,17 +1,32 @@
 "use client";
 import {
+  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import DateRange from "./date-range";
 import DressName from "./dress-name";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner"; // Assuming you're using sonner for toasts, otherwise use your toast library
 
-const ManualBookings = () => {
+interface ManualBookingPayload {
+  listingId: string;
+  rentalStartDate: string;
+  rentalEndDate: string;
+  rentalDurationDays: number;
+  size: string;
+}
+
+interface Props {
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+}
+
+const ManualBookings = ({ isOpen, setIsOpen }: Props) => {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [rentalDurationDays, setRentalDurationDays] = useState<number>(0);
@@ -20,6 +35,7 @@ const ManualBookings = () => {
 
   const session = useSession();
   const token = session?.data?.user?.accessToken;
+  const queryClient = useQueryClient();
 
   const { data: listingInfo } = useQuery({
     queryKey: ["lender-all-listing"],
@@ -29,18 +45,97 @@ const ManualBookings = () => {
           "content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch listings");
+        }
+        return res.json();
+      }),
     enabled: !!token,
   });
 
+  const { mutateAsync: manualBookingMutate, isPending } = useMutation({
+    mutationKey: ["manual-booking"],
+    mutationFn: async (payload: ManualBookingPayload) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/customer/bookings/manual`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to create booking");
+      }
+
+      return res.json();
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message);
+      queryClient.invalidateQueries({ queryKey: ["all-bookings"] });
+      resetForm();
+      setIsOpen(false);
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Failed to create booking");
+    },
+  });
+
+  const handleManualBooking = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!selectedDressId) {
+      toast.error("Please select a dress");
+      return;
+    }
+
+    if (!startDate || !endDate) {
+      toast.error("Please select rental dates");
+      return;
+    }
+
+    if (!selectedSize) {
+      toast.error("Please select a size");
+      return;
+    }
+
+    const payload: ManualBookingPayload = {
+      listingId: selectedDressId,
+      rentalStartDate: startDate,
+      rentalEndDate: endDate,
+      rentalDurationDays: rentalDurationDays,
+      size: selectedSize,
+    };
+
+    try {
+      await manualBookingMutate(payload);
+    } catch (error) {
+      console.error("Booking error:", error);
+    }
+  };
+
+  const resetForm = () => {
+    setStartDate("");
+    setEndDate("");
+    setRentalDurationDays(0);
+    setSelectedDressId("");
+    setSelectedSize("");
+  };
+
   return (
-    <div>
+    <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
       <DialogContent className="lg:max-w-[800px]">
         <DialogHeader className="mb-4">
           <DialogTitle className="text-xl">Manual Booking</DialogTitle>
         </DialogHeader>
 
-        <form>
+        <form onSubmit={handleManualBooking}>
           <DressName
             selectedDressId={selectedDressId}
             setSelectedDressId={setSelectedDressId}
@@ -58,11 +153,13 @@ const ManualBookings = () => {
           />
 
           <div className="text-center mt-10">
-            <Button>Manual Booking</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? "Creating Booking..." : "Manual Booking"}
+            </Button>
           </div>
         </form>
       </DialogContent>
-    </div>
+    </Dialog>
   );
 };
 
