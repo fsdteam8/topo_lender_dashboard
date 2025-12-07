@@ -11,7 +11,7 @@ import DressName from "./dress-name";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner"; // Assuming you're using sonner for toasts, otherwise use your toast library
+import { toast } from "sonner";
 
 interface ManualBookingPayload {
   listingId: string;
