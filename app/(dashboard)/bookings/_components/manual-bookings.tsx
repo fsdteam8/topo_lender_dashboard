@@ -4,7 +4,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import React from "react";
+import React, { useState } from "react";
 import DateRange from "./date-range";
 import DressName from "./dress-name";
 import Description from "./description";
@@ -13,6 +13,10 @@ import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 
 const ManualBookings = () => {
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+  const [rentalDurationDays, setRentalDurationDays] = useState<number>(0);
+
   const session = useSession();
   const token = session?.data?.user?.accessToken;
 
@@ -36,11 +40,18 @@ const ManualBookings = () => {
 
         <form>
           <DressName listingInfo={listingInfo} />
-          <DateRange />
+          <DateRange
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            rentalDurationDays={rentalDurationDays}
+            setRentalDurationDays={setRentalDurationDays}
+          />
           <Description />
 
           <div className="text-center mt-10">
-            <Button>Sync to calendar</Button>
+            <Button>Manual Booking</Button>
           </div>
         </form>
       </DialogContent>
