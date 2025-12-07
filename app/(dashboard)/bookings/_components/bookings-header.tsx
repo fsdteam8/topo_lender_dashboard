@@ -10,13 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useBookingsFilter } from "./states/useBookingsFilter";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ManualBookings from "./manual-bookings";
 
 const BookingsHeader = () => {
   const { setSearch, setDate } = useBookingsFilter();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
@@ -26,13 +26,7 @@ const BookingsHeader = () => {
         </h1>
 
         <div>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button>Manual Booking</Button>
-            </DialogTrigger>
-
-            <ManualBookings />
-          </Dialog>
+          <Button onClick={() => setIsOpen(true)}>Manual Booking</Button>
         </div>
       </div>
 
@@ -82,6 +76,10 @@ const BookingsHeader = () => {
           </div>
         </div>
       </div>
+
+      {isOpen && (
+        <ManualBookings isOpen={isOpen} setIsOpen={() => setIsOpen(false)} />
+      )}
     </div>
   );
 };
