@@ -1,21 +1,14 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import React from "react";
+import { auth } from "@/auth";
+import PaymentSuccess from "./_components/payment-success";
 
-const page = () => {
+const page = async () => {
+  const cu = await auth();
+  const id = cu?.user?.id;
+  const token = cu?.user?.accessToken;
+
   return (
-    <div className="min-h-[calc(100vh-100px)] flex flex-col items-center justify-center ">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">
-        Payment Successful!
-      </h1>
-
-      <p className="text-xl text-gray-600 mb-8">
-        Thank you for your order. Your payment has been processed successfully.
-      </p>
-
-      <Link href={`/bookings`}>
-        <Button>Back to bookings</Button>
-      </Link>
+    <div>
+      <PaymentSuccess token={token as string} id={id as string} />
     </div>
   );
 };
