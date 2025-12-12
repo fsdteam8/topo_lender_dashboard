@@ -27,14 +27,10 @@ const SubscriptionHeader = ({ token, id }: { token: string; id: string }) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div>
         <h1 className="text-2xl font-medium uppercase tracking-[0.3rem]">
           Subscription Plans
         </h1>
-
-        <Button>
-          Download Report <Download />
-        </Button>
       </div>
 
       <div className="mt-8">
