@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import OverviewFilter from "./overview-filter";
 import States from "./states";
 import LiveListings from "./live-listings";
 import Calendar from "./calendar";
@@ -32,7 +31,6 @@ const Overview = ({ token }: { token: string }) => {
 
   return (
     <div>
-      <OverviewFilter />
 
       <div>
         <States data={data} isLoading={isLoading} />
