@@ -13,17 +13,20 @@ import { Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useBookingsFilter } from "./states/useBookingsFilter";
 import ManualBookings from "./manual-bookings";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const BookingsHeader = ({ token, id }: { token: string; id: string }) => {
   const { setSearch, setDate } = useBookingsFilter();
   const [isOpen, setIsOpen] = useState(false);
   const [isDisabled, setIsDisabled] = useState<boolean>();
+  const router = useRouter();
 
   const { data: profile = {} } = useQuery({
     queryKey: ["profile"],
@@ -44,6 +47,37 @@ const BookingsHeader = ({ token, id }: { token: string; id: string }) => {
     enabled: !!token && !!id,
   });
 
+  const { mutateAsync, isPending } = useMutation({
+    mutationKey: ["add-cart"],
+    mutationFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/payment/savePaymentInfo`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${token}`,
+          },
+        }
+      );
+      return await res.json();
+    },
+    onSuccess: (data) => {
+      router.push(data?.data?.url);
+    },
+    onError: (error) => {
+      toast.success(error.message);
+    },
+  });
+
+  const handleCart = async () => {
+    try {
+      await mutateAsync();
+    } catch (error) {
+      console.log(`error: ${error}`);
+    }
+  };
+
   useEffect(() => {
     setIsDisabled(
       !profile?.stripeCustomerId || !profile?.defaultPaymentMethodId
@@ -59,18 +93,29 @@ const BookingsHeader = ({ token, id }: { token: string; id: string }) => {
 
         <div className="flex items-center gap-4">
           <div>
-            <Button className="bg-black hover:bg-black">Add Cart</Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  disabled={
+                    isPending ||
+                    (profile?.stripeCustomerId &&
+                      profile?.defaultPaymentMethodId)
+                  }
+                  onClick={handleCart}
+                  className="bg-black hover:bg-black disabled:cursor-not-allowed"
+                >
+                  {isPending ? "Add Cart..." : "Add Cart"}
+                </Button>
+              </TooltipTrigger>
+              {profile?.stripeCustomerId && profile?.defaultPaymentMethodId && (
+                <TooltipContent>
+                  <p>Cart already added.</p>
+                </TooltipContent>
+              )}
+            </Tooltip>
           </div>
 
           <div>
-            {/* <Button
-              disabled={isDisabled}
-              onClick={() => setIsOpen(true)}
-              className="disabled:cursor-not-allowed cursor-not-allowed"
-            >
-              Manual Booking
-            </Button> */}
-
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
