@@ -1,34 +1,38 @@
-import AuthProvider from "@/components/Providers/AuthProvider";
-import QueryProvider from "@/components/Providers/query-provider";
-import { EdgeStoreProvider } from "@/lib/edgestore";
-import { cn } from "@/lib/utils";
-import type { Metadata } from "next";
-import { Raleway } from "next/font/google";
-import NextTopLoader from "nextjs-toploader";
-import type React from "react";
-import { Toaster } from "sonner";
-import "./globals.css";
+import AuthProvider from '@/components/Providers/AuthProvider'
+import QueryProvider from '@/components/Providers/query-provider'
+import { EdgeStoreProvider } from '@/lib/edgestore'
+import { cn } from '@/lib/utils'
+import type { Metadata } from 'next'
+import { Raleway } from 'next/font/google'
+import NextTopLoader from 'nextjs-toploader'
+import type React from 'react'
+import { Toaster } from 'sonner'
+import './globals.css'
 
 const raleway = Raleway({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-raleway",
-});
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-raleway',
+})
 
 export const metadata: Metadata = {
-  title: "Dress Rental Dashboard",
-  description: "A dashboard for managing dress rentals",
-  generator: "v0.dev",
-};
+  title: 'Dress Rental Dashboard',
+  description: 'A dashboard for managing dress rentals',
+  generator: 'v0.dev',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={cn(raleway.className, "font-light")}>
-      <body className="bg-[#f7f2ee]">
+    <html
+      suppressHydrationWarning={true}
+      lang="en"
+      className={cn(raleway.className, 'font-light')}
+    >
+      <body suppressHydrationWarning className="bg-[#f7f2ee]">
         <Toaster position="bottom-right" richColors closeButton />
         <AuthProvider>
           <QueryProvider>
@@ -39,5 +43,5 @@ export default function RootLayout({
         <NextTopLoader showSpinner={false} color="#ed6b85" />
       </body>
     </html>
-  );
+  )
 }

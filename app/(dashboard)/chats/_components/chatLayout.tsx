@@ -60,7 +60,7 @@ export default function ChatLayout({
   const currentUserId = user?.id || session?.user?.id
 
   // ✅ Get active conversation object
-  const activeConv = conversations.find((c) => c.id === activeConversation)
+  const activeConv = conversations.find(c => c.id === activeConversation)
   const isClosed = activeConv?.status === 'closed'
   // const isFlagged = activeConv?.flagged?.status === true
 
@@ -74,7 +74,7 @@ export default function ChatLayout({
   // 🧠 Optimized message formatting
   const formattedMessages = useMemo(() => {
     if (!currentUserId || !messages.length) return []
-    return messages.map((m) => ({
+    return messages.map(m => ({
       id: m._id,
       content: m.message,
       sender: m.sender._id === currentUserId,
@@ -115,7 +115,7 @@ export default function ChatLayout({
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row md:h-[600px] lg:h-[750px] gap-6 rounded-lg overflow-hidden">
+      <div className="flex flex-col md:flex-row md:h-[500px] lg:h-[650px] gap-6 rounded-lg overflow-hidden">
         {/* ✅ Sidebar */}
         <ChatList
           conversations={conversations}
