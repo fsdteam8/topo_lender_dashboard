@@ -8,6 +8,7 @@ import AboutOrder from "./about-order";
 import AboutPayment from "./about-payment";
 import AboutAnalytics from "./about-analytics";
 import DisputeForm from "./dispute-form";
+import DeliveryStatus from "./delivery-status";
 
 interface Props {
   token: string;
@@ -36,6 +37,16 @@ const BookingsDetails = ({ token }: Props) => {
 
   return (
     <div>
+      <h1 className="uppercase text-2xl mb-8">Booking Details</h1>
+
+      <div className="mb-10">
+        <DeliveryStatus
+          bookingDetails={bookingDetails}
+          token={token}
+          isLoading={isLoading}
+        />
+      </div>
+
       <div className="grid grid-cols-2 gap-8">
         <AboutBooking bookingDetails={bookingDetails} isLoading={isLoading} />
         <AboutOrder bookingDetails={bookingDetails} isLoading={isLoading} />
