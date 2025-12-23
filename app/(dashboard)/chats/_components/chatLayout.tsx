@@ -64,6 +64,8 @@ export default function ChatLayout({
   const isClosed = activeConv?.status === 'closed'
   // const isFlagged = activeConv?.flagged?.status === true
 
+  console.log('active conversations', activeConv)
+
   // 🔄 Handle conversation switch with loading state
   const handleSelectConversation = async (id: string) => {
     setLocalLoading(true)
@@ -125,7 +127,10 @@ export default function ChatLayout({
 
         {/* ✅ Main Chat Window */}
         <div className="w-full md:w-2/3 flex flex-col">
-          <ChatHeader name={activeConv?.name} orderId={activeConv?.orderId} />
+          <ChatHeader
+            name={activeConv?.name}
+            orderId={activeConv?.orderId?.dressName}
+          />
 
           <div className="flex-1 flex flex-col border border-[#E6E6E6] mt-5 rounded-xl overflow-hidden bg-white">
             {/* ✅ Messages */}
