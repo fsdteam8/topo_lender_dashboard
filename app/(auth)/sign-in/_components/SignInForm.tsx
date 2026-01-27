@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginformSchema, LoginFormValues } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -53,9 +53,9 @@ export default function SignInForm() {
   return (
     <div className="w-full max-w-md mx-auto flex flex-col items-center">
       <AuthHeader
-        title1="Welcome"
-        title2="Back"
-        desc="Please enter your credentials to continue"
+        title1="MUSE"
+        title2="GALA"
+        desc="THE LENDER SUITE"
       />
 
       {/* Form */}
@@ -77,7 +77,7 @@ export default function SignInForm() {
                     </div>
                     <Input
                       placeholder="Enter your email"
-                      className="font-poppins w-full md:w-[400px] h-[40px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[52px] pr-4 py-[15px] rounded-[4px]"
+                      className="font-avenir w-full md:w-[400px] h-[40px] bg-transparent border-t-0 border-l-0 border-r-0 border-b border-black text-[12px] placeholder:text-[12px] placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[52px] pr-4 py-[15px] rounded-none focus-visible:ring-0 focus-visible:border-b-2"
                       {...field}
                     />
                   </div>
@@ -102,7 +102,7 @@ export default function SignInForm() {
                       <Input
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your Password"
-                        className="font-poppins w-full md:w-[400px] h-[40px] bg-white border border-black text-base placeholder:text-base placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[42px] pr-4 py-[15px] rounded-[4px]"
+                        className="font-avenir w-full md:w-[400px] h-[40px] bg-transparent border-t-0 border-l-0 border-r-0 border-b border-black text-[12px] placeholder:text-[12px] placeholder:text-[#999999] placeholder:leading-[120%] placeholder:font-normal pl-[42px] pr-4 py-[15px] rounded-none focus-visible:ring-0 focus-visible:border-b-2"
                         {...field}
                       />
                       <button
@@ -141,7 +141,7 @@ export default function SignInForm() {
                   </FormControl>
                   <Label
                     htmlFor="rememberMe"
-                    className="font-poppins text-xm font-normal text-black leading-[120%] tracking-[0%] cursor-pointer"
+                    className="font-avenir text-[12px] font-normal text-black leading-[120%] tracking-[0%] cursor-pointer"
                   >
                     Remember me
                   </Label>
@@ -150,20 +150,24 @@ export default function SignInForm() {
             />
             <Link
               href="/forgot-password"
-              className="font-poppins text-xs text-[#891D33] font-normal leading-[120%] tracking-[0%] hover:underline"
+              className="font-avenir text-[12px] text-[#891D33] font-normal leading-[120%] tracking-[0%] hover:underline"
             >
               Forgot password?
             </Link>
           </div>
 
           {/* Sign In Button */}
-          <Button
-            type="submit"
-            className="font-poppins h-[40px] w-full bg-black text-lg font-medium leading-[120%] tracking-[0%] rounded-[4px] text-[#F4F4F4] py-[15px]"
-            disabled={isPending}
-          >
-            Sign In
-          </Button>
+          <div className="flex justify-end mt-8">
+            <Button
+              type="submit"
+              variant="ghost"
+              className="group p-0 h-auto hover:bg-transparent"
+              disabled={isPending}
+            >
+              <span className="sr-only">Sign In</span>
+              <ArrowRight className="w-12 h-12 text-black group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
 
           {/* Sign Up Link */}
           {/* <div className="text-center text-sm mt-4 md:mt-5 lg:mt-6">
