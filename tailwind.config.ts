@@ -68,6 +68,15 @@ const config: Config = {
         "gradient-flow":
           "gradientFlow 10s ease 0s infinite normal none running",
       },
+      fontFamily: {
+        avenir: ["Avenir", "sans-serif"],
+        avenirArabic: ["Avenir Arabic", "sans-serif"],
+      },
+      letterSpacing: {
+        header: "0.2em",
+        subheader: "0.1em",
+        button: "0.1em",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
